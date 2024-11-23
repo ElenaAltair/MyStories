@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/noteBgColor"
+    tools:context=".activities.books.NewHeroActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/actionModeBackground"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="?attr/noteBg3Color"
+            android:textColorHighlight="?attr/noteBg3Color"
+            android:textColorHint="?attr/noteBg3Color"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="top"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/nameHero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hero_name"
+                    android:textColor="?attr/noteBg3Color" />
+
+                <EditText
+                    android:id="@+id/edNameHero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:hint="@string/hero_name"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="?attr/noteBg3Color"
+                    android:textColorHint="?attr/noteBg3Color"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_2"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lLayout" />
+
+                <EditText
+                    android:id="@+id/edText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_3"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText2" />
+
+                <EditText
+                    android:id="@+id/edText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_4"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText3" />
+
+                <EditText
+                    android:id="@+id/edText4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_5"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText4" />
+
+                <EditText
+                    android:id="@+id/edText5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_6"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText5" />
+
+                <EditText
+                    android:id="@+id/edText6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_7"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText6" />
+
+                <EditText
+                    android:id="@+id/edText7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_8"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText7" />
+
+                <EditText
+                    android:id="@+id/edText8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_9"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText8" />
+
+                <EditText
+                    android:id="@+id/edText9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_10"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText9" />
+
+                <EditText
+                    android:id="@+id/edText10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_11"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText10" />
+
+                <EditText
+                    android:id="@+id/edText11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_12"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText11" />
+
+                <EditText
+                    android:id="@+id/edText12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_13"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText12" />
+
+                <EditText
+                    android:id="@+id/edText13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_14"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText13" />
+
+                <EditText
+                    android:id="@+id/edText14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_15"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText14" />
+
+                <EditText
+                    android:id="@+id/edText15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_16"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText15" />
+
+                <EditText
+                    android:id="@+id/edText16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_17"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText16" />
+
+                <EditText
+                    android:id="@+id/edText17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_18"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText17" />
+
+                <EditText
+                    android:id="@+id/edText18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_19"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText18" />
+
+                <EditText
+                    android:id="@+id/edText19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_20"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText19" />
+
+                <EditText
+                    android:id="@+id/edText20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/hero_edit_21"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edText20" />
+
+                <EditText
+                    android:id="@+id/edText21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

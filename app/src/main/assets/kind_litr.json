@@ -1,0 +1,43 @@
+{
+  "Эпос (Epic)": [
+    "Басня (Fable)",
+    "Былина (Epic)",
+    "Легенда (Legend)",
+    "Новелла (Novella)",
+    "Очерк (Essay)",
+    "Повесть (The story)",
+    "Рассказ (Story)",
+    "Роман (Novel)",
+    "Сказка (Fairy Tale)",
+    "Эпопея (The Epic)"
+  ],
+  "Лирика (Lyrics)": [
+    "Гимн (Anthem)",
+    "Инвектива (Invective)",
+    "Мадригал (Madrigal)",
+    "Ода (Ode)",
+    "Песня (Song)",
+    "Послание (Message)",
+    "Романс (Romance)",
+    "Сонет (Sonnet)",
+    "Стансы (Stanzas)",
+    "Стихотворение (Poem)",
+    "Стихотворение в прозе (Poem in prose)",
+    "Элегия (Elegy)",
+    "Эпиграмма (Epigram)",
+    "Эпитафия (Epitaph)"
+  ],
+  "Драма (Drama)": [
+    "Водевиль (Vaudeville)",
+    "Драма (Drama)",
+    "Комедия (Comedy)",
+    "Мелодрама (Melodrama)",
+    "Скетч (Sketch)",
+    "Трагедия (Tragedy)"
+  ],
+  "Лиро-эпические жанры (Lyric-epic genres)": [
+    "Баллада (The Ballad)",
+    "Поэма (The poem)",
+    "Роман в стихах (A novel in verse)"
+  ]
+}

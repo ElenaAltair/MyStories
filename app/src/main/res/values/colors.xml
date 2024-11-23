@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="grey">#858484</color>
+    <color name="grey_light">#EDEDED</color>
+    <color name="green_main">#4CAF50</color>
+    <color name="green_main_light">#5DD182</color>
+    <color name="green_light_light">#A7DEB8</color>
+    <color name="green_main_dark">#0A5723</color>
+
+    <color name="picker_red">#FF0000</color>
+    <color name="picker_orange_dark">#FF5722</color>
+    <color name="picker_orange">#FF9800</color>
+    <color name="picker_yellow">#FFC107</color>
+
+    <color name="picker_purple">#421B89</color>
+    <color name="picker_blue">#2443EF</color>
+    <color name="picker_green_see">#00766C</color>
+    <color name="picker_green">#01A939</color>
+
+    <color name="picker_black">#FF000000</color>
+    <color name="picker_grey">#4D4D4D</color>
+    <color name="picker_grey_light">#999999</color>
+    <color name="picker_white">#D3D3D3</color>
+
+    <color name="blue_light">#A4DCD1</color>
+
+    <color name="blue_light_new">#02ADF8</color>
+    <color name="blue_light_bg">#DFF7FD</color>
+    <color name="blue_light_bg2">#65BDE4</color>
+    <color name="blue_dark">#0276A9</color>
+    <color name="blue_dark_dark">#02587E</color>
+    <color name="blue_dark_dark4">#013B54</color>
+
+    <color name="red_light">#CF1414</color>
+    <color name="red_light_bg">#FBE3E3</color>
+    <color name="red_light_bg2">#D58181</color>
+    <color name="red_dark">#951212</color>
+    <color name="red_dark_dark">#620202</color>
+    <color name="red_dark_dark4">#4B0101</color>
+
+    <color name="green_light_new">#019589</color>
+    <color name="green_light_bg">#E8FDF8</color>
+    <color name="green_light_bg2">#6BBAB4</color>
+    <color name="green_dark_new">#028075</color>
+    <color name="green_dark_dark">#015250</color>
+    <color name="green_dark_dark4">#003732</color>
+
+    <color name="orange_light_new">#D78025</color>
+    <color name="orange_light_bg">#FDF3E7</color>
+    <color name="orange_light_bg2">#E9B47E</color>
+    <color name="orange_dark_new">#B65F02</color>
+    <color name="orange_dark_dark">#7A4002</color>
+    <color name="orange_dark_dark4">#4B2801</color>
+
+</resources>

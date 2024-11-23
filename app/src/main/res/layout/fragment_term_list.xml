@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragChapter"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/noteBgColor"
+    tools:context=".fragments.books.TermListFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="?attr/noteBg3Color"
+            android:orientation="horizontal"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/tvCT"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:padding="3dp"
+                android:text="@string/list_of_terms"
+                android:textColor="?android:attr/detailsElementBackground"
+                android:textColorHighlight="?android:attr/detailsElementBackground"
+                android:textColorHint="?android:attr/detailsElementBackground"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/titBook"
+                app:layout_constraintEnd_toStartOf="@+id/imPdf"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imListBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@null"
+                app:layout_constraintBottom_toTopOf="@+id/titBook"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_book2" />
+
+            <ImageButton
+                android:id="@+id/imPdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@null"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/imTxt"
+                app:layout_constraintEnd_toStartOf="@+id/imTxt"
+                app:layout_constraintTop_toTopOf="@+id/imTxt"
+                app:srcCompat="@drawable/ic_pdf" />
+
+            <ImageButton
+                android:id="@+id/imTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@null"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/imListBook"
+                app:layout_constraintEnd_toStartOf="@+id/imDocx"
+                app:layout_constraintTop_toTopOf="@+id/imListBook"
+                app:srcCompat="@drawable/txt_file____" />
+
+            <ImageButton
+                android:id="@+id/imDocx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/imListBook"
+                app:layout_constraintEnd_toStartOf="@+id/imListBook"
+                app:layout_constraintTop_toTopOf="@+id/imListBook"
+                app:srcCompat="@drawable/ic_docx" />
+
+            <TextView
+                android:id="@+id/titBook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?attr/noteBg2Color"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:text="@string/book_title"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCT" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/to_create_a_new_term"
+                    android:textColor="?attr/noteBg3Color"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcViewTerm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginEnd="5dp"
+                    android:src="@mipmap/ic_book_7_background" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

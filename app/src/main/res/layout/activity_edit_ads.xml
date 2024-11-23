@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/noteBg4Color"
+    tools:context=".activities.ads.EditAdsActivity">
+
+    <FrameLayout
+        android:id="@+id/place__holder_ads"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_light">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/constLayout"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:background="?attr/noteBg3Color"
+                android:foregroundGravity="top"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/imRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@null"
+                    android:onClick="onClickBackListener"
+                    app:layout_constraintBottom_toBottomOf="@+id/titBook"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/titBook"
+                    app:srcCompat="@drawable/ic_arrow_back" />
+
+                <TextView
+                    android:id="@+id/titBook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:maxLines="3"
+                    android:padding="10dp"
+                    android:text="@string/ad_my_new_ads"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imRight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/scroolViewMain"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constLayout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardHead"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/white"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView24"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="@string/fill_ad"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/vpImages"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_margin="5dp"
+                                android:padding="5dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </androidx.viewpager2.widget.ViewPager2>
+
+                            <TextView
+                                android:id="@+id/tvImageCounter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#000000"
+                                android:padding="5dp"
+                                android:text="1/3"
+                                android:textColor="?attr/noteBgColor"
+                                app:layout_constraintBottom_toBottomOf="@+id/vpImages"
+                                app:layout_constraintEnd_toEndOf="@+id/vpImages" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/edit_image_button"
+                                android:onClick="onClickGetImages"
+                                android:padding="5dp"
+                                app:layout_constraintEnd_toEndOf="@+id/vpImages"
+                                app:layout_constraintTop_toTopOf="@+id/vpImages"
+                                app:srcCompat="@drawable/ic_edit_green" />
+
+                            <ProgressBar
+                                android:id="@+id/pBarLoad"
+                                style="?android:attr/progressBarStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/vpImages"
+                                app:layout_constraintStart_toStartOf="@+id/vpImages"
+                                app:layout_constraintTop_toTopOf="@+id/vpImages" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvTitleTel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/tel"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <EditText
+                                android:id="@+id/editTel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:drawable/dialog_holo_light_frame"
+                                android:ems="10"
+                                android:inputType="number"
+                                android:maxLength="200"
+                                android:padding="15dp"
+                                android:text="1"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/picker_grey"
+                                android:textSize="18sp"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/tvTitleEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/email_hint"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:background="@android:drawable/dialog_holo_light_frame"
+                                android:ems="10"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="30"
+                                android:padding="15dp"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/picker_grey"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/white"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="10dp"
+                                android:text="@string/book_title"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/edTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:background="@android:drawable/dialog_holo_light_frame"
+                                android:onClick="onClickSelectTitleBook"
+                                android:padding="15dp"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/picker_grey"
+                                android:textSize="18sp" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cv2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7dp"
+                                android:background="@drawable/edit_button_bg_blue"
+                                android:backgroundTint="?attr/noteBg3Color"
+                                android:visibility="gone"
+                                app:cardCornerRadius="5dp">
+
+
+                                <TextView
+                                    android:id="@+id/edTitle2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="10dp"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp" />
+                            </androidx.cardview.widget.CardView>
+
+
+                            <TextView
+                                android:id="@+id/tvLiterCat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="10dp"
+                                android:text="@string/genres_literature"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7dp"
+                                android:background="@drawable/edit_button_bg_blue"
+                                android:backgroundTint="?attr/noteBgColor"
+                                app:cardCornerRadius="5dp">
+
+
+                                <TextView
+                                    android:id="@+id/tvLiter"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="10dp"
+                                    android:textColor="?attr/noteBg3Color"
+                                    android:textColorHint="@color/picker_grey"
+                                    android:textSize="18sp" />
+                            </androidx.cardview.widget.CardView>
+
+                            <!--android:onClick="onClickSelectGenresLiter" -->
+
+                            <TextView
+                                android:id="@+id/tvAgeCat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/age_cat"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7dp"
+                                android:background="@drawable/edit_button_bg_blue"
+                                android:backgroundTint="?attr/noteBgColor"
+                                app:cardCornerRadius="5dp">
+
+                                <TextView
+                                    android:id="@+id/tvAge"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="10dp"
+                                    android:textColor="?attr/noteBg3Color"
+                                    android:textColorHint="@color/picker_grey"
+                                    android:textSize="18sp" />
+                            </androidx.cardview.widget.CardView>
+
+
+                            <!-- android:onClick="onClickSelectAgeCat"-->
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardDesk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/white"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTitleDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/description"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7dp"
+                                android:background="@drawable/edit_button_bg_blue"
+                                android:backgroundTint="?attr/noteBgColor"
+                                app:cardCornerRadius="5dp">
+
+                                <TextView
+                                    android:id="@+id/edDescription"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:maxLength="3000"
+                                    android:padding="10dp"
+                                    android:textColor="?attr/noteBg3Color"
+                                    android:textColorHint="@color/picker_grey"
+                                    android:textSize="18sp" />
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/listChapter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvListChapters"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:text="@string/chapters_selected_for_publication"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvListChapters"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:layout_marginEnd="7dp"
+                                android:layout_marginBottom="7dp"
+                                android:background="@drawable/edit_button_bg_blue"
+                                android:backgroundTint="@color/blue_light_bg"
+                                android:padding="10dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/btPublish"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:onClick="onClickPublish"
+                                android:text="@string/publish"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:backgroundTint="?attr/noteBg3Color" />
+
+                            <TextView
+                                android:id="@+id/mess"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="@string/cannot_make_changes"
+                                android:textColor="@color/red_dark"
+                                android:textSize="16sp"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/white"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/comm2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/selection_section_empty"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/comm1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/edit_publish"
+                                android:textColor="?attr/noteBg3Color"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </ScrollView>
+
+
+            <LinearLayout
+                android:id="@+id/progressLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#9F292929"
+                android:clickable="true"
+                android:focusable="auto"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</FrameLayout>

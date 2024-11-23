@@ -1,0 +1,438 @@
+package elena.altair.note.fragments.ads
+
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
+import elena.altair.note.R
+import elena.altair.note.activities.MainActivity
+import elena.altair.note.activities.MainActivity.Companion.ADS_DATA
+import elena.altair.note.activities.MainActivity.Companion.EDIT_STATE_AD
+import elena.altair.note.activities.MainActivity.Companion.catPublic
+import elena.altair.note.activities.ads.DescriptionActivity
+import elena.altair.note.activities.ads.EditAdsActivity
+import elena.altair.note.adapters.ads.AllAdsFragmentBookRsAdapter
+import elena.altair.note.databinding.DeleteDialogBinding
+import elena.altair.note.databinding.FragmentAllAdsBinding
+import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
+import elena.altair.note.dialoghelper.DialogSpinnerHelper
+import elena.altair.note.dialoghelper.ProgressDialog.createProgressDialog
+import elena.altair.note.fragments.books.BaseFragment
+import elena.altair.note.fragments.books.MainListFragment.Companion.SCROLL_DOWN
+import elena.altair.note.model.Ad
+import elena.altair.note.utils.InternetConnection.isOnline
+import elena.altair.note.viewmodel.FirebaseViewModel
+import elena.altair.note.viewmodel.MainViewModel
+
+
+@AndroidEntryPoint
+class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
+
+    private lateinit var binding: FragmentAllAdsBinding
+    private var pref: SharedPreferences? = null
+    private val mAuth = Firebase.auth
+    private val dialog = DialogSpinnerHelper()
+    private val adapter = AllAdsFragmentBookRsAdapter(mAuth, this@AllAdsFragment)
+
+    private val firebaseViewModel: FirebaseViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private var clearUpdate: Boolean = true
+    private var filter: Int = 0
+    private var currentCategory = ""
+    private var tempTime = "0"
+    private lateinit var dialogProgres: AlertDialog
+    override fun onClickNew() {
+        val i = Intent(activity as MainActivity, EditAdsActivity::class.java)
+        startActivity(i)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        binding = FragmentAllAdsBinding.inflate(inflater, container, false)
+        return binding.root
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        //val nv = act.findViewById<NavigationView>(R.id.navView)
+        initFirebaseViewModal()
+        //tv.text = act.resources.getString(R.string.ad_my_ads)
+        pref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
+        super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        initRecyclerView()
+        scrollListener()
+
+
+
+
+
+        binding.edCatLiter2.setOnClickListener {
+            //tempFlagListEmpti = 0
+            val listGenresLiter =
+                resources.getStringArray(R.array.genres_of_literature).toMutableList() as ArrayList
+            dialog.showSpinnerDialog(activity as MainActivity, listGenresLiter, binding.edCatLiter2)
+
+
+        }
+
+        // отслеживаем момент, когда пользователь выберет книгу для публикации
+        binding.edCatLiter2.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+
+                filter = 1
+                tempTime = "0"
+                clearUpdate = true
+                currentCategory = binding.edCatLiter2.text.toString()
+                //val catLiterTime = "${currentCategory}_0"
+                //Log.d("MyLog", "catLiterTime $catLiterTime")
+                firebaseViewModel.loadAllAdsFromCatLiterFirstPage(currentCategory, dialogProgres)
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+            }
+        })
+
+    }
+
+
+    private fun initFirebaseViewModal() {
+
+        val act = activity as MainActivity
+        tempTime = "0"
+        act.findViewById<View>(R.id.add).visibility = View.VISIBLE
+        act.findViewById<View>(R.id.settings).visibility = View.GONE
+        act.findViewById<View>(R.id.tb).visibility = View.GONE
+        val toolbar =
+            act.findViewById<Toolbar>(R.id.toolbar) // import androidx.appcompat.widget.Toolbar
+        val tv: TextView = toolbar.getChildAt(0) as TextView
+        //Log.d("MyLog", "isInternetAvailable() ${isOnline(act)}")
+        dialogProgres = createProgressDialog(activity as MainActivity)
+        if (!isOnline(act)) {
+            dialogProgres.dismiss()
+            createDialogInfo(resources.getString(R.string.network_exception), act)
+        }
+
+        if (catPublic == 1) {
+            clearUpdate = true
+            tv.text = act.resources.getString(R.string.ad_my_ads)
+            if (currentCategory == "")
+                firebaseViewModel.loadMyAdsFirstPage(dialogProgres)
+            else
+                firebaseViewModel.loadMyAdsFirstPageCatLiterTime(
+                    currentCategory, dialogProgres
+                )
+
+
+        }
+        if (catPublic == 2) {
+            clearUpdate = true
+            tv.text = act.resources.getString(R.string.ad_other_ads)
+            if (currentCategory == "")
+                firebaseViewModel.loadAllAdsFirstPage(dialogProgres)
+            else
+                firebaseViewModel.loadAllAdsFromCatLiterFirstPage(
+                    currentCategory, dialogProgres
+                )
+
+        }
+        if (catPublic == 3) {
+            binding.edCatLiter2.visibility = View.GONE
+            binding.tvSelCatLit.visibility = View.GONE
+            clearUpdate = true
+            tv.text = act.resources.getString(R.string.ad_favourites)
+            firebaseViewModel.loadMyFavs(dialogProgres)
+        }
+
+    }
+
+
+    private fun initViewModel() {
+
+        firebaseViewModel.liveAdsData.observe(activity as MainActivity) {
+            val list = getAdsByCategory(it)
+
+            if (!clearUpdate) {
+                adapter.updateAdapter(list)
+            } else {
+                adapter.updateAdapterWithClear(list)
+            }
+            binding.tvEmpty.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+        }
+
+    }
+
+    // если выбран фильтр по жанру литературы, создать список книг только с выбранным жанром
+    // если фильтр не применен, то пусть в списке будут книги всех жанров
+    private fun getAdsByCategory(list: ArrayList<Ad>): ArrayList<Ad> {
+        val tempList = ArrayList<Ad>()
+
+        if (catPublic == 1) {
+            list.forEach {
+                if (mAuth.uid == it.uidOwner)
+                    tempList.add(it)
+            }
+            if (currentCategory != "") {
+                tempList.clear()
+                list.forEach {
+                    if (currentCategory == it.categoryLiter && mAuth.uid == it.uidOwner)
+                        tempList.add(it)
+                }
+            }
+        }
+
+        if (catPublic == 2) {
+            tempList.addAll(list)
+            if (currentCategory != "") {
+                tempList.clear()
+                list.forEach {
+                    if (currentCategory == it.categoryLiter)
+                        tempList.add(it)
+                }
+            }
+        }
+
+        if (catPublic == 3) {
+            tempList.addAll(list)
+
+        }
+
+        tempList.reverse()
+        if (tempList.size > 2 && tempList[tempList.size - 1] == tempList[tempList.size - 2])
+            tempList.remove(tempList[tempList.size - 1])
+
+
+        return tempList
+    }
+
+
+    private fun initRecyclerView() {
+        binding.apply {
+            rcViewAds.layoutManager = LinearLayoutManager(activity as MainActivity)
+            rcViewAds.adapter = adapter
+        }
+
+    }
+
+
+    override fun onDeleteItem(ad: Ad) {
+        if (!isOnline(activity as MainActivity)) {
+            createDialogInfo(
+                (activity as MainActivity).resources.getString(R.string.network_exception),
+                activity as MainActivity
+            )
+            return
+        }
+        createDialogDeletePublic(
+            resources.getString(R.string.sure_delete_book_published),
+            activity as MainActivity,
+            ad,
+            firebaseViewModel,
+        )
+    }
+
+    private fun createDialogDeletePublic(
+        message: String,
+        activity: MainActivity,
+        ad: Ad,
+        firebaseViewModel: FirebaseViewModel,
+    ) {
+        val builder = AlertDialog.Builder(activity)
+        val bindingDialog = DeleteDialogBinding.inflate(activity.layoutInflater)
+        val view = bindingDialog.root
+        builder.setView(view)
+        bindingDialog.tvMess.text = message
+        val dialog = builder.create()
+
+        object : CountDownTimer(10000, 1000) {
+
+            @SuppressLint("SetTextI18n")
+            override fun onTick(millisUntilFinished: Long) {
+                bindingDialog.tvCounter.text = "" + (millisUntilFinished / 1000)
+            }
+
+            override fun onFinish() {
+                bindingDialog.bDelete.visibility = View.VISIBLE
+            }
+        }.start()
+
+
+        bindingDialog.bNo.setOnClickListener {
+            dialog?.dismiss()
+        }
+        bindingDialog.bDelete.setOnClickListener {
+            firebaseViewModel.deleteItem(ad)
+            dialog?.dismiss()
+            initFirebaseViewModal()
+        }
+        dialog.show()
+
+    }
+
+    override fun onAdViewed(ad: Ad) { // увеличиваем счетчик просмотров
+        if (!isOnline(activity as MainActivity)) {
+            createDialogInfo(
+                (activity as MainActivity).resources.getString(R.string.network_exception),
+                activity as MainActivity
+            )
+            return
+        }
+        firebaseViewModel.adViewed(ad)
+
+        val i = Intent(context, DescriptionActivity::class.java)
+        i.putExtra(AD_KEY, ad)
+        (activity as MainActivity).startActivity(i)
+    }
+
+    override fun onFavClicked(ad: Ad) {
+        if (!isOnline(activity as MainActivity)) {
+            createDialogInfo(
+                (activity as MainActivity).resources.getString(R.string.network_exception),
+                activity as MainActivity
+            )
+            return
+        }
+        firebaseViewModel.onFavClick(ad) // нажали на сердечко
+        initFirebaseViewModal() // временная мера
+    }
+
+
+    // при удалении книги из firebase, в локальной базе данных, указываем, что книга не опубликована
+    override fun onUpdateLocalBook(ad: Ad) {
+        if (!isOnline(activity as MainActivity)) {
+            createDialogInfo(
+                (activity as MainActivity).resources.getString(R.string.network_exception),
+                activity as MainActivity
+            )
+            return
+        }
+        val id = ad.idBookLocal!!.toLong()
+        Log.d("MyLog", "key ${ad.key}")
+        mainViewModel.getBook(id, ad.key.toString()).observe(viewLifecycleOwner) {
+            val book = it
+            if (book != null) {
+                //book.copy(public = "0")
+                book.public = "0"
+                book.uidAd = null
+                mainViewModel.updateBook(book)
+            }
+        }
+    }
+
+    override fun onClickEdit(ad: Ad) {
+        if (!isOnline(activity as MainActivity)) {
+            createDialogInfo(
+                (activity as MainActivity).resources.getString(R.string.network_exception),
+                activity as MainActivity
+            )
+            return
+        }
+        val editIntent = Intent((activity as MainActivity), EditAdsActivity::class.java).apply {
+            // true - открыли объявление для редактирования
+            // false - создаём новое объявление
+            putExtra(EDIT_STATE_AD, true)
+            putExtra(ADS_DATA, ad)
+        }
+        (activity as MainActivity).startActivity(editIntent)
+    }
+
+
+    // тест
+    private fun scrollListener() {
+
+        binding.rcViewAds.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recView, newState)
+                // не может скролиться вниз и новое состояние это состояние покоя
+                if (!recView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //Log.d("MyLog", "Can't scroll down")
+                    clearUpdate = false
+                    val adsList = firebaseViewModel.liveAdsData.value!!
+                    //Log.d("MyLog", "adsList ${adsList}")
+                    //Log.d("MyLog", "tempFlagListEmpti ${tempFlagListEmpti}")
+
+                    if (adsList.isNotEmpty()) {///
+                        adsList[0]
+                            .let {
+                                if (tempTime == "0" || tempTime > it.time) {
+
+                                    tempTime = it.time
+
+                                    if (catPublic == 1) {
+                                        if (filter == 0)
+                                            firebaseViewModel.loadMyAdsNextPage(it.time)
+                                        else {
+                                            val catLiterTime = "${currentCategory}_${it.time}"
+                                            firebaseViewModel.loadMyAdsNextPageCatLiterTime(
+                                                catLiterTime
+                                            )
+                                        }
+                                    }
+                                    if (catPublic == 2) {
+                                        if (filter == 0)
+                                            firebaseViewModel.loadAllAdsNextPage(it.time)
+                                        else {
+                                            val catLiterTime = "${currentCategory}_${it.time}"
+                                            firebaseViewModel.loadAllAdsFromCatLiterNextPage(
+                                                catLiterTime
+                                            )
+                                            //Log.d("MyLog", "+++")
+                                        }
+                                    }
+                                    if (catPublic == 3) {
+                                        firebaseViewModel.loadMyFavs(dialogProgres)
+                                    }
+
+                                }
+                            }
+                    }
+                }
+            }
+        })
+    }
+
+
+    companion object {
+
+        const val AD_KEY = "AD"
+
+        @JvmStatic
+        fun newInstance() = AllAdsFragment()
+    }
+}
+
+

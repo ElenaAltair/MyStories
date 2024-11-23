@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/noteBgColor"
+    tools:context=".activities.books.NewLocationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/actionModeBackground"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="?attr/noteBg3Color"
+            android:textColorHighlight="?attr/noteBg3Color"
+            android:textColorHint="?attr/noteBg3Color"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="top"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/nameLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location_title"
+                    android:textColor="?attr/noteBg3Color" />
+
+                <EditText
+                    android:id="@+id/edTitleLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:hint="@string/location_title"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="?attr/noteBg3Color"
+                    android:textColorHint="?attr/noteBg3Color"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/geography"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lLayout" />
+
+                <EditText
+                    android:id="@+id/edGeography"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/population"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edGeography" />
+
+                <EditText
+                    android:id="@+id/edPopulation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/politics"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edPopulation" />
+
+                <EditText
+                    android:id="@+id/edPolitics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/economy"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edPolitics" />
+
+                <EditText
+                    android:id="@+id/edEconomy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/religion"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edEconomy" />
+
+                <EditText
+                    android:id="@+id/edReligion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/history"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edReligion" />
+
+                <EditText
+                    android:id="@+id/edHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/feature"
+                    android:textColor="?attr/noteBg3Color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edHistory" />
+
+                <EditText
+                    android:id="@+id/edFeature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textColorLink="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="note_style_array">
+        <item>@string/linear_list</item>
+        <item>@string/grid</item>
+    </string-array>
+    <string-array name="note_style_values">
+        <item>Linear</item>
+        <item>Grid</item>
+    </string-array>
+
+    <string-array name="time_format_array">
+        <item>23:59:59 – 2024/12/31</item>
+        <item>23:59:59 – 31/12/2024</item>
+    </string-array>
+    <string-array name="time_format_values">
+        <item>HH:mm:ss - yyyy/MM/dd</item>
+        <item>HH:mm:ss - dd/MM/yyyy</item>
+    </string-array>
+    <string-array name="chose_theme_array">
+        <item>@string/blue_theme</item>
+        <item>@string/red_theme</item>
+        <item>@string/green_theme</item>
+        <item>@string/orange_theme</item>
+    </string-array>
+    <string-array name="chose_theme_values">
+        <item>blue</item>
+        <item>red</item>
+        <item>green</item>
+        <item>orange</item>
+    </string-array>
+
+    <string-array name="text_size_array">
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+        <item>24</item>
+        <item>28</item>
+        <item>32</item>
+        <item>36</item>
+    </string-array>
+    <string-array name="text_size_values">
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+        <item>24</item>
+        <item>28</item>
+        <item>32</item>
+        <item>36</item>
+    </string-array>
+    <!-- <font color="#FF3700B3">abighaustitul3d: </font> -->
+    <string-array name="font_family_array">
+        <item>asylbekm29kz</item>
+        <item>capsmall</item>
+        <item>couriernewcyr80n</item>
+        <item>dited</item>
+        <item>gildiatitulcmbold</item>
+        <item>josephinac</item>
+        <item>karnacone</item>
+        <item>monospace</item>
+        <item>perfoc</item>
+        <item>sans-serif</item>
+        <item>sans-serif-black</item>
+        <item>schoolbook</item>
+        <item>serif</item>
+        <item>serif-monospace</item>
+        <item>villaphelomena</item>
+    </string-array>
+    <string-array name="font_family_values">
+        <item>R.font.asylbekm29kz</item>
+        <item>R.font.capsmall</item>
+        <item>R.font.couriernewcyr80n</item>
+        <item>R.font.dited</item>
+        <item>R.font.gildiatitulcmbold</item>
+        <item>R.font.josephinac</item>
+        <item>R.font.karnacone</item>
+        <item>monospace</item>
+        <item>R.font.perfoc</item>
+        <item>sans-serif</item>
+        <item>sans-serif-black</item>
+        <item>R.font.schoolbook</item>
+        <item>serif</item>
+        <item>serif-monospace</item>
+        <item>R.font.villaphelomena</item>
+    </string-array>
+    <string-array name="kinds_of_literature">
+        <item>@string/epic</item>
+        <item>@string/lyrics</item>
+        <item>@string/drama</item>
+        <item>@string/lyric_epic</item>
+    </string-array>
+    <string-array name="epic">
+        <item>@string/fable</item>
+        <item>@string/epic_</item>
+        <item>@string/legend</item>
+        <item>@string/novella</item>
+        <item>@string/essay</item>
+        <item>@string/the_story</item>
+        <item>@string/story</item>
+        <item>@string/novel</item>
+        <item>@string/fairy_tale</item>
+        <item>@string/the_epic</item>
+    </string-array>
+    <string-array name="lyrics">
+        <item>@string/anthem</item>
+        <item>@string/invective</item>
+        <item>@string/madrigal</item>
+        <item>@string/ode</item>
+        <item>@string/song</item>
+        <item>@string/message</item>
+        <item>@string/romance</item>
+        <item>@string/sonnet</item>
+        <item>@string/stanzas</item>
+        <item>@string/poem</item>
+        <item>@string/poem_in_prose</item>
+        <item>@string/elegy</item>
+        <item>@string/epigram</item>
+        <item>@string/epitaph</item>
+    </string-array>
+    <string-array name="drama">
+        <item>@string/vaudeville</item>
+        <item>@string/drama</item>
+        <item>@string/comedy</item>
+        <item>@string/melodrama</item>
+        <item>@string/sketch</item>
+        <item>@string/tragedy</item>
+    </string-array>
+    <string-array name="lyric_epic">
+        <item>@string/the_ballad</item>
+        <item>@string/the_poem</item>
+        <item>@string/novel_in_verse</item>
+    </string-array>
+    <string-array name="genres_of_literature">
+        <item>@string/fable</item>
+        <item>@string/epic_</item>
+        <item>@string/legend</item>
+        <item>@string/novella</item>
+        <item>@string/essay</item>
+        <item>@string/the_story</item>
+        <item>@string/story</item>
+        <item>@string/novel</item>
+        <item>@string/fairy_tale</item>
+        <item>@string/the_epic</item>
+        <item>@string/anthem</item>
+        <item>@string/invective</item>
+        <item>@string/madrigal</item>
+        <item>@string/ode</item>
+        <item>@string/song</item>
+        <item>@string/message</item>
+        <item>@string/romance</item>
+        <item>@string/sonnet</item>
+        <item>@string/stanzas</item>
+        <item>@string/poem</item>
+        <item>@string/poem_in_prose</item>
+        <item>@string/elegy</item>
+        <item>@string/epigram</item>
+        <item>@string/epitaph</item>
+        <item>@string/vaudeville</item>
+        <item>@string/drama</item>
+        <item>@string/comedy</item>
+        <item>@string/melodrama</item>
+        <item>@string/sketch</item>
+        <item>@string/tragedy</item>
+        <item>@string/the_ballad</item>
+        <item>@string/the_poem</item>
+        <item>@string/novel_in_verse</item>
+    </string-array>
+</resources>
