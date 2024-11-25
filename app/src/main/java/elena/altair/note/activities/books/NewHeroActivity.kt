@@ -25,7 +25,7 @@ import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveHero
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.fragments.books.HeroListFragment
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
@@ -53,7 +53,7 @@ class NewHeroActivity : AppCompatActivity() {
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: ActivityNewHeroBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private var hero: HeroEntity2? = null
     private val mainViewModel: MainViewModel by viewModels()
     private val STORAGE_CODE: Int = 100
@@ -170,6 +170,7 @@ class NewHeroActivity : AppCompatActivity() {
                 ShareHelperHero.shareHero(
                     createNewHero(),
                     book?.titleBook.toString(),
+                    book?.nameAuthor.toString(),
                     this
                 ),
                 "Share by"
@@ -181,6 +182,7 @@ class NewHeroActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewHero(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = hero?.desc1.toString()
@@ -220,6 +222,7 @@ class NewHeroActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewHero(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = hero?.desc1.toString()
@@ -256,6 +259,7 @@ class NewHeroActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewHero(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = hero?.desc1.toString()
@@ -444,6 +448,7 @@ class NewHeroActivity : AppCompatActivity() {
                     val string = makeShareText(
                         createNewHero(),
                         book?.titleBook.toString(),
+                        book?.nameAuthor.toString(),
                         this
                     )
 
@@ -488,7 +493,7 @@ class NewHeroActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             book = intent.getSerializableExtra(
                 HeroListFragment.TITLE_BOOK_KEY,
-                BookEntity4::class.java
+                BookEntity7::class.java
             )
             hero = intent.getSerializableExtra(
                 HeroListFragment.NEW_NOTE_KEY,
@@ -500,7 +505,7 @@ class NewHeroActivity : AppCompatActivity() {
             val sBook = intent.getSerializableExtra(HeroListFragment.TITLE_BOOK_KEY)
             val sHero = intent.getSerializableExtra(HeroListFragment.NEW_NOTE_KEY)
 
-            book = sBook as BookEntity4
+            book = sBook as BookEntity7
             if (sHero != null) {
                 hero = sHero as HeroEntity2
                 fillHero()

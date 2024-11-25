@@ -11,7 +11,7 @@ import java.io.Serializable
 @Entity(tableName = "chapters",
     foreignKeys = [
         ForeignKey(
-            entity = BookEntity4::class,
+            entity = BookEntity7::class,
             parentColumns = ["id"],
             childColumns = ["id_book"],
             onDelete = ForeignKey.CASCADE,

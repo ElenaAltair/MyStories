@@ -194,6 +194,24 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/tw6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/сhoose_alias"
+                    android:textColor="?attr/noteBg3Color" />
+
+                <TextView
+                    android:id="@+id/edAlias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:onClick="onClickSelectAlias"
+                    android:padding="15dp"
+                    android:text="@string/сhoose_alias"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tw4"

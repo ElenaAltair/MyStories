@@ -36,13 +36,19 @@ object PdfTxtTermListUtils {
 
     suspend fun savePdf(
         title: String,
+        nameA: String,
         list: List<TermEntity2>,
         activity: AppCompatActivity
     ): String {
         return withContext(Dispatchers.IO) {
             val mDoc = Document()
 
-            val mFileName = title + "_" + SimpleDateFormat(
+            var titleTemp = title
+            if (titleTemp.length > 10) {
+                titleTemp = titleTemp.substring(0, 10)
+            }
+
+            val mFileName = titleTemp + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
             ).format(System.currentTimeMillis()) + ".pdf"
@@ -108,6 +114,7 @@ object PdfTxtTermListUtils {
                         val string = makeShareText(
                             createTermEntity(list[i]),
                             title,
+                            nameA,
                             activity as MainActivity
                         )
                         mDoc.add(Paragraph(string, font))
@@ -134,12 +141,18 @@ object PdfTxtTermListUtils {
 
     suspend fun saveTxt(
         title: String,
+        nameA: String,
         list: List<TermEntity2>,
         activity: AppCompatActivity
     ): String {
         return withContext(Dispatchers.IO) {
 
-            val mFileName = title + "_" + SimpleDateFormat(
+            var titleTemp = title
+            if (titleTemp.length > 10) {
+                titleTemp = titleTemp.substring(0, 10)
+            }
+
+            val mFileName = titleTemp + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
             ).format(System.currentTimeMillis()) + ".txt"
@@ -152,6 +165,7 @@ object PdfTxtTermListUtils {
                         val string = makeShareText(
                             createTermEntity(list[i]),
                             title,
+                            nameA,
                             activity as MainActivity
                         )
                         stringB.append("$string \n\n")
@@ -233,12 +247,18 @@ object PdfTxtTermListUtils {
 
     suspend fun saveDocx(
         title: String,
+        nameA: String,
         list: List<TermEntity2>,
         activity: AppCompatActivity
     ): String {
         return withContext(Dispatchers.IO) {
 
-            val mFileName = title + "_" + SimpleDateFormat(
+            var titleTemp = title
+            if (titleTemp.length > 10) {
+                titleTemp = titleTemp.substring(0, 10)
+            }
+
+            val mFileName = titleTemp + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
             ).format(System.currentTimeMillis()) + ".docx"
@@ -255,6 +275,7 @@ object PdfTxtTermListUtils {
                         val string = makeShareText(
                             createTermEntity(list[i]),
                             title,
+                            nameA,
                             activity as MainActivity
                         )
                         stringB.append("$string \n\n")

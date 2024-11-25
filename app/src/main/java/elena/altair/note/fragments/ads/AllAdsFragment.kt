@@ -27,10 +27,13 @@ import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.activities.MainActivity.Companion.ADS_DATA
 import elena.altair.note.activities.MainActivity.Companion.EDIT_STATE_AD
+import elena.altair.note.activities.MainActivity.Companion.USER_ANONYMOUS
 import elena.altair.note.activities.MainActivity.Companion.catPublic
+import elena.altair.note.activities.MainActivity.Companion.currentUser
 import elena.altair.note.activities.ads.DescriptionActivity
 import elena.altair.note.activities.ads.EditAdsActivity
 import elena.altair.note.adapters.ads.AllAdsFragmentBookRsAdapter
+import elena.altair.note.databinding.ContinueDialogBinding
 import elena.altair.note.databinding.DeleteDialogBinding
 import elena.altair.note.databinding.FragmentAllAdsBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
@@ -60,7 +63,18 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     private var currentCategory = ""
     private var tempTime = "0"
     private lateinit var dialogProgres: AlertDialog
+
+
+
     override fun onClickNew() {
+
+        if (mAuth.currentUser!!.isAnonymous || currentUser == USER_ANONYMOUS || currentUser == "" || currentUser == "null") {
+            createDialogInfo(
+                resources.getString(R.string.only_registered_users),
+                activity as MainActivity
+            )
+            return
+        }
         val i = Intent(activity as MainActivity, EditAdsActivity::class.java)
         startActivity(i)
     }
@@ -135,7 +149,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
         val act = activity as MainActivity
         tempTime = "0"
         act.findViewById<View>(R.id.add).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.settings).visibility = View.GONE
+        //act.findViewById<View>(R.id.settings).visibility = View.GONE
         act.findViewById<View>(R.id.tb).visibility = View.GONE
         val toolbar =
             act.findViewById<Toolbar>(R.id.toolbar) // import androidx.appcompat.widget.Toolbar
@@ -250,6 +264,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
 
     override fun onDeleteItem(ad: Ad) {
+
         if (!isOnline(activity as MainActivity)) {
             createDialogInfo(
                 (activity as MainActivity).resources.getString(R.string.network_exception),
@@ -257,22 +272,67 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
             )
             return
         }
-        createDialogDeletePublic(
-            resources.getString(R.string.sure_delete_book_published),
-            activity as MainActivity,
-            ad,
-            firebaseViewModel,
-        )
+
+
+        deleteBookFromPublic(ad)
+
     }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun deleteBookFromPublic(ad: Ad){
+        val id = ad.idBookLocal!!.toLong()
+
+        mainViewModel.getBook(id, ad.key.toString()).observe(viewLifecycleOwner) {
+            if (it == null) {
+                if (flagDel == 0)
+                createDialogContinue(
+                    (activity as MainActivity).resources.getString(R.string.published_from_another_device),
+                    ad
+                )
+            } else {
+                createDialogDeletePublic(
+                    resources.getString(R.string.sure_delete_book_published),
+                    ad,
+                )
+            }
+        }
+    }
+
+    private fun createDialogContinue(
+        message: String,
+        ad: Ad
+    ) {
+        val builder = AlertDialog.Builder(activity as MainActivity)
+        val bindingDialog = ContinueDialogBinding.inflate((activity as MainActivity).layoutInflater)
+        val view = bindingDialog.root
+        builder.setView(view)
+        bindingDialog.tvMess.text = message
+        val dialog = builder.create()
+        bindingDialog.bNo.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+        bindingDialog.bContinue.setOnClickListener {
+            createDialogDeletePublic(
+                resources.getString(R.string.sure_delete_book_published),
+                ad,
+            )
+
+            dialog?.dismiss()
+        }
+        dialog.show()
+    }
+
 
     private fun createDialogDeletePublic(
         message: String,
-        activity: MainActivity,
+        //activity: MainActivity,
         ad: Ad,
-        firebaseViewModel: FirebaseViewModel,
+        //firebaseViewModel: FirebaseViewModel,
+        //mainViewModel: MainViewModel,
     ) {
-        val builder = AlertDialog.Builder(activity)
-        val bindingDialog = DeleteDialogBinding.inflate(activity.layoutInflater)
+        val builder = AlertDialog.Builder(activity as MainActivity)
+        val bindingDialog = DeleteDialogBinding.inflate((activity as MainActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -295,8 +355,22 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
             dialog?.dismiss()
         }
         bindingDialog.bDelete.setOnClickListener {
+            flagDel = 1
             firebaseViewModel.deleteItem(ad)
             dialog?.dismiss()
+
+
+            val id = ad.idBookLocal!!.toLong()
+            Log.d("MyLog", "key ${ad.key}")
+            mainViewModel.getBookByKeyFirebase(ad.key.toString()).observe(viewLifecycleOwner) {
+                val book = it
+                if (book != null) {
+                    //book.copy(public = "0")
+                    book.public = "0"
+                    book.uidAd = null
+                    mainViewModel.updateBook(book)
+                }
+            }
             initFirebaseViewModal()
         }
         dialog.show()
@@ -330,28 +404,6 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
         initFirebaseViewModal() // временная мера
     }
 
-
-    // при удалении книги из firebase, в локальной базе данных, указываем, что книга не опубликована
-    override fun onUpdateLocalBook(ad: Ad) {
-        if (!isOnline(activity as MainActivity)) {
-            createDialogInfo(
-                (activity as MainActivity).resources.getString(R.string.network_exception),
-                activity as MainActivity
-            )
-            return
-        }
-        val id = ad.idBookLocal!!.toLong()
-        Log.d("MyLog", "key ${ad.key}")
-        mainViewModel.getBook(id, ad.key.toString()).observe(viewLifecycleOwner) {
-            val book = it
-            if (book != null) {
-                //book.copy(public = "0")
-                book.public = "0"
-                book.uidAd = null
-                mainViewModel.updateBook(book)
-            }
-        }
-    }
 
     override fun onClickEdit(ad: Ad) {
         if (!isOnline(activity as MainActivity)) {
@@ -429,7 +481,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     companion object {
 
         const val AD_KEY = "AD"
-
+        var flagDel = 0
         @JvmStatic
         fun newInstance() = AllAdsFragment()
     }

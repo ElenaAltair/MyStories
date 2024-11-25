@@ -17,6 +17,7 @@ data class Ad(
     val image3: String = "empty",
 
     val loginOwner: String? = null,
+    val nameOwner: String? = null,
     val uidOwner: String? = null,
 
     val time: String = "0",

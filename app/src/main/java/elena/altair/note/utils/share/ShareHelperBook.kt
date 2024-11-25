@@ -3,10 +3,10 @@ package elena.altair.note.utils.share
 import android.content.Context
 import android.content.Intent
 import elena.altair.note.R
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 
 object ShareHelperBook {
-    fun shareBook(book: BookEntity4, listName: String, context: Context): Intent {
+    fun shareBook(book: BookEntity7, listName: String, context: Context): Intent {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plane"
         intent.apply {
@@ -15,11 +15,13 @@ object ShareHelperBook {
         return intent
     }
 
-    fun makeShareTextBook(book: BookEntity4, listName: String, context: Context): String {
+    fun makeShareTextBook(book: BookEntity7, listName: String, context: Context): String {
         val sBuilder = StringBuilder()
         sBuilder.append("${context.getString(R.string.book_title)} $listName")
         sBuilder.append("\n")
 
+        sBuilder.append("\n${context.getString(R.string.author)} \n ${book.nameAuthor} ")
+        sBuilder.append("\n")
         sBuilder.append("\n${context.getString(R.string.kind_literature)} \n ${book.kindLiterature} ")
         sBuilder.append("\n")
         sBuilder.append("\n${context.getString(R.string.genres_literature)} \n ${book.genreLiterature} ")

@@ -2,19 +2,20 @@ package elena.altair.note.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.etities.LocationEntity2
 import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.etities.PlotEntity2
+import elena.altair.note.etities.ProfileEntity2
 import elena.altair.note.etities.TermEntity2
 import elena.altair.note.etities.ThemeEntity2
 
 
 @Database(
     entities = [
-        BookEntity4::class,
+        BookEntity7::class,
         ChapterEntity2::class,
         PlotEntity2::class,
         ThemeEntity2::class,
@@ -22,6 +23,7 @@ import elena.altair.note.etities.ThemeEntity2
         LocationEntity2::class,
         PeopleEntity2::class,
         TermEntity2::class,
+        ProfileEntity2::class,
     ], version = 1 //, exportSchema = true
 ) //, autoMigrations = [AutoMigration(from = 1, to = 2)]
 abstract class MainDataBase : RoomDatabase() {

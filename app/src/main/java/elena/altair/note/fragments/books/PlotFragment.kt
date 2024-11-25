@@ -21,7 +21,7 @@ import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.dialogSavePlot
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.PlotEntity2
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
 import elena.altair.note.utils.file.PDFUtils.savePdf
@@ -40,7 +40,7 @@ class PlotFragment : BaseFragment(), BackPressed {
 
     private lateinit var binding: FragmentPlotBinding
     private var pref: SharedPreferences? = null
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private var plot: PlotEntity2? = null
     private val mainViewModel: MainViewModel by activityViewModels()
     private val STORAGE_CODE: Int = 100
@@ -98,6 +98,7 @@ class PlotFragment : BaseFragment(), BackPressed {
             val string = makeShareText(
                 createNewPlot(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 activity as MainActivity
             )
 
@@ -140,6 +141,7 @@ class PlotFragment : BaseFragment(), BackPressed {
             val string = makeShareText(
                 createNewPlot(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 activity as MainActivity
             )
             var titleTemp = book?.titleBook.toString()
@@ -178,6 +180,7 @@ class PlotFragment : BaseFragment(), BackPressed {
             val string = makeShareText(
                 createNewPlot(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 activity as MainActivity
             )
             var titleTemp = book?.titleBook.toString()
@@ -201,6 +204,7 @@ class PlotFragment : BaseFragment(), BackPressed {
                 ShareHelperPlot.sharePlot(
                     createNewPlot(),
                     book?.titleBook.toString(),
+                    book?.nameAuthor.toString(),
                     activity as AppCompatActivity
                 ),
                 "Share by"
@@ -240,6 +244,7 @@ class PlotFragment : BaseFragment(), BackPressed {
                     val string = makeShareText(
                         createNewPlot(),
                         book?.titleBook.toString(),
+                        book?.nameAuthor.toString(),
                         activity as MainActivity
                     )
                     var titleTemp = book?.titleBook.toString()

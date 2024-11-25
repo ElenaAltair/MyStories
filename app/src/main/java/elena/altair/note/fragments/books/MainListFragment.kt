@@ -27,7 +27,7 @@ import elena.altair.note.activities.books.NewBookActivity
 import elena.altair.note.adapters.books.BookAdapter
 import elena.altair.note.databinding.FragmentMainListBinding
 import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.viewmodel.MainViewModel
@@ -152,11 +152,11 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
                         mainViewModel.updateBook(
                             it.data?.getSerializableExtra(
                                 NEW_NOTE_KEY,
-                                BookEntity4::class.java
+                                BookEntity7::class.java
                             )!!
                         )
                     } else {
-                        mainViewModel.updateBook(it.data?.getSerializableExtra(NEW_NOTE_KEY) as BookEntity4)
+                        mainViewModel.updateBook(it.data?.getSerializableExtra(NEW_NOTE_KEY) as BookEntity7)
                     }
                 } else {
                     //Log.d("MyLog", "title: ${it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem}")
@@ -167,11 +167,11 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
                         mainViewModel.insertBook(
                             it.data?.getSerializableExtra(
                                 NEW_NOTE_KEY,
-                                BookEntity4::class.java
+                                BookEntity7::class.java
                             )!!
                         )
                     } else {
-                        mainViewModel.insertBook(it.data?.getSerializableExtra(NEW_NOTE_KEY) as BookEntity4)
+                        mainViewModel.insertBook(it.data?.getSerializableExtra(NEW_NOTE_KEY) as BookEntity7)
                     }
                 }
 
@@ -180,7 +180,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
         }
     }
 
-    override fun editItem(book: BookEntity4) { // нажали на маленькую кнопку редакировать заголовок книги
+    override fun editItem(book: BookEntity7) { // нажали на маленькую кнопку редакировать заголовок книги
 
 
         val intent = Intent(activity, NewBookActivity::class.java).apply {
@@ -201,7 +201,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
 
     // нажали на элемент списка (на какую-нибудь книгу)
     // открывается фрагмент с меню для новой книги
-    override fun onClickItem(book: BookEntity4) {
+    override fun onClickItem(book: BookEntity7) {
         mainViewModel.bookTr.value = book
         FragmentManager.setFragment(
             ChapterListFragment.newInstance(),
@@ -211,7 +211,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
 
     // нажали на маленьку кнопку edit_in
     // открывается фрагмент с меню для новой книги
-    override fun editInItem(book: BookEntity4) {
+    override fun editInItem(book: BookEntity7) {
         mainViewModel.bookTr.value = book
         FragmentManager.setFragment(
             ChapterListFragment.newInstance(),

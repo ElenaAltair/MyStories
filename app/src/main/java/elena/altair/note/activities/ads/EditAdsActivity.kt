@@ -1,5 +1,6 @@
 package elena.altair.note.activities.ads
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.net.Uri
@@ -26,7 +27,7 @@ import elena.altair.note.adapters.ads.EditAdsActivityImageAdapter
 import elena.altair.note.databinding.ActivityEditAdsBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSpinnerHelper
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.fragments.ads.FragmentCloseInterface
 import elena.altair.note.fragments.ads.ImageListFragment
@@ -58,9 +59,9 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
     var editImagePos = 0
     private var ad: Ad? = null
     private val mainViewModel: MainViewModel by viewModels()
-    private var listBooks = ArrayList<BookEntity4>()
+    private var listBooks = ArrayList<BookEntity7>()
     private var listChapters = ArrayList<ChapterEntity2>()
-    private var selectBook: BookEntity4? = null
+    private var selectBook: BookEntity7? = null
 
     private var key: String? = null
 
@@ -103,6 +104,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
                     binding.edDescription.text =
                         HtmlManager.getFromHtml(selectBook?.shotDescribe).trim()
                     initRecycleViewChapter()
+                    binding.tvAlias.text = selectBook?.nameAuthor.toString().trim()
                 }
             }
 
@@ -142,7 +144,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
             }
 
             if (ad != null) {
-                ad!!.idBookLocal?.let { getBookById(it.toLong(), ad!!.key) }
+                ad!!.idBookLocal?.let { getBookByKeyFirebase(ad!!.key) }
                 key = ad!!.key
 
             }
@@ -155,7 +157,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
     }
 
     //Заполнение View при редактировании
-    private fun fillViews(ad: Ad, book: BookEntity4?) = with(binding) {
+    private fun fillViews(ad: Ad, book: BookEntity7?) = with(binding) {
         editTel.setText(ad.tel)
         editEmail.setText(ad.email)
 
@@ -163,18 +165,21 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         var categoryLiter: String? = null
         var categoryAge: String? = null
         var description: String? = null
+        var name: String? = null
         //Log.d("MyLog", "selectBook $book")
         if (book != null) {
             title = "${ad.idBookLocal}/ ${book.titleBook}"
             categoryLiter = book.genreLiterature
             categoryAge = book.ageCat
             description = HtmlManager.getFromHtml(book.shotDescribe).toString().trim()
+            name = book.nameAuthor
         } else {
             btPublish.visibility = View.GONE
             mess.visibility = View.VISIBLE
         }
         tvLiter.text = categoryLiter ?: ad.categoryLiter
         tvAge.text = categoryAge ?: ad.categoryAge
+        tvAlias.text = name ?: ad.nameOwner
         edTitle.text = title ?: ad.titleBook
 
         edTitle.visibility = View.GONE
@@ -226,8 +231,10 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         })
     }
 
-    private fun getBookById(id: Long, uidAd: String?) {
-        mainViewModel.getBook(id, uidAd).observe(this, Observer {
+    @SuppressLint("SuspiciousIndentation")
+    private fun getBookByKeyFirebase(key: String?) {
+        if(key != null)
+        mainViewModel.getBookByKeyFirebase(key).observe(this, Observer {
             selectBook = it
             //Log.d("MyLog", "it $it")
             fillViews(ad!!, it)
@@ -263,22 +270,27 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
 
     // найдем id выбранной книги, если она новая
     private fun getIdSelectBook(): String? {
+        //Log.d("MyLog", "binding.edTitle.text ${binding.edTitle.text.toString()}")
         if (binding.edTitle.text.isNotEmpty()) {
             val str = binding.edTitle.text.toString()
             val k = str.indexOf("/")
+            //Log.d("MyLog", "str.substring(0, k) ${str.substring(0, k)}")
             return str.substring(0, k)
         }
         return null
     }
 
     // получим BookEntity выбранной книги, если она публикуется в первый раз
-    private fun getSelectedBook(id: String?): BookEntity4? {
+    private fun getSelectedBook(id: String?): BookEntity7? {
 
         if (!id.isNullOrEmpty()) {
+            //Log.d("MyLog", "listBooks $listBooks")
             for (item in listBooks.indices) {
-                if (listBooks[item].id == id.toLong())
+                if (listBooks[item].id == id.toLong()) {
                     selectBook = listBooks[item]
-                return selectBook
+                    //Log.d("MyLog", "selectBook $selectBook")
+                    return selectBook
+                }
             }
         }
         return null
@@ -426,6 +438,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
                 ad?.image2 ?: "empty",
                 ad?.image3 ?: "empty",
                 ad?.loginOwner ?: dbManager.auth.currentUser?.email,
+                tvAlias.text.toString(),
                 ad?.uidOwner ?: dbManager.auth.uid,
                 //ad?.time ?: System.currentTimeMillis().toString(),
                 time,
@@ -489,6 +502,8 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         tvLiter.setTextSize(defPref.getString("content_size_key", "18"))
         tvAge.setTextSize(defPref.getString("content_size_key", "18"))
         edTitle.setTextSize(defPref.getString("content_size_key", "18"))
+        edTitle2.setTextSize(defPref.getString("content_size_key", "18"))
+        tvAlias.setTextSize(defPref.getString("content_size_key", "18"))
         edDescription.setTextSize(defPref.getString("content_size_key", "18"))
 
         tvTitleTel.setTextSize(defPref.getString("comments_size_key", "16"))
@@ -496,6 +511,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         tvLiterCat.setTextSize(defPref.getString("comments_size_key", "16"))
         tvAgeCat.setTextSize(defPref.getString("comments_size_key", "16"))
         tvTitle.setTextSize(defPref.getString("comments_size_key", "16"))
+        tvAliasCat.setTextSize(defPref.getString("comments_size_key", "16"))
         tvTitleDescription.setTextSize(defPref.getString("comments_size_key", "16"))
 
         tvListChapters.setTextSize(defPref.getString("comments_size_key", "16"))
@@ -524,6 +540,14 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
             this@EditAdsActivity
         )
         edTitle.setTypeface(
+            defPref.getString("font_family_content_key", "sans-serif"),
+            this@EditAdsActivity
+        )
+        edTitle2.setTypeface(
+            defPref.getString("font_family_content_key", "sans-serif"),
+            this@EditAdsActivity
+        )
+        tvAlias.setTypeface(
             defPref.getString("font_family_content_key", "sans-serif"),
             this@EditAdsActivity
         )
@@ -557,6 +581,10 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
             this@EditAdsActivity
         )
         tvTitleEmail.setTypeface(
+            defPref.getString("font_family_comment_key", "sans-serif"),
+            this@EditAdsActivity
+        )
+        tvAliasCat.setTypeface(
             defPref.getString("font_family_comment_key", "sans-serif"),
             this@EditAdsActivity
         )
@@ -594,7 +622,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         mainViewModel.updateChapter(chapter)
     }
 
-    private fun updatePublicBook(book: BookEntity4, key: String?) {
+    private fun updatePublicBook(book: BookEntity7, key: String?) {
         Log.d("MyLog", "ad!!.key.toString() $key")
         //book.copy(public = "1")
         book.public = "1"

@@ -22,17 +22,23 @@
         tools:replace="android:theme"
         tools:targetApi="31">
         <activity
-            android:name=".activities.ads.ReadChapterActivity"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:name=".activities.books.ProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
+            android:theme="@style/Base.Theme.BlueWithActionBar"
             android:exported="true" />
         <activity
-            android:name=".activities.ads.DescriptionActivity"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:name=".activities.ads.ReadChapterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activities.ads.DescriptionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
+            android:exported="true"
+            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".settings.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"

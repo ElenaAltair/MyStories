@@ -2,6 +2,7 @@ package elena.altair.note.activities.books
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -19,18 +20,27 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
+import elena.altair.note.activities.MainActivity
+import elena.altair.note.activities.MainActivity.Companion
+import elena.altair.note.activities.MainActivity.Companion.USER_ANONYMOUS
 import elena.altair.note.databinding.ActivityNewBookBinding
+import elena.altair.note.databinding.ContinueDialogBinding
+import elena.altair.note.databinding.CreateDialogBinding
 import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveBook
 import elena.altair.note.dialoghelper.DialogSpinnerHelper
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
+import elena.altair.note.etities.ProfileEntity2
 import elena.altair.note.fragments.books.MainListFragment
+import elena.altair.note.model.Ad
+import elena.altair.note.model.DbManager
 import elena.altair.note.utils.LiterKindHelper
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
 import elena.altair.note.utils.file.ExtDocx.extractDocx
@@ -67,15 +77,17 @@ class NewBookActivity : AppCompatActivity() {
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: ActivityNewBookBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private val mainViewModel: MainViewModel by viewModels()
     private var currentUser = ""
     private val dialog = DialogSpinnerHelper()
     private val STORAGE_CODE: Int = 100
     private val DSQLITE_MAX_LENGTH = 2000
     private var job: Job? = null
-    private var oldBook: BookEntity4? = null
-    private var newBook: BookEntity4? = null
+    private var oldBook: BookEntity7? = null
+    private var newBook: BookEntity7? = null
+    private val dbManager = DbManager()
+    private var profile: ProfileEntity2? = null
     //private val mainViewModel: MainViewModel by viewModels {
     //MainViewModel.MainViewModalFactory((this.applicationContext as MainApp).database)
     //}
@@ -94,7 +106,7 @@ class NewBookActivity : AppCompatActivity() {
         actionBarSetting()
 
         getBook()
-
+        observer()
         init()
         // зададим настройки текста
         setTextSize()
@@ -131,8 +143,9 @@ class NewBookActivity : AppCompatActivity() {
     fun onClickSelectKindLiter(view: View) {
         // список родов литературы
         //val listKindLiter = LiterKindHelper.getAllKindLiter(this)
-        val listKindLiter = resources.getStringArray(R.array.kinds_of_literature).toMutableList() as ArrayList
-            dialog.showSpinnerDialog(this, listKindLiter, binding.edCatLiter1)
+        val listKindLiter =
+            resources.getStringArray(R.array.kinds_of_literature).toMutableList() as ArrayList
+        dialog.showSpinnerDialog(this, listKindLiter, binding.edCatLiter1)
         if (binding.edCatLiter2.text.toString() != resources.getString(R.string.select_genre_liter) ||
             binding.edCatLiter2.text.toString() == resources.getString(R.string.all_genres)
         ) {
@@ -140,20 +153,82 @@ class NewBookActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun observer() {
+        mainViewModel.getProfile(dbManager.auth.currentUser?.email.toString())
+            .observe(this, Observer {
+                if (it != null) {
+                    profile = it
+                }
+            })
+    }
+
+
+    fun onClickSelectAlias(view: View) {
+        if (MainActivity.currentUser == USER_ANONYMOUS || MainActivity.currentUser == "" || MainActivity.currentUser == "null") {
+            createDialogInfo(resources.getString(R.string.can_create_profile), this)
+            return
+        }
+
+        val list = ArrayList<String>()
+        if (profile != null) {
+            if(profile!!.nameAuthor1 != "")
+                list.add(profile!!.nameAuthor1)
+            if(profile!!.nameAuthor2 != "")
+                list.add(profile!!.nameAuthor2)
+            if(profile!!.nameAuthor3 != "")
+                list.add(profile!!.nameAuthor3)
+        }
+
+        if (list.isEmpty()) {
+            createDialogCreate(resources.getString(R.string.create_signature))
+        } else {
+            dialog.showSpinnerDialog(this, list, binding.edAlias)
+        }
+
+    }
+
+    private fun createDialogCreate(
+        message: String,
+    ) {
+        val builder = AlertDialog.Builder(this)
+        val bindingDialog = CreateDialogBinding.inflate(this.layoutInflater)
+        val view = bindingDialog.root
+        builder.setView(view)
+        bindingDialog.tvMess.text = message
+        val dialog = builder.create()
+        bindingDialog.bNo.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+        bindingDialog.bCreate.setOnClickListener {
+            val i = Intent(this, ProfileActivity::class.java)
+            startActivity(i)
+
+            dialog?.dismiss()
+        }
+        dialog.show()
+    }
+
     fun onClickSelectGenresLiter(view: View) {
         val selKindLiter = binding.edCatLiter1.text.toString()
         if (selKindLiter != resources.getString(R.string.select_kind_liter)) {
             // список жанров литературы
             //val listGenresLiter = LiterKindHelper.getGenresLiter(selKindLiter, this)
-            var listGenresLiter = resources.getStringArray(R.array.genres_of_literature).toMutableList() as ArrayList
-            if(selKindLiter == "Epic" || selKindLiter == "Эпос") {
-                listGenresLiter = resources.getStringArray(R.array.epic).toMutableList() as ArrayList
-            } else if(selKindLiter == "Lyrics" || selKindLiter == "Лирика") {
-                listGenresLiter = resources.getStringArray(R.array.lyrics).toMutableList() as ArrayList
-            } else if(selKindLiter == "Drama" || selKindLiter == "Драма") {
-                listGenresLiter = resources.getStringArray(R.array.drama).toMutableList() as ArrayList
-            } else if(selKindLiter == "Lyric-epic genres" || selKindLiter == "Лиро-эпические жанры") {
-                listGenresLiter = resources.getStringArray(R.array.lyric_epic).toMutableList() as ArrayList
+            var listGenresLiter =
+                resources.getStringArray(R.array.genres_of_literature).toMutableList() as ArrayList
+            if (selKindLiter == "Epic" || selKindLiter == "Эпос") {
+                listGenresLiter =
+                    resources.getStringArray(R.array.epic).toMutableList() as ArrayList
+            } else if (selKindLiter == "Lyrics" || selKindLiter == "Лирика") {
+                listGenresLiter =
+                    resources.getStringArray(R.array.lyrics).toMutableList() as ArrayList
+            } else if (selKindLiter == "Drama" || selKindLiter == "Драма") {
+                listGenresLiter =
+                    resources.getStringArray(R.array.drama).toMutableList() as ArrayList
+            } else if (selKindLiter == "Lyric-epic genres" || selKindLiter == "Лиро-эпические жанры") {
+                listGenresLiter =
+                    resources.getStringArray(R.array.lyric_epic).toMutableList() as ArrayList
             }
 
             dialog.showSpinnerDialog(this, listGenresLiter, binding.edCatLiter2)
@@ -182,14 +257,14 @@ class NewBookActivity : AppCompatActivity() {
         currentUser = intent.getStringExtra(MainListFragment.CURRENT_USER).toString()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             book =
-                intent.getSerializableExtra(MainListFragment.NEW_NOTE_KEY, BookEntity4::class.java)
+                intent.getSerializableExtra(MainListFragment.NEW_NOTE_KEY, BookEntity7::class.java)
 
             fillBook()
         } else {
             val sBook = intent.getSerializableExtra(MainListFragment.NEW_NOTE_KEY)
 
             if (sBook != null) {
-                book = sBook as BookEntity4
+                book = sBook as BookEntity7
                 fillBook()
             }
         }
@@ -376,6 +451,7 @@ class NewBookActivity : AppCompatActivity() {
             edCatLiter1.text = book?.kindLiterature
             edCatLiter2.text = book?.genreLiterature
             edCatAge.text = book?.ageCat
+            edAlias.text = book?.nameAuthor
         }
 
         oldBook = createNewBookForOldAndNew()
@@ -734,11 +810,12 @@ class NewBookActivity : AppCompatActivity() {
 
     }
 
-    private fun updateBook(): BookEntity4? = with(binding) {
+    private fun updateBook(): BookEntity7? = with(binding) {
 
         var typeLiter = edCatLiter1.text.toString()
         var genreLiter = edCatLiter2.text.toString()
         var ageCategory = edCatAge.text.toString()
+        var nameA = edAlias.text.toString()
         if (edCatLiter1.text.toString() == resources.getString(R.string.select_kind_liter)) {
             typeLiter = resources.getString(R.string.all_types)
         }
@@ -747,6 +824,16 @@ class NewBookActivity : AppCompatActivity() {
         }
         if (edCatAge.text.toString() == resources.getString(R.string.select_age_cat)) {
             ageCategory = "12+"
+        }
+        if (binding.edAlias.text.toString() == resources.getString(R.string.сhoose_alias)) {
+            val nameTemp = currentUser
+            if (MainActivity.currentUser == USER_ANONYMOUS || MainActivity.currentUser == "" || MainActivity.currentUser == "null") {
+                nameA = USER_ANONYMOUS
+            } else {
+                val k = nameTemp.indexOf("@")
+                //Log.d("MyLog", "str.substring(0, k) ${str.substring(0, k)}")
+                nameA = nameTemp.substring(0, k)
+            }
         }
 
         var text = HtmlManager.toHtml(binding.edDescription.text)
@@ -758,17 +845,19 @@ class NewBookActivity : AppCompatActivity() {
             shotDescribe = text,
             kindLiterature = typeLiter,
             genreLiterature = genreLiter,
-            ageCat = ageCategory
+            ageCat = ageCategory,
+            nameAuthor = nameA,
         )
 
     }
 
 
     // функция заполняющая наш BookEntity
-    private fun createNewBook(): BookEntity4 {
+    private fun createNewBook(): BookEntity7 {
         var typeLiter = binding.edCatLiter1.text.toString()
         var genreLiter = binding.edCatLiter2.text.toString()
         var ageCat = binding.edCatAge.text.toString()
+        var nameA = binding.edAlias.text.toString()
         if (binding.edCatLiter1.text.toString() == resources.getString(R.string.select_kind_liter)) {
             typeLiter = resources.getString(R.string.all_types)
         }
@@ -778,12 +867,22 @@ class NewBookActivity : AppCompatActivity() {
         if (binding.edCatAge.text.toString() == resources.getString(R.string.select_age_cat)) {
             ageCat = "12+"
         }
+        if (binding.edAlias.text.toString() == resources.getString(R.string.сhoose_alias)) {
+            val nameTemp = currentUser
+            if (MainActivity.currentUser == USER_ANONYMOUS || MainActivity.currentUser == "" || MainActivity.currentUser == "null") {
+                nameA = USER_ANONYMOUS
+            } else {
+                val k = nameTemp.indexOf("@")
+                //Log.d("MyLog", "str.substring(0, k) ${str.substring(0, k)}")
+                nameA = nameTemp.substring(0, k)
+            }
+        }
 
         var text = HtmlManager.toHtml(binding.edDescription.text)
         if (text.length > 35000)
             text = text.substring(0, 35000)
 
-        return BookEntity4(
+        return BookEntity7(
             null,
             binding.edTitle.text.toString(),
             text,
@@ -798,13 +897,15 @@ class NewBookActivity : AppCompatActivity() {
             "",
             0,
             null,
+            nameA,
         )
     }
 
-    private fun createNewBookForOldAndNew(): BookEntity4 {
+    private fun createNewBookForOldAndNew(): BookEntity7 {
         var typeLiter = binding.edCatLiter1.text.toString()
         var genreLiter = binding.edCatLiter2.text.toString()
         var ageCat = binding.edCatAge.text.toString()
+        var nameA = binding.edAlias.text.toString()
         if (binding.edCatLiter1.text.toString() == resources.getString(R.string.select_kind_liter)) {
             typeLiter = resources.getString(R.string.all_types)
         }
@@ -814,12 +915,22 @@ class NewBookActivity : AppCompatActivity() {
         if (binding.edCatAge.text.toString() == resources.getString(R.string.select_age_cat)) {
             ageCat = "12+"
         }
+        if (binding.edAlias.text.toString() == resources.getString(R.string.сhoose_alias)) {
+            val nameTemp = currentUser
+            if (MainActivity.currentUser == USER_ANONYMOUS || MainActivity.currentUser == "" || MainActivity.currentUser == "null") {
+                nameA = USER_ANONYMOUS
+            } else {
+                val k = nameTemp.indexOf("@")
+                //Log.d("MyLog", "str.substring(0, k) ${str.substring(0, k)}")
+                nameA = nameTemp.substring(0, k)
+            }
+        }
 
         var text = HtmlManager.toHtml(binding.edDescription.text)
         if (text.length > 35000)
             text = text.substring(0, 35000)
 
-        return BookEntity4(
+        return BookEntity7(
             null,
             binding.edTitle.text.toString(),
             text,
@@ -834,14 +945,18 @@ class NewBookActivity : AppCompatActivity() {
             "",
             0,
             null,
+            nameA,
         )
     }
 
     // функция заполняющая наш BookEntity
-    private fun createNewBookForShare(): BookEntity4 {
+    private fun createNewBookForShare(): BookEntity7 {
         var typeLiter = binding.edCatLiter1.text.toString()
         var genreLiter = binding.edCatLiter2.text.toString()
         var ageCat = binding.edCatAge.text.toString()
+        var nameA = binding.edAlias.text.toString()
+
+
         if (binding.edCatLiter1.text.toString() == resources.getString(R.string.select_kind_liter)) {
             typeLiter = resources.getString(R.string.all_types)
         }
@@ -852,7 +967,18 @@ class NewBookActivity : AppCompatActivity() {
             ageCat = "12+"
         }
 
-        return BookEntity4(
+        if (binding.edAlias.text.toString() == resources.getString(R.string.сhoose_alias)) {
+            val nameTemp = currentUser
+            if (MainActivity.currentUser == USER_ANONYMOUS || MainActivity.currentUser == "" || MainActivity.currentUser == "null") {
+                nameA = USER_ANONYMOUS
+            } else {
+                val k = nameTemp.indexOf("@")
+                //Log.d("MyLog", "str.substring(0, k) ${str.substring(0, k)}")
+                nameA = nameTemp.substring(0, k)
+            }
+        }
+
+        return BookEntity7(
             null,
             binding.edTitle.text.toString(),
             binding.edDescription.text.toString(),
@@ -867,6 +993,7 @@ class NewBookActivity : AppCompatActivity() {
             "",
             0,
             null,
+            nameA,
         )
     }
 
@@ -898,12 +1025,14 @@ class NewBookActivity : AppCompatActivity() {
         edCatLiter1.setTextSize(pref?.getString("content_size_key", "18"))
         edCatLiter2.setTextSize(pref?.getString("content_size_key", "18"))
         edCatAge.setTextSize(pref?.getString("content_size_key", "18"))
+        edAlias.setTextSize(pref?.getString("content_size_key", "18"))
 
         tw1.setTextSize(pref?.getString("comments_size_key", "16"))
         tw2.setTextSize(pref?.getString("comments_size_key", "16"))
         tw3.setTextSize(pref?.getString("comments_size_key", "16"))
         tw4.setTextSize(pref?.getString("comments_size_key", "16"))
         tw5.setTextSize(pref?.getString("comments_size_key", "16"))
+        tw6.setTextSize(pref?.getString("comments_size_key", "16"))
         textComm0.setTextSize(pref?.getString("comments_size_key", "16"))
         textComm1.setTextSize(pref?.getString("comments_size_key", "16"))
         textComm2.setTextSize(pref?.getString("comments_size_key", "16"))
@@ -926,6 +1055,10 @@ class NewBookActivity : AppCompatActivity() {
             this@NewBookActivity
         )
         edCatAge.setTypeface(
+            pref?.getString("font_family_content_key", "sans-serif"),
+            this@NewBookActivity
+        )
+        edAlias.setTypeface(
             pref?.getString("font_family_content_key", "sans-serif"),
             this@NewBookActivity
         )
@@ -952,6 +1085,10 @@ class NewBookActivity : AppCompatActivity() {
             this@NewBookActivity
         )
         tw5.setTypeface(
+            pref?.getString("font_family_comment_key", "sans-serif"),
+            this@NewBookActivity
+        )
+        tw6.setTypeface(
             pref?.getString("font_family_comment_key", "sans-serif"),
             this@NewBookActivity
         )

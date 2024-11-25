@@ -29,7 +29,7 @@ import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.utils.file.PdfTxtHeroListUtils.saveDocx
 import elena.altair.note.utils.file.PdfTxtHeroListUtils.savePdf
@@ -47,7 +47,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: FragmentHeroListBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private val STORAGE_CODE: Int = 100
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
 
@@ -118,7 +118,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                 job = CoroutineScope(Dispatchers.Main).launch {
                     val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                     val strMessage =
-                        saveDocx("book", list, activity as MainActivity)
+                        saveDocx(book?.titleBook ?: "book", book?.nameAuthor ?: "Author", list, activity as MainActivity)
                     dialog.dismiss()
                     createDialogInfo(strMessage, activity as MainActivity)
                 }
@@ -133,7 +133,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                         val strMessage =
-                            savePdf("book", list, activity as MainActivity)
+                            savePdf(book?.titleBook ?: "book",book?.nameAuthor ?: "Author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -151,7 +151,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                             val dialog =
                                 ProgressDialog.createProgressDialog(activity as MainActivity)
                             val strMessage =
-                                savePdf("book", list, activity as MainActivity)
+                                savePdf(book?.titleBook ?: "book",book?.nameAuthor ?: "Author", list, activity as MainActivity)
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -166,7 +166,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                         val strMessage =
-                            saveTxt("book", list, activity as MainActivity)
+                            saveTxt(book?.titleBook ?: "book",book?.nameAuthor ?: "Author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -183,7 +183,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                             val dialog =
                                 ProgressDialog.createProgressDialog(activity as MainActivity)
                             val strMessage =
-                                saveTxt("book", list, activity as MainActivity)
+                                saveTxt(book?.titleBook ?: "book",book?.nameAuthor ?: "Author", list, activity as MainActivity)
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -253,7 +253,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                 if (editState == "update") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         book =
-                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity4::class.java)
+                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity7::class.java)
                         mainViewModel.updateHero(
                             it.data?.getSerializableExtra(
                                 NEW_NOTE_KEY,
@@ -261,7 +261,7 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                             )!!
                         )
                     } else {
-                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity4
+                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity7
                         mainViewModel.updateHero(
                             it.data?.getSerializableExtra(NEW_NOTE_KEY) as HeroEntity2
                         )
@@ -273,12 +273,12 @@ class HeroListFragment : BaseFragment(), HeroAdapter.Listener, BackPressed {
                     // поэтому вам следует использовать блок if для устройств, использующих Android ниже 33.
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         book =
-                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity4::class.java)
+                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity7::class.java)
                         mainViewModel.insertHero(
                             it.data?.getSerializableExtra(NEW_NOTE_KEY, HeroEntity2::class.java)!!
                         )
                     } else {
-                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity4
+                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity7
                         mainViewModel.insertHero(
                             it.data?.getSerializableExtra(NEW_NOTE_KEY) as HeroEntity2
                         )

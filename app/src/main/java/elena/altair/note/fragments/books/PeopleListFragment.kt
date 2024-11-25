@@ -29,7 +29,7 @@ import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.utils.file.PdfTxtPeopleListUtils.saveDocx
 import elena.altair.note.utils.file.PdfTxtPeopleListUtils.savePdf
@@ -47,7 +47,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: FragmentPeopleListBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private val STORAGE_CODE: Int = 100
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
     private var job: Job? = null
@@ -108,10 +108,11 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
 
             binding.imDocx.setOnClickListener {
                 val list = adapter.currentList
+
                 job = CoroutineScope(Dispatchers.Main).launch {
                     val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                     val strMessage =
-                        saveDocx("book", list, activity as MainActivity)
+                        saveDocx(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                     dialog.dismiss()
                     createDialogInfo(strMessage, activity as MainActivity)
                 }
@@ -124,7 +125,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                         val strMessage =
-                            savePdf("book", list, activity as MainActivity)
+                            savePdf(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -142,7 +143,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                             val dialog =
                                 ProgressDialog.createProgressDialog(activity as MainActivity)
                             val strMessage =
-                                savePdf("book", list, activity as MainActivity)
+                                savePdf(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -157,7 +158,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                         val strMessage =
-                            saveTxt("book", list, activity as MainActivity)
+                            saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -174,7 +175,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                             val dialog =
                                 ProgressDialog.createProgressDialog(activity as MainActivity)
                             val strMessage =
-                                saveTxt("book", list, activity as MainActivity)
+                                saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -243,7 +244,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                 if (editState == "update") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         book =
-                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity4::class.java)
+                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity7::class.java)
                         mainViewModel.updatePeople(
                             it.data?.getSerializableExtra(
                                 NEW_NOTE_KEY,
@@ -251,7 +252,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                             )!!
                         )
                     } else {
-                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity4
+                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity7
                         mainViewModel.updatePeople(
                             it.data?.getSerializableExtra(NEW_NOTE_KEY) as PeopleEntity2
                         )
@@ -263,12 +264,12 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                     // поэтому вам следует использовать блок if для устройств, использующих Android ниже 33.
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         book =
-                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity4::class.java)
+                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity7::class.java)
                         mainViewModel.insertPeoples(
                             it.data?.getSerializableExtra(NEW_NOTE_KEY, PeopleEntity2::class.java)!!
                         )
                     } else {
-                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity4
+                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity7
                         mainViewModel.insertPeoples(
                             it.data?.getSerializableExtra(NEW_NOTE_KEY) as PeopleEntity2
                         )

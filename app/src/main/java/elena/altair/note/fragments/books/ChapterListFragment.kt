@@ -31,7 +31,7 @@ import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.utils.file.PdfTxtChapterListUtils.saveDocx
 import elena.altair.note.utils.file.PdfTxtChapterListUtils.savePdf
@@ -50,7 +50,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: FragmentChapterListBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
 
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
 
@@ -122,7 +122,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
                 job = CoroutineScope(Dispatchers.Main).launch {
                     val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                    val strMessage = saveDocx("book", list, activity as MainActivity)
+                    val strMessage = saveDocx(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                     dialog.dismiss()
                     createDialogInfo(strMessage, activity as MainActivity)
                 }
@@ -136,7 +136,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf("book", list, activity as MainActivity)
+                        val strMessage = savePdf(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -152,7 +152,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                         //permission already granted, call savePdf() method
                         job = CoroutineScope(Dispatchers.Main).launch {
                             val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                            val strMessage = savePdf("book", list, activity as MainActivity)
+                            val strMessage = savePdf(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -166,7 +166,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt("book", list, activity as MainActivity)
+                        val strMessage = saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -181,7 +181,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                         //permission already granted, call saveTxt() method
                         job = CoroutineScope(Dispatchers.Main).launch {
                             val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                            val strMessage = saveTxt("book", list, activity as MainActivity)
+                            val strMessage = saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -221,13 +221,13 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     //permission from popup was granted, call savePdf() method
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf("book", list, activity as MainActivity)
+                        val strMessage = savePdf("book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt("book", list, activity as MainActivity)
+                        val strMessage = saveTxt("book", book?.nameAuthor ?: "author", list, activity as MainActivity)
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -297,7 +297,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 if (editState == "update") {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         book =
-                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity4::class.java)
+                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity7::class.java)
                         mainViewModel.updateChapter(
                             it.data?.getSerializableExtra(
                                 NEW_NOTE_KEY,
@@ -305,7 +305,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                             )!!
                         )
                     } else {
-                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity4
+                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity7
                         mainViewModel.updateChapter(it.data?.getSerializableExtra(NEW_NOTE_KEY) as ChapterEntity2)
                     }
                 } else {
@@ -315,7 +315,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     // поэтому вам следует использовать блок if для устройств, использующих Android ниже 33.
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         book =
-                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity4::class.java)
+                            it.data?.getSerializableExtra(TITLE_BOOK_KEY, BookEntity7::class.java)
                         mainViewModel.insertChapter(
                             it.data?.getSerializableExtra(
                                 NEW_NOTE_KEY,
@@ -323,7 +323,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                             )!!
                         )
                     } else {
-                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity4
+                        book = it.data?.getSerializableExtra(TITLE_BOOK_KEY) as BookEntity7
                         mainViewModel.insertChapter(it.data?.getSerializableExtra(NEW_NOTE_KEY) as ChapterEntity2)
                     }
                 }

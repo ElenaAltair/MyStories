@@ -8,12 +8,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import elena.altair.note.db.MainDataBase
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.etities.LocationEntity2
 import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.etities.PlotEntity2
+import elena.altair.note.etities.ProfileEntity2
 import elena.altair.note.etities.TermEntity2
 import elena.altair.note.etities.ThemeEntity2
 import kotlinx.coroutines.launch
@@ -23,22 +24,26 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
     private val dao = database.getDao()
 
-    val bookTr = MutableLiveData<BookEntity4>()
+    val bookTr = MutableLiveData<BookEntity7>()
 
     // считаем список книг из базы данных
     //val allBooks: LiveData<List<BookEntity>> = dao.getAllBooks().asLiveData()
 
-    fun allBooks(login: String): LiveData<List<BookEntity4>> {
+    fun allBooks(login: String): LiveData<List<BookEntity7>> {
         return dao.getAllBooks(login).asLiveData()
     }
 
     // найдем все неопубликованные книги
-    fun allBooksNotPublic(login: String): LiveData<List<BookEntity4>> {
+    fun allBooksNotPublic(login: String): LiveData<List<BookEntity7>> {
         return dao.getAllBooksNotPublic(login).asLiveData()
     }
 
-    fun getBook(idBook: Long, uidAd: String?): LiveData<BookEntity4> {
-        return dao.getBook(idBook, uidAd).asLiveData()
+    fun getBook(idBook: Long, key: String?): LiveData<BookEntity7> {
+        return dao.getBook(idBook, key).asLiveData()
+    }
+
+    fun getBookByKeyFirebase (key: String?): LiveData<BookEntity7> {
+        return dao.getBookByKeyFirebase(key).asLiveData()
     }
 
     fun allChaptersById(idBook: Long): LiveData<List<ChapterEntity2>> {
@@ -78,13 +83,17 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
         return dao.getTheme(idBook).asLiveData()
     }
 
+    fun getProfile(login: String): LiveData<ProfileEntity2> {
+        return dao.getProfileByLogin(login).asLiveData()
+    }
+
 
 
     // добавление новой книги в базу данных
-    fun insertBook(book: BookEntity4) = viewModelScope.launch {
+    fun insertBook(book: BookEntity7) = viewModelScope.launch {
 
         dao.insertBook(
-            BookEntity4(
+            BookEntity7(
                 book.id,
                 book.titleBook,
                 book.shotDescribe,
@@ -99,6 +108,7 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
                 book.columnTemp1,
                 book.number,
                 book.uidAd,
+                book.nameAuthor,
             )
         )
 
@@ -241,8 +251,21 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
         )
     }
 
+
+    fun insertProfile(profile: ProfileEntity2) = viewModelScope.launch {
+        dao.insertProfile(
+            ProfileEntity2(
+                profile.id,
+                profile.loginAuthor,
+                profile.nameAuthor1,
+                profile.nameAuthor2,
+                profile.nameAuthor3,
+            )
+        )
+    }
+
     // обновление заголовка книги в базе данных
-    fun updateBook(book: BookEntity4) = viewModelScope.launch {
+    fun updateBook(book: BookEntity7) = viewModelScope.launch {
         dao.updateBook(book)
     }
 
@@ -269,6 +292,10 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
     // обновление термина в базе данных
     fun updateTerm(term: TermEntity2) = viewModelScope.launch {
         dao.updateTerm(term)
+    }
+
+    fun updateProfile(profile: ProfileEntity2) = viewModelScope.launch {
+        dao.updateProfile(profile)
     }
 
 

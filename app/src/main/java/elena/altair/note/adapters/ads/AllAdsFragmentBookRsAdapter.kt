@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import elena.altair.note.R
 import elena.altair.note.databinding.AdListItemBinding
+import elena.altair.note.fragments.ads.AllAdsFragment
 import elena.altair.note.model.Ad
 import elena.altair.note.utils.settings.TimeManager
 import java.text.SimpleDateFormat
@@ -86,7 +87,7 @@ class AllAdsFragmentBookRsAdapter(
             textDiscription.text = ad.description
             tvViewCounter.text = ad.viewsCounter
             tvFavCounter.text = ad.favCounter
-
+            textAlias.text = ad.nameOwner
 
             val timePublish = TimeManager.getTimeFormat(getTimeFromMillis(ad.time), null)
             time.text = timePublish
@@ -120,23 +121,12 @@ class AllAdsFragmentBookRsAdapter(
                 listener.onClickEdit(ad)
             }
             ibDeleteAd.setOnClickListener {
-                listener.onUpdateLocalBook(ad)
+                AllAdsFragment.flagDel = 0
+                //listener.onUpdateLocalBook(ad)
                 listener.onDeleteItem(ad)
             }
         }
-        /*
-        private fun onClickEdit(ad: Ad): View.OnClickListener {
-            return View.OnClickListener {
-                val editIntent = Intent(context, EditAdsActivity::class.java).apply {
-                    // true - открыли объявление для редактирования
-                    // false - создаём новое объявление
-                    putExtra(EDIT_STATE_AD, true)
-                    putExtra(ADS_DATA, ad)
-                }
-                context.startActivity(editIntent)
 
-            }
-        }*/
 
         private fun isOwner(ad: Ad): Boolean {
             return ad.uidOwner == auth.uid
@@ -154,7 +144,7 @@ class AllAdsFragmentBookRsAdapter(
         fun onDeleteItem(ad: Ad)
         fun onAdViewed(ad: Ad)
         fun onFavClicked(ad: Ad)
-        fun onUpdateLocalBook(ad: Ad)
+        //fun onUpdateLocalBook(ad: Ad)
         fun onClickEdit(ad: Ad)
     }
 

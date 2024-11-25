@@ -36,6 +36,10 @@
     <item android:title="@string/ad_cat2">
         <menu>
             <item
+                android:id="@+id/profile"
+                android:title="@string/profile"
+                />
+            <item
                 android:id="@+id/id_sign_up"
                 android:title="@string/ac_sign_up"
                 />

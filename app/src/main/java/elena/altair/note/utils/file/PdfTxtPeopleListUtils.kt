@@ -35,13 +35,19 @@ object PdfTxtPeopleListUtils {
 
     suspend fun savePdf(
         title: String,
+        nameA: String,
         list: List<PeopleEntity2>,
         activity: AppCompatActivity
     ): String {
         return withContext(Dispatchers.IO) {
             val mDoc = Document()
 
-            val mFileName = title + "_" + SimpleDateFormat(
+            var titleTemp = title
+            if (titleTemp.length > 10) {
+                titleTemp = titleTemp.substring(0, 10)
+            }
+
+            val mFileName = titleTemp + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
             ).format(System.currentTimeMillis()) + ".pdf"
@@ -107,6 +113,7 @@ object PdfTxtPeopleListUtils {
                         val string = makeShareText(
                             list[i],
                             title,
+                            nameA,
                             activity as MainActivity
                         )
                         mDoc.add(Paragraph(string, font))
@@ -133,12 +140,18 @@ object PdfTxtPeopleListUtils {
 
     suspend fun saveTxt(
         title: String,
+        nameA: String,
         list: List<PeopleEntity2>,
         activity: AppCompatActivity
     ): String {
         return withContext(Dispatchers.IO) {
 
-            val mFileName = title + "_" + SimpleDateFormat(
+            var titleTemp = title
+            if (titleTemp.length > 10) {
+                titleTemp = titleTemp.substring(0, 10)
+            }
+
+            val mFileName = titleTemp + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
             ).format(System.currentTimeMillis()) + ".txt"
@@ -151,6 +164,7 @@ object PdfTxtPeopleListUtils {
                         val string = makeShareText(
                             list[i],
                             title,
+                            nameA,
                             activity as MainActivity
                         )
                         stringB.append("$string \n\n")
@@ -231,12 +245,18 @@ object PdfTxtPeopleListUtils {
 
     suspend fun saveDocx(
         title: String,
+        nameA: String,
         list: List<PeopleEntity2>,
         activity: AppCompatActivity
     ): String {
         return withContext(Dispatchers.IO) {
 
-            val mFileName = title + "_" + SimpleDateFormat(
+            var titleTemp = title
+            if (titleTemp.length > 10) {
+                titleTemp = titleTemp.substring(0, 10)
+            }
+
+            val mFileName = titleTemp + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
             ).format(System.currentTimeMillis()) + ".docx"
@@ -253,6 +273,7 @@ object PdfTxtPeopleListUtils {
                         val string = makeShareText(
                             list[i],
                             title,
+                            nameA,
                             activity as MainActivity
                         )
                         stringB.append("$string \n\n")

@@ -6,18 +6,26 @@ import elena.altair.note.R
 import elena.altair.note.etities.ThemeEntity2
 
 object ShareHelperTheme {
-    fun shareTheme(theme: ThemeEntity2, listName: String, context: Context): Intent {
+    fun shareTheme(theme: ThemeEntity2, listName: String, nameA: String, context: Context): Intent {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plane"
         intent.apply {
-            putExtra(Intent.EXTRA_TEXT, makeShareText(theme, listName, context))
+            putExtra(Intent.EXTRA_TEXT, makeShareText(
+                theme,
+                listName,
+                nameA,
+                context
+            ))
         }
         return intent
     }
 
-    fun makeShareText(theme: ThemeEntity2, listName: String, context: Context): String {
+    fun makeShareText(theme: ThemeEntity2, listName: String, nameA: String, context: Context): String {
         val sBuilder = StringBuilder()
+
         sBuilder.append("${context.getString(R.string.book_title)} $listName")
+        sBuilder.append("\n")
+        sBuilder.append("${context.getString(R.string.author)} $nameA")
         sBuilder.append("\n")
         sBuilder.append("\n \n${context.getString(R.string.theme_edit_1)}\n")
         sBuilder.append("${theme.desc1} ")

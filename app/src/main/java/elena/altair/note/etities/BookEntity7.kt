@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "books")
-data class BookEntity4(
+data class BookEntity7(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
 
@@ -49,7 +49,10 @@ data class BookEntity4(
     @ColumnInfo(name = "uid_ad") // на тот случай, если пользователь решит создавать книги с разных устройств под одним аккаунтом
     var uidAd: String? = null,
 
+    @ColumnInfo(name = "name_author")
+    var nameAuthor: String = "",
+
 ) : Serializable{
     constructor():this(0L, "", "",0L,"","",
-        "", "", "12+", "0", 0L, "", 0, null)
+        "", "", "12+", "0", 0L, "", 0, null, "")
 }

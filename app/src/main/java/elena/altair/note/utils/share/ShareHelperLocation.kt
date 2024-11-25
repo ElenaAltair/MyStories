@@ -6,19 +6,24 @@ import elena.altair.note.R
 import elena.altair.note.etities.LocationEntity2
 
 object ShareHelperLocation {
-    fun shareLocation(location: LocationEntity2, listName: String, context: Context): Intent {
+    fun shareLocation(
+        location: LocationEntity2,
+        listName: String,
+        nameA: String,
+        context: Context
+    ): Intent {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plane"
         intent.apply {
-            putExtra(Intent.EXTRA_TEXT, makeShareText(location, listName, context))
+            putExtra(Intent.EXTRA_TEXT, makeShareText(location, listName, nameA, context))
         }
         return intent
     }
 
-    fun makeShareText(location: LocationEntity2, listName: String, context: Context): String {
+    fun makeShareText(location: LocationEntity2, listName: String, nameA: String, context: Context): String {
         val sBuilder = StringBuilder()
         sBuilder.append("${context.getString(R.string.book_title)} $listName")
-
+        sBuilder.append("\n${context.getString(R.string.author)} $nameA")
         sBuilder.append("\n \n${context.getString(R.string.location_title)}\n")
         sBuilder.append("${location.titleLocation} ")
         sBuilder.append("\n \n${context.getString(R.string.geography)}\n")

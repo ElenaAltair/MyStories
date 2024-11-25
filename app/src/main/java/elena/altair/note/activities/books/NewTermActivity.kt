@@ -28,7 +28,7 @@ import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveTerm
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.TermEntity2
 import elena.altair.note.fragments.books.TermListFragment
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
@@ -63,7 +63,7 @@ class NewTermActivity : AppCompatActivity() {
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: ActivityNewTermBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private var term: TermEntity2? = null
     private val mainViewModel: MainViewModel by viewModels()
     private val STORAGE_CODE: Int = 100
@@ -170,6 +170,7 @@ class NewTermActivity : AppCompatActivity() {
                 ShareHelperTerm.shareTerm(
                     createNewTermForShare(),
                     book?.titleBook.toString(),
+                    book?.nameAuthor.toString(),
                     this
                 ),
                 "Share by"
@@ -180,6 +181,7 @@ class NewTermActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewTermForShare(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
 
@@ -220,6 +222,7 @@ class NewTermActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewTermForShare(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = term?.titleTerm.toString()
@@ -256,6 +259,7 @@ class NewTermActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewTermForShare(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = term?.titleTerm.toString()
@@ -433,6 +437,7 @@ class NewTermActivity : AppCompatActivity() {
                     val string = makeShareText(
                         createNewTermForShare(),
                         book?.titleBook.toString(),
+                        book?.nameAuthor.toString(),
                         this
                     )
                     var titleTemp = term?.titleTerm.toString()
@@ -474,7 +479,7 @@ class NewTermActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             book = intent.getSerializableExtra(
                 TermListFragment.TITLE_BOOK_KEY,
-                BookEntity4::class.java
+                BookEntity7::class.java
             )
             term = intent.getSerializableExtra(
                 TermListFragment.NEW_NOTE_KEY,
@@ -486,7 +491,7 @@ class NewTermActivity : AppCompatActivity() {
             val sBook = intent.getSerializableExtra(TermListFragment.TITLE_BOOK_KEY)
             val sTerm = intent.getSerializableExtra(TermListFragment.NEW_NOTE_KEY)
 
-            book = sBook as BookEntity4
+            book = sBook as BookEntity7
             if (sTerm != null) {
                 term = sTerm as TermEntity2
                 fillTerm()

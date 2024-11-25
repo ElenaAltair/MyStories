@@ -23,10 +23,10 @@
                 android:id="@+id/bookName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/red_dark"
+                android:background="?attr/noteBg4Color"
+                android:ellipsize="end"
                 android:fontFamily="monospace"
                 android:maxLines="1"
-                android:ellipsize="end"
                 android:padding="10dp"
                 android:text="TextView"
                 android:textColor="@color/white"
@@ -56,13 +56,14 @@
                 android:id="@+id/chapterName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/picker_orange"
-                android:maxLines="2"
+                android:background="?attr/noteBg3Color"
                 android:ellipsize="end"
+                android:maxLines="2"
                 android:padding="5dp"
                 android:text="TextView"
-                android:textColor="@color/red_dark"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

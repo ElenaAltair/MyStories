@@ -30,7 +30,7 @@ import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveChapter
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.fragments.books.ChapterListFragment
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
@@ -68,7 +68,7 @@ class NewChapterActivity : AppCompatActivity() {
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private lateinit var binding: ActivityNewChapterBinding
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private var chapter: ChapterEntity2? = null
     private var public = "0"
     private val STORAGE_CODE: Int = 100
@@ -500,6 +500,7 @@ class NewChapterActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewChapterForShare(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = chapter?.titleChapters.toString()
@@ -543,6 +544,7 @@ class NewChapterActivity : AppCompatActivity() {
                 ShareHelperChapter.shareChapter(
                     createNewChapterForShare(),
                     book?.titleBook.toString(),
+                    book?.nameAuthor.toString(),
                     this
                 ),
                 "Share by"
@@ -555,6 +557,7 @@ class NewChapterActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewChapterForShare(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = chapter?.titleChapters.toString()
@@ -591,6 +594,7 @@ class NewChapterActivity : AppCompatActivity() {
             val string = makeShareText(
                 createNewChapterForShare(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 this
             )
             var titleTemp = chapter?.titleChapters.toString()
@@ -774,6 +778,7 @@ class NewChapterActivity : AppCompatActivity() {
                     val string = makeShareText(
                         createNewChapterForShare(),
                         book?.titleBook.toString(),
+                        book?.nameAuthor.toString(),
                         this
                     )
 
@@ -817,7 +822,7 @@ class NewChapterActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             book = intent.getSerializableExtra(
                 ChapterListFragment.TITLE_BOOK_KEY,
-                BookEntity4::class.java
+                BookEntity7::class.java
             )
             chapter = intent.getSerializableExtra(
                 ChapterListFragment.NEW_NOTE_KEY,
@@ -832,7 +837,7 @@ class NewChapterActivity : AppCompatActivity() {
             val sBook = intent.getSerializableExtra(ChapterListFragment.TITLE_BOOK_KEY)
             val sChapter = intent.getSerializableExtra(ChapterListFragment.NEW_NOTE_KEY)
 
-            book = sBook as BookEntity4
+            book = sBook as BookEntity7
             if (sChapter != null) {
                 chapter = sChapter as ChapterEntity2
                 public = chapter!!.public_

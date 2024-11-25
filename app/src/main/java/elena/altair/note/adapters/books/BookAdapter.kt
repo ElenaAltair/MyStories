@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.databinding.BookItemBinding
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.text.textRedactor.HtmlManager
 import elena.altair.note.utils.settings.TimeManager
@@ -19,7 +19,7 @@ class BookAdapter(
     private val listener: Listener,
     private val defPref: SharedPreferences,
     private val mainActivity: MainActivity
-) : ListAdapter<BookEntity4, BookAdapter.ItemHolder>(ItemComparator()) {
+) : ListAdapter<BookEntity7, BookAdapter.ItemHolder>(ItemComparator()) {
 
     // функция будет создавать для каждого элемента (для каждой заметки) из базы данных
     // свой ItemHolder, который в себе будет создавать разметку
@@ -38,7 +38,7 @@ class BookAdapter(
         private val binding = BookItemBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в book_item, беря данные из базы данных
-        fun setData(book: BookEntity4, listener: Listener, defPref: SharedPreferences) = with(binding){
+        fun setData(book: BookEntity7, listener: Listener, defPref: SharedPreferences) = with(binding){
             tvTitle.text = book.titleBook
             tvShotDescrip.text = HtmlManager.getFromHtml(book.shotDescribe).trim()
             tvTime.text = TimeManager.getTimeFormat(book.time, defPref)
@@ -82,24 +82,24 @@ class BookAdapter(
     }
 
     // класс сравнивающий элементы из старого списка и нового
-    class ItemComparator : DiffUtil.ItemCallback<BookEntity4>(){
+    class ItemComparator : DiffUtil.ItemCallback<BookEntity7>(){
 
         // функция сравнивающая, если отдельные элементы равны
-        override fun areItemsTheSame(oldItem: BookEntity4, newItem: BookEntity4): Boolean {
+        override fun areItemsTheSame(oldItem: BookEntity7, newItem: BookEntity7): Boolean {
             // будем сравнивать по id
             return oldItem.id == newItem.id
         }
 
         // функция сравнивающая весь контент внутри элемента
-        override fun areContentsTheSame(oldItem: BookEntity4, newItem: BookEntity4): Boolean {
+        override fun areContentsTheSame(oldItem: BookEntity7, newItem: BookEntity7): Boolean {
             return oldItem == newItem
         }
     }
 
     interface Listener {
-        fun editItem(book: BookEntity4)
+        fun editItem(book: BookEntity7)
         fun deleteItem(id: Long)
-        fun onClickItem(book: BookEntity4)
-        fun editInItem(book: BookEntity4)
+        fun onClickItem(book: BookEntity7)
+        fun editInItem(book: BookEntity7)
     }
 }

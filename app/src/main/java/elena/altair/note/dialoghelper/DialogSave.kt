@@ -8,7 +8,7 @@ import elena.altair.note.R
 import elena.altair.note.databinding.SaveDialogBinding
 import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.etities.LocationEntity2
@@ -24,7 +24,7 @@ object DialogSave {
         activity: AppCompatActivity,
         new: Boolean,
         mainViewModel: MainViewModel,
-        tempBook: BookEntity4
+        tempBook: BookEntity7
     ) {
         val builder = AlertDialog.Builder(activity)
         val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)

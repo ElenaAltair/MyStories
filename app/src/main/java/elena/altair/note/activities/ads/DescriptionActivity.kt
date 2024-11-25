@@ -1,5 +1,6 @@
 package elena.altair.note.activities.ads
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -24,6 +26,8 @@ import elena.altair.note.model.ChapterPublic
 import elena.altair.note.utils.font.TypefaceUtils.setTitleActionBar
 import elena.altair.note.utils.font.TypefaceUtils.typeface
 import elena.altair.note.utils.font.setTypeface
+import elena.altair.note.utils.ViewExpandCollapse.collapse
+import elena.altair.note.utils.ViewExpandCollapse.expand
 import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme2
 import elena.altair.note.viewmodel.FirebaseViewModel
 
@@ -36,7 +40,9 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
     private val firebaseViewModel: FirebaseViewModel by viewModels()
     private var listChaptersPublic = ArrayList<ChapterPublic>()
     private var ad: Ad? = null
+    private var isCollapsed = true
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -52,9 +58,37 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
 
         // активируем стрелку на верхнем меню
         actionBarSetting()
+        binding.apply {
+            ibMail.setOnClickListener { sendEmail() }
 
-        binding.ibMail.setOnClickListener { sendEmail() }
+           desciption.collapse(300)
+
+
+            ibExpander.setOnClickListener {
+                if(!isCollapsed) {
+                    desciption.collapse(300)
+                    desciption5.expand(300)
+                    isCollapsed = true
+                    ibExpander.setBackgroundResource(R.drawable.ic_expand_more)
+
+                } else {
+                    desciption5.collapse(300)
+                    desciption.expand(300)
+                    isCollapsed = false
+                    ibExpander.setBackgroundResource(R.drawable.ic_expand_less)
+
+                }
+
+            }
+        }
     }
+
+
+
+
+
+
+
 
     // активируем стрелку на верхнем меню
     private fun actionBarSetting() {
@@ -144,6 +178,8 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
         literCat.text = ad.categoryLiter.toString()
         email.text = ad.email
         desciption.text = ad.description
+        desciption5.text = ad.description
+        alias.text = ad.nameOwner
     }
 
 
@@ -181,6 +217,10 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
             this@DescriptionActivity
         )
         email.setTypeface(
+            defPref.getString("font_family_content_key", "sans-serif"),
+            this@DescriptionActivity
+        )
+        alias.setTypeface(
             defPref.getString("font_family_content_key", "sans-serif"),
             this@DescriptionActivity
         )

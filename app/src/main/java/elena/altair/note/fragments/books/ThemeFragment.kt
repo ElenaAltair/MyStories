@@ -22,7 +22,7 @@ import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveTheme
 import elena.altair.note.dialoghelper.ProgressDialog
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ThemeEntity2
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
 import elena.altair.note.utils.file.PDFUtils.savePdf
@@ -42,7 +42,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
 
     private lateinit var binding: FragmentThemeBinding
     private var pref: SharedPreferences? = null
-    private var book: BookEntity4? = null
+    private var book: BookEntity7? = null
     private var theme: ThemeEntity2? = null
     private val mainViewModel: MainViewModel by activityViewModels()
     private val STORAGE_CODE: Int = 100
@@ -54,8 +54,6 @@ class ThemeFragment : BaseFragment(), BackPressed {
     //private val mainViewModel: MainViewModel by activityViewModels {
     //MainViewModel.MainViewModalFactory((context?.applicationContext as MainApp).database)
     //}
-
-    var alertDialog: AlertDialog? = null
 
     override fun onClickNew() {
         saveTheme = 1
@@ -95,6 +93,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
             val string = makeShareText(
                 createNewTheme(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 activity as MainActivity
             )
             var titleTemp = book?.titleBook.toString()
@@ -135,6 +134,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
             val string = makeShareText(
                 createNewTheme(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 activity as MainActivity
             )
             var titleTemp = book?.titleBook.toString()
@@ -177,6 +177,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
                 ShareHelperTheme.shareTheme(
                     createNewTheme(),
                     book?.titleBook.toString(),
+                    book?.nameAuthor.toString(),
                     activity as AppCompatActivity
                 ),
                 "Share by"
@@ -197,6 +198,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
             val string = makeShareText(
                 createNewTheme(),
                 book?.titleBook.toString(),
+                book?.nameAuthor.toString(),
                 activity as MainActivity
             )
             var titleTemp = book?.titleBook.toString()
@@ -237,6 +239,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
                     val string = makeShareText(
                         createNewTheme(),
                         book?.titleBook.toString(),
+                        book?.nameAuthor.toString(),
                         activity as MainActivity
                     )
                     var titleTemp = book?.titleBook.toString()

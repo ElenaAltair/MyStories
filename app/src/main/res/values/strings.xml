@@ -309,4 +309,20 @@
     <string name="corr">Published:</string>
     <string name="edit_publish">To publish a book, all fields must be filled in! 1. Go back to the application section where you created your book and fill in all the fields: book title, type of literature, genre of literature, short description. (Later, if you want to change these fields in a published book, also first make changes in the section where you are creating a book, then select this book from the published ones, click the "Edit" button, and in the window that opens, click the "Publish" button.) 2. Open at least one chapter for publication. 3. Do not forget to specify the email address.</string>
     <string name="selection_section_empty">If the book selection section is empty, it means that you do not have unpublished books, i.e. all books created on this device have been published, or you have not created any books yet.</string>
+    <string name="only_registered_users">Only registered users can publish their books.</string>
+    <string name="published_from_another_device">This book was created and published from another device. If you now remove it from the published ones from this device, then you will not be able to publish it again from the device from which you originally published it.</string>
+    <string name="continue_">Continue</string>
+    <string name="profile">Profile</string>
+    <string name="account">Account</string>
+    <string name="name_author">Name of the author</string>
+    <string name="name_author1">Name of the author 1</string>
+    <string name="name_author2">Name of the author 2</string>
+    <string name="name_author3">Name of the author 3</string>
+    <string name="choose_several_names">You can choose several names for yourself so that later, if necessary, you can sign different books with different names. Keep track of the uniqueness of the name yourself.</string>
+    <string name="can_create_profile">Only registered users can create a profile.</string>
+    <string name="сhoose_alias">Choose an alias:</string>
+    <string name="create_signature">You haven not created more than one signature for the author yet. Create a signature?</string>
+    <string name="create">Create</string>
+    <string name="nameless">Nameless</string>
+    <string name="author">Author:</string>
 </resources>

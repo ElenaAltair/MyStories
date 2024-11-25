@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.accounthelper.AccountHelper
 import elena.altair.note.activities.ads.EditAdsActivity
+import elena.altair.note.activities.books.ProfileActivity
 import elena.altair.note.databinding.ActivityMainBinding
 import elena.altair.note.databinding.HelpDialogBinding
 import elena.altair.note.dialoghelper.DialogConst
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var currentTheme = ""
     private val dialogHelper = DialogHelper(this)
     var backPressedTime: Long = 0
-    private var USER_ANONYMOUS = "Anonymous"
+
     //private val firebaseViewModel: FirebaseViewModel by viewModels()
 
     // обработаем нажатие на кнопку назад во фрагментах сюжета и темы
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             tvAccount.text = resources.getString(R.string.guest)
         }
         if (currentUser == "" || currentUser == "null") {
-
+            binding.navView.menu.findItem(R.id.profile).isVisible = false
             binding.navView.menu.findItem(R.id.id_my_books).isVisible = false
             binding.navView.menu.findItem(R.id.id_sign_in).isVisible = true
             binding.navView.menu.findItem(R.id.id_sign_up).isVisible = true
@@ -123,6 +124,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (currentUser == USER_ANONYMOUS && mAuth.currentUser?.isAnonymous == true) {
+            binding.navView.menu.findItem(R.id.profile).isVisible = false
             binding.navView.menu.findItem(R.id.id_my_ads).isVisible = false
             binding.navView.menu.findItem(R.id.id_my_new_ads).isVisible = false
             binding.navView.menu.findItem(R.id.id_other_ads).isVisible = true
@@ -131,6 +133,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             binding.navView.menu.findItem(R.id.id_sign_up).isVisible = true
             binding.navView.menu.findItem(R.id.id_sign_out).isVisible = false
         } else if (currentUser == USER_ANONYMOUS && mAuth.currentUser?.isAnonymous == null) {
+            binding.navView.menu.findItem(R.id.profile).isVisible = false
             binding.navView.menu.findItem(R.id.id_my_ads).isVisible = false
             binding.navView.menu.findItem(R.id.id_my_new_ads).isVisible = false
             binding.navView.menu.findItem(R.id.id_other_ads).isVisible = false
@@ -149,6 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             binding.navView.menu.findItem(R.id.id_my_new_ads).isVisible = true
             binding.navView.menu.findItem(R.id.id_other_ads).isVisible = true
             binding.navView.menu.findItem(R.id.id_favourites).isVisible = true
+            binding.navView.menu.findItem(R.id.profile).isVisible = true
         }
 
         //Log.d("MyLog", "currentUser $currentUser")
@@ -348,9 +352,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (currentUser != USER_ANONYMOUS)
                         currentUser = mAuth.currentUser?.email.toString()
                     if (currentUser == "" || currentUser == "null") {
-                        createDialog(resources.getString(R.string.ad_continue))
+                        createDialog(resources.getString(R.string.only_registered_users))
                     } else {
-
                         currentFlag?.onClickNew()
                     }
                 }
@@ -394,8 +397,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.id_my_ads -> {
-                if (mAuth.currentUser == null) {
-                    createDialog(resources.getString(R.string.ad_continue))
+                if (mAuth.currentUser == null && currentUser != USER_ANONYMOUS) {
+                    createDialog(resources.getString(R.string.only_registered_users))
                 } else {
                     catPublic = 1
                     FragmentManager.setFragment(AllAdsFragment.newInstance(), this)
@@ -403,10 +406,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.id_my_new_ads -> {
-                if (mAuth.currentUser == null) {
-                    createDialog(resources.getString(R.string.ad_continue))
+                if (mAuth.currentUser == null && currentUser != USER_ANONYMOUS) {
+                    createDialog(resources.getString(R.string.only_registered_users))
                 } else {
                     val i = Intent(this, EditAdsActivity::class.java)
+                    startActivity(i)
+                }
+            }
+
+            R.id.profile -> {
+                if (mAuth.currentUser!!.isAnonymous || currentUser == USER_ANONYMOUS || currentUser == "" || currentUser == "null") {
+                    createDialog(resources.getString(R.string.can_create_profile))
+                } else {
+                    val i = Intent(this, ProfileActivity::class.java)
                     startActivity(i)
                 }
             }
@@ -534,7 +546,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var flag = 0
         const val EDIT_STATE_AD = "edit_state"
         const val ADS_DATA = "ads_data"
-
+        const val USER_ANONYMOUS = "Anonymous"
         // catPublic = 1 - мои опубликованные книги
         // catPublic = 2 - все опубликованные книги
         // catPublic = 3 - избранные опубликованные книги

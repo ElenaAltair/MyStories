@@ -6,12 +6,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import elena.altair.note.etities.BookEntity4
+import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.etities.LocationEntity2
 import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.etities.PlotEntity2
+import elena.altair.note.etities.ProfileEntity2
 import elena.altair.note.etities.TermEntity2
 import elena.altair.note.etities.ThemeEntity2
 import kotlinx.coroutines.flow.Flow
@@ -21,14 +22,20 @@ import kotlinx.coroutines.flow.Flow
 abstract class Dao {
     // возвращается список с нашими заметками
     @Query("SELECT * FROM books WHERE login_author = :login")
-    abstract fun getAllBooks(login: String): Flow<List<BookEntity4>>
+    abstract fun getAllBooks(login: String): Flow<List<BookEntity7>>
+
+    @Query("SELECT * FROM profile WHERE login_author = :login")
+    abstract fun getProfileByLogin(login: String): Flow<ProfileEntity2>
 
     @Query("SELECT * FROM books WHERE login_author = :login and public = \"0\"")
-    abstract fun getAllBooksNotPublic(login: String): Flow<List<BookEntity4>>
+    abstract fun getAllBooksNotPublic(login: String): Flow<List<BookEntity7>>
 
 
-    @Query("SELECT * FROM books WHERE id = :idBook and uid_ad = :uidAd")
-    abstract fun getBook(idBook: Long, uidAd: String?): Flow<BookEntity4>
+    @Query("SELECT * FROM books WHERE id = :idBook and uid_ad = :key")
+    abstract fun getBook(idBook: Long, key: String?): Flow<BookEntity7>
+
+    @Query("SELECT * FROM books WHERE uid_ad = :key")
+    abstract fun getBookByKeyFirebase (key: String?): Flow<BookEntity7>
 
 
     @Query("SELECT * FROM chapters WHERE id_book = :idBook ORDER BY number, id ") //
@@ -60,7 +67,7 @@ abstract class Dao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertBook(book: BookEntity4)
+    abstract suspend fun insertBook(book: BookEntity7)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertChapter(chapter: ChapterEntity2)
@@ -82,6 +89,9 @@ abstract class Dao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertTerm(term: TermEntity2)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertProfile(profile: ProfileEntity2)
 
 
     @Query("DELETE FROM books WHERE id IS :id")
@@ -107,6 +117,9 @@ abstract class Dao {
 
     @Query("DELETE FROM term WHERE id IS :id")
     abstract suspend fun deleteTerm(id: Long)
+
+    @Query("DELETE FROM profile WHERE login_author IS :login")
+    abstract suspend fun deleteProfile(login: String)
 
 
     @Query("DELETE FROM chapters WHERE id_book IS :idBook")
@@ -139,7 +152,7 @@ abstract class Dao {
 
 
     @Update
-    abstract suspend fun updateBook(book: BookEntity4)
+    abstract suspend fun updateBook(book: BookEntity7)
 
     @Update
     abstract suspend fun updateChapter(chapter: ChapterEntity2)
@@ -161,4 +174,7 @@ abstract class Dao {
 
     @Update
     abstract suspend fun updateTerm(term: TermEntity2)
+
+    @Update
+    abstract suspend fun updateProfile(profile: ProfileEntity2)
 }
