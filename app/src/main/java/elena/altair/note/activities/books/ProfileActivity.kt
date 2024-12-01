@@ -19,7 +19,7 @@ import elena.altair.note.utils.font.TypefaceUtils.setTitleActionBar
 import elena.altair.note.utils.font.TypefaceUtils.typeface
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
-import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme2
+import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
 import elena.altair.note.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -35,16 +35,21 @@ class ProfileActivity : AppCompatActivity() {
 
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
-        setTheme(getSelectedTheme2(defPref))
+        setTheme(getSelectedTheme(defPref))
 
         super.onCreate(savedInstanceState)
 
 
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // подключим наш собсвенный Action Bar к нашему активити
+        setSupportActionBar(binding.toolbar)
         setTextSize()
         setFontFamily()
         observer()
+
+
         // активируем стрелку на верхнем меню
         actionBarSetting()
 

@@ -422,16 +422,35 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvTitleDescription"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="20dp"
-                                android:text="@string/description"
-                                android:textColor="?attr/noteBg3Color"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvTitleDescription"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_weight="100"
+                                    android:text="@string/description"
+                                    android:textColor="?attr/noteBg3Color"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <ImageButton
+                                    android:id="@+id/ibExpander"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom|end"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="0"
+                                    android:background="@drawable/ic_expand_more"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent" />
+                            </LinearLayout>
 
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
@@ -490,8 +509,8 @@
                                 android:layout_marginStart="7dp"
                                 android:layout_marginEnd="7dp"
                                 android:layout_marginBottom="7dp"
-                                android:background="@drawable/edit_button_bg_blue"
-                                android:backgroundTint="@color/blue_light_bg"
+                                android:background="@drawable/edit_button_bg"
+                                android:backgroundTint="?attr/noteBgColor"
                                 android:padding="10dp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

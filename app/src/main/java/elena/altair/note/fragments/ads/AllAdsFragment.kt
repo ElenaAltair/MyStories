@@ -65,7 +65,6 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     private lateinit var dialogProgres: AlertDialog
 
 
-
     override fun onClickNew() {
 
         if (mAuth.currentUser!!.isAnonymous || currentUser == USER_ANONYMOUS || currentUser == "" || currentUser == "null") {
@@ -279,16 +278,16 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun deleteBookFromPublic(ad: Ad){
+    private fun deleteBookFromPublic(ad: Ad) {
         val id = ad.idBookLocal!!.toLong()
 
         mainViewModel.getBook(id, ad.key.toString()).observe(viewLifecycleOwner) {
             if (it == null) {
                 if (flagDel == 0)
-                createDialogContinue(
-                    (activity as MainActivity).resources.getString(R.string.published_from_another_device),
-                    ad
-                )
+                    createDialogContinue(
+                        (activity as MainActivity).resources.getString(R.string.published_from_another_device),
+                        ad
+                    )
             } else {
                 createDialogDeletePublic(
                     resources.getString(R.string.sure_delete_book_published),
@@ -482,6 +481,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
         const val AD_KEY = "AD"
         var flagDel = 0
+
         @JvmStatic
         fun newInstance() = AllAdsFragment()
     }

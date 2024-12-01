@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import elena.altair.note.R
 import elena.altair.note.databinding.SaveDialogBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
@@ -16,6 +15,7 @@ import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.etities.PlotEntity2
 import elena.altair.note.etities.TermEntity2
 import elena.altair.note.etities.ThemeEntity2
+import elena.altair.note.viewmodel.MainViewModel
 
 object DialogSave {
 

@@ -20,7 +20,7 @@ object TXTUtils {
             val mFileName = title + "_" + SimpleDateFormat(
                 "yyyyMMdd_HHmmss",
                 Locale.getDefault()
-            ).format(System.currentTimeMillis()) +".txt"
+            ).format(System.currentTimeMillis()) + ".txt"
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 

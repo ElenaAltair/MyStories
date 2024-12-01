@@ -1,7 +1,6 @@
 package elena.altair.note.fragments.books
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -18,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.databinding.FragmentThemeBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveTheme
 import elena.altair.note.dialoghelper.ProgressDialog
@@ -32,6 +30,7 @@ import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.share.ShareHelperTheme
 import elena.altair.note.utils.share.ShareHelperTheme.makeShareText
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

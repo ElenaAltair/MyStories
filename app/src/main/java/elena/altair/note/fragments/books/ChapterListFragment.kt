@@ -27,7 +27,6 @@ import elena.altair.note.activities.MainActivity
 import elena.altair.note.activities.books.NewChapterActivity
 import elena.altair.note.adapters.books.ChapterAdapter
 import elena.altair.note.databinding.FragmentChapterListBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.ProgressDialog
@@ -38,6 +37,7 @@ import elena.altair.note.utils.file.PdfTxtChapterListUtils.savePdf
 import elena.altair.note.utils.file.PdfTxtChapterListUtils.saveTxt
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -122,7 +122,12 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
                 job = CoroutineScope(Dispatchers.Main).launch {
                     val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                    val strMessage = saveDocx(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                    val strMessage = saveDocx(
+                        book?.titleBook ?: "book",
+                        book?.nameAuthor ?: "author",
+                        list,
+                        activity as MainActivity
+                    )
                     dialog.dismiss()
                     createDialogInfo(strMessage, activity as MainActivity)
                 }
@@ -136,7 +141,12 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                        val strMessage = savePdf(
+                            book?.titleBook ?: "book",
+                            book?.nameAuthor ?: "author",
+                            list,
+                            activity as MainActivity
+                        )
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -151,8 +161,14 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     } else {
                         //permission already granted, call savePdf() method
                         job = CoroutineScope(Dispatchers.Main).launch {
-                            val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                            val strMessage = savePdf(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                            val dialog =
+                                ProgressDialog.createProgressDialog(activity as MainActivity)
+                            val strMessage = savePdf(
+                                book?.titleBook ?: "book",
+                                book?.nameAuthor ?: "author",
+                                list,
+                                activity as MainActivity
+                            )
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -166,7 +182,12 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                        val strMessage = saveTxt(
+                            book?.titleBook ?: "book",
+                            book?.nameAuthor ?: "author",
+                            list,
+                            activity as MainActivity
+                        )
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -180,8 +201,14 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     } else {
                         //permission already granted, call saveTxt() method
                         job = CoroutineScope(Dispatchers.Main).launch {
-                            val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                            val strMessage = saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                            val dialog =
+                                ProgressDialog.createProgressDialog(activity as MainActivity)
+                            val strMessage = saveTxt(
+                                book?.titleBook ?: "book",
+                                book?.nameAuthor ?: "author",
+                                list,
+                                activity as MainActivity
+                            )
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -221,13 +248,23 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     //permission from popup was granted, call savePdf() method
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf("book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                        val strMessage = savePdf(
+                            "book",
+                            book?.nameAuthor ?: "author",
+                            list,
+                            activity as MainActivity
+                        )
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt("book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                        val strMessage = saveTxt(
+                            "book",
+                            book?.nameAuthor ?: "author",
+                            list,
+                            activity as MainActivity
+                        )
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -339,7 +376,12 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     }
 
     override fun deleteItem(id: Long) {
-        createDialogDelete(resources.getString(R.string.sure_delete_chapter), activity as MainActivity, id, mainViewModel)
+        createDialogDelete(
+            resources.getString(R.string.sure_delete_chapter),
+            activity as MainActivity,
+            id,
+            mainViewModel
+        )
     }
 
     override fun onClickItem(chapter: ChapterEntity2) {

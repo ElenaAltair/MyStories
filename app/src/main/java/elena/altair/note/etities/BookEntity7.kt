@@ -35,7 +35,7 @@ data class BookEntity7(
     var ageCat: String = "12+",
 
     @ColumnInfo(name = "public")
-    var public:String = "0",
+    var public: String = "0",
 
     @ColumnInfo(name = "id_comment")
     var idComment: Long = 0,
@@ -52,7 +52,9 @@ data class BookEntity7(
     @ColumnInfo(name = "name_author")
     var nameAuthor: String = "",
 
-) : Serializable{
-    constructor():this(0L, "", "",0L,"","",
-        "", "", "12+", "0", 0L, "", 0, null, "")
+    ) : Serializable {
+    constructor() : this(
+        0L, "", "", 0L, "", "",
+        "", "", "12+", "0", 0L, "", 0, null, ""
+    )
 }

@@ -20,7 +20,6 @@ import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.databinding.ActivityNewLocationBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveLocation
@@ -41,7 +40,8 @@ import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.share.ShareHelperLocation
 import elena.altair.note.utils.share.ShareHelperLocation.makeShareText
-import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme2
+import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -61,22 +61,17 @@ class NewLocationActivity : AppCompatActivity() {
     private var job: Job? = null
     private var oldLocation: LocationEntity2? = null
     private var newLocation: LocationEntity2? = null
-    //private val mainViewModel: MainViewModel by viewModels {
-    //MainViewModel.MainViewModalFactory((this.applicationContext as MainApp).database)
-    //}
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
-        setTheme(getSelectedTheme2(defPref))
+        setTheme(getSelectedTheme(defPref))
 
         super.onCreate(savedInstanceState)
 
         binding = ActivityNewLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // активируем стрелку на верхнем меню
-        actionBarSetting()
+
 
         getLocation()
 
@@ -84,7 +79,8 @@ class NewLocationActivity : AppCompatActivity() {
         // зададим настройки текста
         setTextSize()
         setFontFamily()
-
+        // активируем стрелку на верхнем меню
+        actionBarSetting()
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -107,6 +103,9 @@ class NewLocationActivity : AppCompatActivity() {
 
     private fun init() {
         pref = PreferenceManager.getDefaultSharedPreferences(this)
+
+        // подключим наш собсвенный Action Bar к нашему активити
+        setSupportActionBar(binding.toolbar)
     }
 
     // активируем стрелку на верхнем меню

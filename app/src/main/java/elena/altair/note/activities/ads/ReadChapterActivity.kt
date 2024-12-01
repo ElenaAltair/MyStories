@@ -18,7 +18,7 @@ import elena.altair.note.utils.font.TypefaceUtils.setTitleActionBar
 import elena.altair.note.utils.font.TypefaceUtils.typeface
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
-import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme2
+import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
 
 class ReadChapterActivity : AppCompatActivity() {
 
@@ -31,16 +31,16 @@ class ReadChapterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
-        setTheme(getSelectedTheme2(defPref))
+        setTheme(getSelectedTheme(defPref))
 
         binding = ActivityReadChapterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        init()
         // активируем стрелку на верхнем меню
         actionBarSetting()
         setTextSize()
         setFontFamily()
-        init()
+
 
     }
 
@@ -67,6 +67,9 @@ class ReadChapterActivity : AppCompatActivity() {
 
     private fun init() {
         getIntentFromDescriptionActivity()
+
+        // подключим наш собсвенный Action Bar к нашему активити
+        setSupportActionBar(binding.toolbar)
     }
 
     private fun getIntentFromDescriptionActivity() {

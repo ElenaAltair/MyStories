@@ -6,11 +6,7 @@ import android.os.CountDownTimer
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import elena.altair.note.R
-import elena.altair.note.activities.MainActivity
 import elena.altair.note.databinding.DeleteDialogBinding
-import elena.altair.note.fragments.ads.AllAdsFragment
-import elena.altair.note.model.Ad
-import elena.altair.note.viewmodel.FirebaseViewModel
 import elena.altair.note.viewmodel.MainViewModel
 
 object DialogDelete {
@@ -44,17 +40,17 @@ object DialogDelete {
             dialog?.dismiss()
         }
         bindingDialog.bDelete.setOnClickListener {
-            if(message == activity.resources.getString(R.string.sure_delete_book))
+            if (message == activity.resources.getString(R.string.sure_delete_book))
                 mainViewModel.deleteBook(id)
-            if(message == activity.resources.getString(R.string.sure_delete_chapter))
+            if (message == activity.resources.getString(R.string.sure_delete_chapter))
                 mainViewModel.deleteChapter(id)
-            if(message == activity.resources.getString(R.string.sure_delete_hero))
+            if (message == activity.resources.getString(R.string.sure_delete_hero))
                 mainViewModel.deleteHero(id)
-            if(message == activity.resources.getString(R.string.sure_delete_location))
+            if (message == activity.resources.getString(R.string.sure_delete_location))
                 mainViewModel.deleteLocation(id)
-            if(message == activity.resources.getString(R.string.sure_delete_people))
+            if (message == activity.resources.getString(R.string.sure_delete_people))
                 mainViewModel.deletePeople(id)
-            if(message == activity.resources.getString(R.string.sure_delete_term))
+            if (message == activity.resources.getString(R.string.sure_delete_term))
                 mainViewModel.deleteTerm(id)
             dialog?.dismiss()
         }

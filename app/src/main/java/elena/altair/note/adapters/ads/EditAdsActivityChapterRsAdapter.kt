@@ -89,7 +89,11 @@ class EditAdsActivityChapterRsAdapter(
         }
 
         companion object {
-            fun create(parent: ViewGroup, defPref: SharedPreferences, act: EditAdsActivity): ChapHolder {
+            fun create(
+                parent: ViewGroup,
+                defPref: SharedPreferences,
+                act: EditAdsActivity
+            ): ChapHolder {
                 return ChapHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.chapter_item_for_public, parent, false),

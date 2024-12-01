@@ -6,7 +6,12 @@ import elena.altair.note.R
 import elena.altair.note.etities.PeopleEntity2
 
 object ShareHelperPeople {
-    fun sharePeople(people: PeopleEntity2, listName: String, nameA: String, context: Context): Intent {
+    fun sharePeople(
+        people: PeopleEntity2,
+        listName: String,
+        nameA: String,
+        context: Context
+    ): Intent {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plane"
         intent.apply {
@@ -15,7 +20,12 @@ object ShareHelperPeople {
         return intent
     }
 
-    fun makeShareText(people: PeopleEntity2, listName: String, nameA: String, context: Context): String {
+    fun makeShareText(
+        people: PeopleEntity2,
+        listName: String,
+        nameA: String,
+        context: Context
+    ): String {
         val sBuilder = StringBuilder()
         sBuilder.append("${context.getString(R.string.book_title)} $listName")
         sBuilder.append("\n${context.getString(R.string.author)} $nameA")

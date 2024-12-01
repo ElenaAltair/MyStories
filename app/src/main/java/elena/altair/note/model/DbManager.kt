@@ -244,7 +244,8 @@ class DbManager {
                                 chapter = it2.getValue(ChapterPublic::class.java)
 
                                 if (chapter != null) {
-                                    if (chapter!!.key == key && chapter!!.public == "1")
+                                    //if (chapter!!.key == key && chapter!!.public == "1")
+                                    if (chapter!!.key == key)
                                         listChapterPublic.add(chapter!!)
                                 }
                             }

@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.databinding.FragmentPlotBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.dialogSavePlot
 import elena.altair.note.dialoghelper.ProgressDialog
@@ -30,6 +29,7 @@ import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.share.ShareHelperPlot
 import elena.altair.note.utils.share.ShareHelperPlot.makeShareText
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

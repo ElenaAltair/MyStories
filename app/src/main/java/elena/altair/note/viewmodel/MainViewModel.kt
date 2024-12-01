@@ -42,15 +42,13 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
         return dao.getBook(idBook, key).asLiveData()
     }
 
-    fun getBookByKeyFirebase (key: String?): LiveData<BookEntity7> {
+    fun getBookByKeyFirebase(key: String?): LiveData<BookEntity7> {
         return dao.getBookByKeyFirebase(key).asLiveData()
     }
 
     fun allChaptersById(idBook: Long): LiveData<List<ChapterEntity2>> {
         return dao.getAllChaptersById(idBook).asLiveData()
     }
-
-
 
 
     // считываем список героев для выбранной книги
@@ -86,7 +84,6 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
     fun getProfile(login: String): LiveData<ProfileEntity2> {
         return dao.getProfileByLogin(login).asLiveData()
     }
-
 
 
     // добавление новой книги в базу данных

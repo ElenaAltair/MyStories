@@ -7,7 +7,7 @@ import elena.altair.note.databinding.ProgressDialogPdfBinding
 
 object ProgressDialog {
 
-    fun createProgressDialog(act: Activity): AlertDialog{
+    fun createProgressDialog(act: Activity): AlertDialog {
 
         val builder = AlertDialog.Builder(act)
         val rootDialogElement = ProgressDialogLayoutBinding.inflate(act.layoutInflater)
@@ -19,7 +19,7 @@ object ProgressDialog {
         return dialog
     }
 
-    fun createProgressDialogExtPdf(act: Activity): AlertDialog{
+    fun createProgressDialogExtPdf(act: Activity): AlertDialog {
 
         val builder = AlertDialog.Builder(act)
         val rootDialogElement = ProgressDialogPdfBinding.inflate(act.layoutInflater)

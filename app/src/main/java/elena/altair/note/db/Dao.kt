@@ -35,13 +35,11 @@ abstract class Dao {
     abstract fun getBook(idBook: Long, key: String?): Flow<BookEntity7>
 
     @Query("SELECT * FROM books WHERE uid_ad = :key")
-    abstract fun getBookByKeyFirebase (key: String?): Flow<BookEntity7>
+    abstract fun getBookByKeyFirebase(key: String?): Flow<BookEntity7>
 
 
     @Query("SELECT * FROM chapters WHERE id_book = :idBook ORDER BY number, id ") //
     abstract fun getAllChaptersById(idBook: Long): Flow<List<ChapterEntity2>>
-
-
 
 
     @Query("SELECT * FROM plots WHERE id_book = :idBook")
@@ -58,8 +56,6 @@ abstract class Dao {
 
     @Query("SELECT * FROM peoples WHERE id_book = :idBook ORDER BY lower(title_people)")
     abstract fun getAllPeoples(idBook: Long): Flow<List<PeopleEntity2>>
-
-
 
 
     @Query("SELECT * FROM term WHERE id_book = :idBook ORDER BY lower(title_term)")

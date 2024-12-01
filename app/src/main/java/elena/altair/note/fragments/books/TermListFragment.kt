@@ -25,7 +25,6 @@ import elena.altair.note.activities.MainActivity
 import elena.altair.note.activities.books.NewTermActivity
 import elena.altair.note.adapters.books.TermAdapter
 import elena.altair.note.databinding.FragmentTermListBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.ProgressDialog
@@ -36,6 +35,7 @@ import elena.altair.note.utils.file.PdfTxtTermListUtils.savePdf
 import elena.altair.note.utils.file.PdfTxtTermListUtils.saveTxt
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -111,7 +111,12 @@ class TermListFragment : BaseFragment(), TermAdapter.Listener, BackPressed {
                 job = CoroutineScope(Dispatchers.Main).launch {
                     val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                     val strMessage =
-                        saveDocx(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                        saveDocx(
+                            book?.titleBook ?: "book",
+                            book?.nameAuthor ?: "author",
+                            list,
+                            activity as MainActivity
+                        )
                     dialog.dismiss()
                     createDialogInfo(strMessage, activity as MainActivity)
                 }
@@ -124,7 +129,12 @@ class TermListFragment : BaseFragment(), TermAdapter.Listener, BackPressed {
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                         val strMessage =
-                            savePdf(book?.titleBook ?: "book",book?.nameAuthor ?: "author", list, activity as MainActivity)
+                            savePdf(
+                                book?.titleBook ?: "book",
+                                book?.nameAuthor ?: "author",
+                                list,
+                                activity as MainActivity
+                            )
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -142,7 +152,12 @@ class TermListFragment : BaseFragment(), TermAdapter.Listener, BackPressed {
                             val dialog =
                                 ProgressDialog.createProgressDialog(activity as MainActivity)
                             val strMessage =
-                                savePdf(book?.titleBook ?: "book",book?.nameAuthor ?: "author", list, activity as MainActivity)
+                                savePdf(
+                                    book?.titleBook ?: "book",
+                                    book?.nameAuthor ?: "author",
+                                    list,
+                                    activity as MainActivity
+                                )
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -157,7 +172,12 @@ class TermListFragment : BaseFragment(), TermAdapter.Listener, BackPressed {
                     job = CoroutineScope(Dispatchers.Main).launch {
                         val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
                         val strMessage =
-                            saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                            saveTxt(
+                                book?.titleBook ?: "book",
+                                book?.nameAuthor ?: "author",
+                                list,
+                                activity as MainActivity
+                            )
                         dialog.dismiss()
                         createDialogInfo(strMessage, activity as MainActivity)
                     }
@@ -174,7 +194,12 @@ class TermListFragment : BaseFragment(), TermAdapter.Listener, BackPressed {
                             val dialog =
                                 ProgressDialog.createProgressDialog(activity as MainActivity)
                             val strMessage =
-                                saveTxt(book?.titleBook ?: "book", book?.nameAuthor ?: "author", list, activity as MainActivity)
+                                saveTxt(
+                                    book?.titleBook ?: "book",
+                                    book?.nameAuthor ?: "author",
+                                    list,
+                                    activity as MainActivity
+                                )
                             dialog.dismiss()
                             createDialogInfo(strMessage, activity as MainActivity)
                         }
@@ -287,7 +312,12 @@ class TermListFragment : BaseFragment(), TermAdapter.Listener, BackPressed {
     }
 
     override fun deleteItem(id: Long) {
-        createDialogDelete(resources.getString(R.string.sure_delete_term), activity as MainActivity, id, mainViewModel)
+        createDialogDelete(
+            resources.getString(R.string.sure_delete_term),
+            activity as MainActivity,
+            id,
+            mainViewModel
+        )
     }
 
     override fun onClickItem(term: TermEntity2) {

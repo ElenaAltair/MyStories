@@ -17,7 +17,7 @@ class HeroAdapter(
     private val listener: Listener,
     private val defPref: SharedPreferences,
     private val mainActivity: MainActivity,
-) : ListAdapter<HeroEntity2, HeroAdapter.ItemHolder>(ItemComparator()){
+) : ListAdapter<HeroEntity2, HeroAdapter.ItemHolder>(ItemComparator()) {
 
     // функция будет создавать для каждого элемента (для каждой заметки) из базы данных
     // свой ItemHolder, который в себе будет создавать разметку
@@ -31,32 +31,34 @@ class HeroAdapter(
     }
 
     // Во view мы передаем нашу разметку (hero_item.xml)
-    class ItemHolder(view: View, private val mainActivity: MainActivity) : RecyclerView.ViewHolder(view) {
+    class ItemHolder(view: View, private val mainActivity: MainActivity) :
+        RecyclerView.ViewHolder(view) {
 
         private val binding = HeroItemBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в hero_item, беря данные из базы данных
-        fun setData(hero: HeroEntity2, listener: Listener, defPref: SharedPreferences) = with(binding) {
-            tvTitle.text = hero.desc1
+        fun setData(hero: HeroEntity2, listener: Listener, defPref: SharedPreferences) =
+            with(binding) {
+                tvTitle.text = hero.desc1
 
-            tvTitle.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
+                tvTitle.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
 
-            itemView.setOnClickListener {
-                listener.onClickItem(hero)
+                itemView.setOnClickListener {
+                    listener.onClickItem(hero)
+                }
+                imDelete.setOnClickListener {
+                    listener.deleteItem(hero.id!!)
+                }
+                imEdit.setOnClickListener {  // нажали на кнопку редактировать
+                    listener.editItem(hero)
+                }
             }
-            imDelete.setOnClickListener {
-                listener.deleteItem(hero.id!!)
-            }
-            imEdit.setOnClickListener {  // нажали на кнопку редактировать
-                listener.editItem(hero)
-            }
-        }
 
-        companion object{
-            fun create(parent: ViewGroup, mainActivity: MainActivity) : ItemHolder {
+        companion object {
+            fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.hero_item, parent, false),
@@ -68,7 +70,7 @@ class HeroAdapter(
 
 
     // класс сравнивающий элементы из старого списка и нового
-    class ItemComparator : DiffUtil.ItemCallback<HeroEntity2>(){
+    class ItemComparator : DiffUtil.ItemCallback<HeroEntity2>() {
 
         // функция сравнивающая, если отдельные элементы равны
         override fun areItemsTheSame(oldItem: HeroEntity2, newItem: HeroEntity2): Boolean {

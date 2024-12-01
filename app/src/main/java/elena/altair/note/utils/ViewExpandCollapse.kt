@@ -10,8 +10,10 @@ object ViewExpandCollapse {
     // развернуть текст в TextView
     fun View.expand(duration: Long) {
         val initialHeight = this.measuredHeight
-        val matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec((this.parent as View).width, View.MeasureSpec.EXACTLY)
-        val wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        val matchParentMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec((this.parent as View).width, View.MeasureSpec.EXACTLY)
+        val wrapContentMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
         this.measure(matchParentMeasureSpec, wrapContentMeasureSpec)
         val targetHeight = this.measuredHeight
 
@@ -19,7 +21,8 @@ object ViewExpandCollapse {
         this.visibility = View.VISIBLE
         val a: Animation = object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
-                this@expand.layoutParams.height = if (interpolatedTime == 1.0f) ViewGroup.LayoutParams.WRAP_CONTENT else (initialHeight + ((targetHeight - initialHeight) * interpolatedTime)).toInt()
+                this@expand.layoutParams.height =
+                    if (interpolatedTime == 1.0f) ViewGroup.LayoutParams.WRAP_CONTENT else (initialHeight + ((targetHeight - initialHeight) * interpolatedTime)).toInt()
                 this@expand.requestLayout()
             }
 
@@ -41,7 +44,8 @@ object ViewExpandCollapse {
                 if (interpolatedTime == 1.0f) {
                     this@collapse.visibility = View.GONE
                 } else {
-                    this@collapse.layoutParams.height = initialHeight - (initialHeight * interpolatedTime).toInt()
+                    this@collapse.layoutParams.height =
+                        initialHeight - (initialHeight * interpolatedTime).toInt()
                     this@collapse.requestLayout()
                 }
             }

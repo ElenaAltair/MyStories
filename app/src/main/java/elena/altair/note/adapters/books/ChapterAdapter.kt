@@ -12,14 +12,14 @@ import elena.altair.note.activities.MainActivity
 import elena.altair.note.databinding.ChapterItemBinding
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.utils.font.setTypeface
-import elena.altair.note.utils.text.textRedactor.HtmlManager
 import elena.altair.note.utils.settings.TimeManager
+import elena.altair.note.utils.text.textRedactor.HtmlManager
 
 class ChapterAdapter(
     private val listener: Listener,
     private val defPref: SharedPreferences,
     private val mainActivity: MainActivity,
-) : ListAdapter <ChapterEntity2, ChapterAdapter.ItemHolder>(ItemComparator()){
+) : ListAdapter<ChapterEntity2, ChapterAdapter.ItemHolder>(ItemComparator()) {
 
     // функция будет создавать для каждого элемента (для каждой заметки) из базы данных
     // свой ItemHolder, который в себе будет создавать разметку
@@ -33,69 +33,71 @@ class ChapterAdapter(
     }
 
     // Во view мы передаем нашу разметку (chapter_item.xml)
-    class ItemHolder(view: View, private val mainActivity: MainActivity) : RecyclerView.ViewHolder(view) {
+    class ItemHolder(view: View, private val mainActivity: MainActivity) :
+        RecyclerView.ViewHolder(view) {
 
         private val binding = ChapterItemBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в chapter_item, беря данные из базы данных
-        fun setData(chapter: ChapterEntity2, listener: Listener, defPref: SharedPreferences) = with(binding) {
-            tvTitle.text = chapter.titleChapters
-            tvShotDescrip.text = HtmlManager.getFromHtml(chapter.shotDescribe).trim()
-            tvTime.text = TimeManager.getTimeFormat(chapter.time, defPref)
+        fun setData(chapter: ChapterEntity2, listener: Listener, defPref: SharedPreferences) =
+            with(binding) {
+                tvTitle.text = chapter.titleChapters
+                tvShotDescrip.text = HtmlManager.getFromHtml(chapter.shotDescribe).trim()
+                tvTime.text = TimeManager.getTimeFormat(chapter.time, defPref)
 
-            tvTitle.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
-            tvShotDescrip.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
-            tvTime.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
+                tvTitle.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
+                tvShotDescrip.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
+                tvTime.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
 
 
-            if(chapter.public_ == "0"){
-                imPublic.setImageResource(R.drawable.ic_public_off)
-            } else {
-                imPublic.setImageResource(R.drawable.ic_public)
-            }
-
-            imPublic.setOnClickListener {
-
-                var public = "0"
-                if(chapter.public_ == "0"){
+                if (chapter.public_ == "0") {
                     imPublic.setImageResource(R.drawable.ic_public_off)
-                    public = "1"
                 } else {
                     imPublic.setImageResource(R.drawable.ic_public)
-                    public = "0"
                 }
-                val chap = updateChapter(chapter, public)
-                listener.updatePublic(chap)
-            }
+
+                imPublic.setOnClickListener {
+
+                    var public = "0"
+                    if (chapter.public_ == "0") {
+                        imPublic.setImageResource(R.drawable.ic_public_off)
+                        public = "1"
+                    } else {
+                        imPublic.setImageResource(R.drawable.ic_public)
+                        public = "0"
+                    }
+                    val chap = updateChapter(chapter, public)
+                    listener.updatePublic(chap)
+                }
 
 
-            itemView.setOnClickListener {
-                listener.onClickItem(chapter)
+                itemView.setOnClickListener {
+                    listener.onClickItem(chapter)
+                }
+                imDelete.setOnClickListener {
+                    listener.deleteItem(chapter.id!!)
+                }
+                imEdit.setOnClickListener {  // нажали на кнопку редактировать
+                    listener.editItem(chapter)
+                }
             }
-            imDelete.setOnClickListener {
-                listener.deleteItem(chapter.id!!)
-            }
-            imEdit.setOnClickListener {  // нажали на кнопку редактировать
-                listener.editItem(chapter)
-            }
-        }
 
         private fun updateChapter(chapter: ChapterEntity2, num: String): ChapterEntity2 {
             return chapter.copy(public_ = num)
         }
 
 
-        companion object{
-            fun create(parent: ViewGroup, mainActivity: MainActivity) : ItemHolder {
+        companion object {
+            fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.chapter_item, parent, false),
@@ -107,7 +109,7 @@ class ChapterAdapter(
 
 
     // класс сравнивающий элементы из старого списка и нового
-    class ItemComparator : DiffUtil.ItemCallback<ChapterEntity2>(){
+    class ItemComparator : DiffUtil.ItemCallback<ChapterEntity2>() {
 
         // функция сравнивающая, если отдельные элементы равны
         override fun areItemsTheSame(oldItem: ChapterEntity2, newItem: ChapterEntity2): Boolean {

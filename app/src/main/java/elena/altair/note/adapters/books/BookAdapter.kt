@@ -12,8 +12,8 @@ import elena.altair.note.activities.MainActivity
 import elena.altair.note.databinding.BookItemBinding
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.utils.font.setTypeface
-import elena.altair.note.utils.text.textRedactor.HtmlManager
 import elena.altair.note.utils.settings.TimeManager
+import elena.altair.note.utils.text.textRedactor.HtmlManager
 
 class BookAdapter(
     private val listener: Listener,
@@ -33,45 +33,47 @@ class BookAdapter(
     }
 
     // Во view мы передаем нашу разметку (book_item.xml)
-    class ItemHolder(view: View, private val mainActivity: MainActivity) : RecyclerView.ViewHolder(view) {
+    class ItemHolder(view: View, private val mainActivity: MainActivity) :
+        RecyclerView.ViewHolder(view) {
 
         private val binding = BookItemBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в book_item, беря данные из базы данных
-        fun setData(book: BookEntity7, listener: Listener, defPref: SharedPreferences) = with(binding){
-            tvTitle.text = book.titleBook
-            tvShotDescrip.text = HtmlManager.getFromHtml(book.shotDescribe).trim()
-            tvTime.text = TimeManager.getTimeFormat(book.time, defPref)
+        fun setData(book: BookEntity7, listener: Listener, defPref: SharedPreferences) =
+            with(binding) {
+                tvTitle.text = book.titleBook
+                tvShotDescrip.text = HtmlManager.getFromHtml(book.shotDescribe).trim()
+                tvTime.text = TimeManager.getTimeFormat(book.time, defPref)
 
-            tvTitle.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
-            tvShotDescrip.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
-            tvTime.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
+                tvTitle.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
+                tvShotDescrip.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
+                tvTime.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
 
-            itemView.setOnClickListener {
-                listener.onClickItem(book)
+                itemView.setOnClickListener {
+                    listener.onClickItem(book)
+                }
+                imDelete.setOnClickListener {
+                    listener.deleteItem(book.id!!)
+                }
+                imEdit.setOnClickListener {  // нажали на кнопку редактировать
+                    listener.editItem(book)
+                }
+                imEditIn.setOnClickListener {
+                    listener.editInItem(book)
+                }
             }
-            imDelete.setOnClickListener {
-                listener.deleteItem(book.id!!)
-            }
-            imEdit.setOnClickListener {  // нажали на кнопку редактировать
-                listener.editItem(book)
-            }
-            imEditIn.setOnClickListener {
-                listener.editInItem(book)
-            }
-        }
 
-        companion object{
-            fun create(parent: ViewGroup, mainActivity: MainActivity) : ItemHolder {
+        companion object {
+            fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.book_item, parent, false),
@@ -82,7 +84,7 @@ class BookAdapter(
     }
 
     // класс сравнивающий элементы из старого списка и нового
-    class ItemComparator : DiffUtil.ItemCallback<BookEntity7>(){
+    class ItemComparator : DiffUtil.ItemCallback<BookEntity7>() {
 
         // функция сравнивающая, если отдельные элементы равны
         override fun areItemsTheSame(oldItem: BookEntity7, newItem: BookEntity7): Boolean {

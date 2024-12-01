@@ -26,15 +26,27 @@
                 android:layout_marginTop="20dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:text="@string/published_from_another_device"
                 android:textColor="?attr/noteBg3Color"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/b_no"
+                app:layout_constraintBottom_toTopOf="@+id/tvCounter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvT" />
 
+
+            <TextView
+                android:id="@+id/tvCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/b_no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mess" />
 
             <Button
                 android:id="@+id/b_no"

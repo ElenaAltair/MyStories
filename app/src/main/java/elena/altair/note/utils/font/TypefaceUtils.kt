@@ -49,7 +49,6 @@ object TypefaceUtils {
                     return ResourcesCompat.getFont(activity, R.font.schoolbook)
 
 
-
             } else {
                 return Typeface.create(fontFamily, Typeface.NORMAL)
             }
@@ -110,10 +109,10 @@ object TypefaceUtils {
             },
             0,
             spannableTitle.length,
-            Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
         return spannableTitle
     }
-
 
 
     // для изменения FontFamily для версии ниже P (28)
@@ -121,6 +120,7 @@ object TypefaceUtils {
         override fun updateDrawState(paint: TextPaint) {
             paint.typeface = typeface
         }
+
         override fun updateMeasureState(paint: TextPaint) {
             paint.typeface = typeface
         }

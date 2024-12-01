@@ -2,7 +2,6 @@ package elena.altair.note.adapters.ads
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,6 @@ import elena.altair.note.databinding.ChapterItemForPublic2Binding
 import elena.altair.note.fragments.ads.AllAdsFragment.Companion.AD_KEY
 import elena.altair.note.model.Ad
 import elena.altair.note.model.ChapterPublic
-import elena.altair.note.utils.font.TypefaceUtils.setTitleActionBar
-import elena.altair.note.utils.font.TypefaceUtils.typeface
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
 
@@ -86,7 +83,11 @@ class DescriptionActivityChapterRsAdapter(
 
 
         companion object {
-            fun create(parent: ViewGroup, activity: DescriptionActivity, defPref: SharedPreferences): ChapHolder {
+            fun create(
+                parent: ViewGroup,
+                activity: DescriptionActivity,
+                defPref: SharedPreferences
+            ): ChapHolder {
                 return ChapHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.chapter_item_for_public_2, parent, false),

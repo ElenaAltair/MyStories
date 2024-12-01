@@ -547,6 +547,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         const val EDIT_STATE_AD = "edit_state"
         const val ADS_DATA = "ads_data"
         const val USER_ANONYMOUS = "Anonymous"
+
         // catPublic = 1 - мои опубликованные книги
         // catPublic = 2 - все опубликованные книги
         // catPublic = 3 - избранные опубликованные книги

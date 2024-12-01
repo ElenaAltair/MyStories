@@ -17,7 +17,8 @@ class RcViewDialogSpinnerAdapter(
     private val mainList = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.spinner_list_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.spinner_list_item, parent, false)
         return SpViewHolder(view, dialog, tvTextView)
     }
 

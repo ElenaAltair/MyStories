@@ -18,7 +18,7 @@ class TermAdapter(
     private val listener: Listener,
     private val defPref: SharedPreferences,
     private val mainActivity: MainActivity,
-) : ListAdapter<TermEntity2, TermAdapter.ItemHolder>(ItemComparator()){
+) : ListAdapter<TermEntity2, TermAdapter.ItemHolder>(ItemComparator()) {
 
     // функция будет создавать для каждого элемента (для каждой заметки) из базы данных
     // свой ItemHolder, который в себе будет создавать разметку
@@ -32,38 +32,40 @@ class TermAdapter(
     }
 
     // Во view мы передаем нашу разметку (term_item.xml)
-    class ItemHolder(val view: View, private val mainActivity: MainActivity) : RecyclerView.ViewHolder(view) {
+    class ItemHolder(val view: View, private val mainActivity: MainActivity) :
+        RecyclerView.ViewHolder(view) {
 
         private val binding = TermItemBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в term_item, беря данные из базы данных
-        fun setData(term: TermEntity2, listener: Listener, defPref: SharedPreferences) = with(binding) {
-            tvTitle.text = term.titleTerm
-            tvDesc.text = HtmlManager.getFromHtml(term.interpretationTerm)
+        fun setData(term: TermEntity2, listener: Listener, defPref: SharedPreferences) =
+            with(binding) {
+                tvTitle.text = term.titleTerm
+                tvDesc.text = HtmlManager.getFromHtml(term.interpretationTerm)
 
-            tvTitle.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
-            tvDesc.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
+                tvTitle.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
+                tvDesc.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
 
 
-            itemView.setOnClickListener {
-                listener.onClickItem(term)
+                itemView.setOnClickListener {
+                    listener.onClickItem(term)
+                }
+                imDelete.setOnClickListener {
+                    listener.deleteItem(term.id!!)
+                }
+                imEdit.setOnClickListener {  // нажали на кнопку редактировать
+                    listener.editItem(term)
+                }
             }
-            imDelete.setOnClickListener {
-                listener.deleteItem(term.id!!)
-            }
-            imEdit.setOnClickListener {  // нажали на кнопку редактировать
-                listener.editItem(term)
-            }
-        }
 
-        companion object{
-            fun create(parent: ViewGroup, mainActivity: MainActivity) : ItemHolder {
+        companion object {
+            fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
 
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
@@ -75,7 +77,7 @@ class TermAdapter(
     }
 
     // класс сравнивающий элементы из старого списка и нового
-    class ItemComparator : DiffUtil.ItemCallback<TermEntity2>(){
+    class ItemComparator : DiffUtil.ItemCallback<TermEntity2>() {
 
         // функция сравнивающая, если отдельные элементы равны
         override fun areItemsTheSame(oldItem: TermEntity2, newItem: TermEntity2): Boolean {

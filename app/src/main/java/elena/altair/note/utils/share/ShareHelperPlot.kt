@@ -15,7 +15,12 @@ object ShareHelperPlot {
         return intent
     }
 
-    fun makeShareText(plot: PlotEntity2, listName: String, nameA: String, context: Context): String {
+    fun makeShareText(
+        plot: PlotEntity2,
+        listName: String,
+        nameA: String,
+        context: Context
+    ): String {
         val sBuilder = StringBuilder()
         sBuilder.append("${context.getString(R.string.book_title)} $listName")
         sBuilder.append("\n${context.getString(R.string.author)} $nameA")

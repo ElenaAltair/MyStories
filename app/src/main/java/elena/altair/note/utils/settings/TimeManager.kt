@@ -26,7 +26,8 @@ object TimeManager {
 
     fun getTimeFormat(time: String, defPreferences: SharedPreferences?): String {
 
-        val newFormat = defPreferences?.getString("time_format_key", DEF_TIME_FORMAT) ?: "HH:mm:ss - dd/MM/yyyy"
+        val newFormat =
+            defPreferences?.getString("time_format_key", DEF_TIME_FORMAT) ?: "HH:mm:ss - dd/MM/yyyy"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 

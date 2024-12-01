@@ -23,7 +23,6 @@ import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.databinding.ActivityNewTermBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveTerm
@@ -51,7 +50,8 @@ import elena.altair.note.utils.text.TextStyle.setStrikethroughForSelectedText
 import elena.altair.note.utils.text.TextStyle.setUnderlineForSelectedText
 import elena.altair.note.utils.text.textRedactor.HtmlManager
 import elena.altair.note.utils.text.textRedactor.MyTouchListener
-import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme2
+import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -71,21 +71,17 @@ class NewTermActivity : AppCompatActivity() {
     private var job: Job? = null
     private var oldTerm: TermEntity2? = null
     private var newTerm: TermEntity2? = null
-    //private val mainViewModel: MainViewModel by viewModels {
-    //MainViewModel.MainViewModalFactory((this.applicationContext as MainApp).database)
-    //}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
-        setTheme(getSelectedTheme2(defPref))
+        setTheme(getSelectedTheme(defPref))
 
         super.onCreate(savedInstanceState)
 
         binding = ActivityNewTermBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // активируем стрелку на верхнем меню
-        actionBarSetting()
+
 
         getTerm()
 
@@ -99,7 +95,8 @@ class NewTermActivity : AppCompatActivity() {
         onClickImageUnderlined()
         onClickImageStrikethrough()
         onClickColorPicker()
-
+        // активируем стрелку на верхнем меню
+        actionBarSetting()
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -125,6 +122,8 @@ class NewTermActivity : AppCompatActivity() {
         // в нашем случае для перетаскивания панельки с палитрой
         binding.colorPicker.setOnTouchListener(MyTouchListener())
         pref = PreferenceManager.getDefaultSharedPreferences(this)
+        // подключим наш собсвенный Action Bar к нашему активити
+        setSupportActionBar(binding.toolbar)
     }
 
     // активируем стрелку на верхнем меню

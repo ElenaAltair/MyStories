@@ -9,121 +9,141 @@
     tools:context=".activities.books.ProfileActivity">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="top"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white" />
 
-            <TextView
-                android:id="@+id/tw1"
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="top"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/account"
-                android:textColor="?attr/noteBg3Color" />
-
-            <TextView
-                android:id="@+id/twAkk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/noteBg3Color"
-                android:ems="10"
-                android:maxLength="2000"
-                android:padding="15dp"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tw2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/name_author1"
-                android:textColor="?attr/noteBg3Color" />
-
-            <EditText
-                android:id="@+id/edName1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:ems="10"
+                android:layout_margin="10dp"
                 android:gravity="top"
-                android:inputType="textMultiLine"
-                android:maxLength="30"
-                android:padding="15dp"
-                android:textColor="@color/black" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tw3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/name_author2"
-                android:textColor="?attr/noteBg3Color" />
+                <TextView
+                    android:id="@+id/tw1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account"
+                    android:textColor="?attr/noteBg3Color" />
 
-            <EditText
-                android:id="@+id/edName2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:ems="10"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:maxLength="30"
-                android:padding="15dp"
-                android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/twAkk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/noteBg3Color"
+                    android:ems="10"
+                    android:maxLength="2000"
+                    android:padding="15dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tw4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/name_author3"
-                android:textColor="?attr/noteBg3Color" />
+                <TextView
+                    android:id="@+id/tw2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/name_author1"
+                    android:textColor="?attr/noteBg3Color" />
 
-            <EditText
-                android:id="@+id/edName3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:ems="10"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:maxLength="30"
-                android:padding="15dp"
-                android:textColor="@color/black" />
+                <EditText
+                    android:id="@+id/edName1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="30"
+                    android:padding="15dp"
+                    android:textColor="@color/black" />
 
-            <Button
-                android:id="@+id/bSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/save" />
+                <TextView
+                    android:id="@+id/tw3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/name_author2"
+                    android:textColor="?attr/noteBg3Color" />
 
-            <TextView
-                android:id="@+id/tw5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/choose_several_names"
-                android:textColor="?attr/noteBg3Color" />
+                <EditText
+                    android:id="@+id/edName2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="30"
+                    android:padding="15dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tw4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/name_author3"
+                    android:textColor="?attr/noteBg3Color" />
+
+                <EditText
+                    android:id="@+id/edName3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:drawable/dialog_holo_light_frame"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLength="30"
+                    android:padding="15dp"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/bSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_button_bg"
+                    android:text="@string/save" />
+
+                <TextView
+                    android:id="@+id/tw5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/choose_several_names"
+                    android:textColor="?attr/noteBg3Color" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
 
-    </ScrollView>
+        </ScrollView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

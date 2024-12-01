@@ -25,12 +25,9 @@ import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
-import elena.altair.note.activities.MainActivity.Companion
 import elena.altair.note.activities.MainActivity.Companion.USER_ANONYMOUS
 import elena.altair.note.databinding.ActivityNewBookBinding
-import elena.altair.note.databinding.ContinueDialogBinding
 import elena.altair.note.databinding.CreateDialogBinding
-import elena.altair.note.viewmodel.MainViewModel
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
 import elena.altair.note.dialoghelper.DialogSave.dialogSaveBook
@@ -39,7 +36,6 @@ import elena.altair.note.dialoghelper.ProgressDialog
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ProfileEntity2
 import elena.altair.note.fragments.books.MainListFragment
-import elena.altair.note.model.Ad
 import elena.altair.note.model.DbManager
 import elena.altair.note.utils.LiterKindHelper
 import elena.altair.note.utils.file.DOCXUtils.saveDocx
@@ -63,7 +59,8 @@ import elena.altair.note.utils.text.TextStyle.setStrikethroughForSelectedText
 import elena.altair.note.utils.text.TextStyle.setUnderlineForSelectedText
 import elena.altair.note.utils.text.textRedactor.HtmlManager
 import elena.altair.note.utils.text.textRedactor.MyTouchListener
-import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme2
+import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
+import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -88,22 +85,18 @@ class NewBookActivity : AppCompatActivity() {
     private var newBook: BookEntity7? = null
     private val dbManager = DbManager()
     private var profile: ProfileEntity2? = null
-    //private val mainViewModel: MainViewModel by viewModels {
-    //MainViewModel.MainViewModalFactory((this.applicationContext as MainApp).database)
-    //}
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
-        setTheme(getSelectedTheme2(defPref))
+        setTheme(getSelectedTheme(defPref))
 
         super.onCreate(savedInstanceState)
 
         binding = ActivityNewBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // активируем стрелку на верхнем меню
-        actionBarSetting()
+
 
         getBook()
         observer()
@@ -117,7 +110,8 @@ class NewBookActivity : AppCompatActivity() {
         onClickImageUnderlined()
         onClickImageStrikethrough()
         onClickColorPicker()
-
+        // активируем стрелку на верхнем меню
+        actionBarSetting()
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -172,11 +166,11 @@ class NewBookActivity : AppCompatActivity() {
 
         val list = ArrayList<String>()
         if (profile != null) {
-            if(profile!!.nameAuthor1 != "")
+            if (profile!!.nameAuthor1 != "")
                 list.add(profile!!.nameAuthor1)
-            if(profile!!.nameAuthor2 != "")
+            if (profile!!.nameAuthor2 != "")
                 list.add(profile!!.nameAuthor2)
-            if(profile!!.nameAuthor3 != "")
+            if (profile!!.nameAuthor3 != "")
                 list.add(profile!!.nameAuthor3)
         }
 
@@ -389,6 +383,10 @@ class NewBookActivity : AppCompatActivity() {
         // в нашем случае для перетаскивания панельки с палитрой
         binding.colorPicker.setOnTouchListener(MyTouchListener())
         pref = PreferenceManager.getDefaultSharedPreferences(this)
+
+
+        // подключим наш собсвенный Action Bar к нашему активити
+        setSupportActionBar(binding.toolbar)
     }
 
     private fun onClickImageColor() = with(binding) {

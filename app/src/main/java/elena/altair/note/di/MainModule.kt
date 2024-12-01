@@ -15,7 +15,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun provideMainDb(app: Application) : MainDataBase{
+    fun provideMainDb(app: Application): MainDataBase {
         return Room.databaseBuilder(
             app,
             MainDataBase::class.java,

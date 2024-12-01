@@ -10,17 +10,24 @@ object ShareHelperTheme {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plane"
         intent.apply {
-            putExtra(Intent.EXTRA_TEXT, makeShareText(
-                theme,
-                listName,
-                nameA,
-                context
-            ))
+            putExtra(
+                Intent.EXTRA_TEXT, makeShareText(
+                    theme,
+                    listName,
+                    nameA,
+                    context
+                )
+            )
         }
         return intent
     }
 
-    fun makeShareText(theme: ThemeEntity2, listName: String, nameA: String, context: Context): String {
+    fun makeShareText(
+        theme: ThemeEntity2,
+        listName: String,
+        nameA: String,
+        context: Context
+    ): String {
         val sBuilder = StringBuilder()
 
         sBuilder.append("${context.getString(R.string.book_title)} $listName")

@@ -17,7 +17,7 @@ class PeopleAdapter(
     private val listener: Listener,
     private val defPref: SharedPreferences,
     private val mainActivity: MainActivity,
-) : ListAdapter<PeopleEntity2, PeopleAdapter.ItemHolder>(ItemComparator()){
+) : ListAdapter<PeopleEntity2, PeopleAdapter.ItemHolder>(ItemComparator()) {
 
     // функция будет создавать для каждого элемента (для каждой заметки) из базы данных
     // свой ItemHolder, который в себе будет создавать разметку
@@ -31,32 +31,34 @@ class PeopleAdapter(
     }
 
     // Во view мы передаем нашу разметку (people_item.xml)
-    class ItemHolder(view: View, private val mainActivity: MainActivity) : RecyclerView.ViewHolder(view) {
+    class ItemHolder(view: View, private val mainActivity: MainActivity) :
+        RecyclerView.ViewHolder(view) {
 
         private val binding = PeopleItemBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в people_item, беря данные из базы данных
-        fun setData(people: PeopleEntity2, listener: Listener, defPref: SharedPreferences) = with(binding) {
-            tvTitle.text = people.titlePeople
+        fun setData(people: PeopleEntity2, listener: Listener, defPref: SharedPreferences) =
+            with(binding) {
+                tvTitle.text = people.titlePeople
 
-            tvTitle.setTypeface(
-                defPref.getString("font_family_list_key", "sans-serif"),
-                mainActivity
-            )
+                tvTitle.setTypeface(
+                    defPref.getString("font_family_list_key", "sans-serif"),
+                    mainActivity
+                )
 
-            itemView.setOnClickListener {
-                listener.onClickItem(people)
+                itemView.setOnClickListener {
+                    listener.onClickItem(people)
+                }
+                imDelete.setOnClickListener {
+                    listener.deleteItem(people.id!!)
+                }
+                imEdit.setOnClickListener {  // нажали на кнопку редактировать
+                    listener.editItem(people)
+                }
             }
-            imDelete.setOnClickListener {
-                listener.deleteItem(people.id!!)
-            }
-            imEdit.setOnClickListener {  // нажали на кнопку редактировать
-                listener.editItem(people)
-            }
-        }
 
-        companion object{
-            fun create(parent: ViewGroup, mainActivity: MainActivity) : ItemHolder {
+        companion object {
+            fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.people_item, parent, false),
@@ -67,7 +69,7 @@ class PeopleAdapter(
     }
 
     // класс сравнивающий элементы из старого списка и нового
-    class ItemComparator : DiffUtil.ItemCallback<PeopleEntity2>(){
+    class ItemComparator : DiffUtil.ItemCallback<PeopleEntity2>() {
 
         // функция сравнивающая, если отдельные элементы равны
         override fun areItemsTheSame(oldItem: PeopleEntity2, newItem: PeopleEntity2): Boolean {

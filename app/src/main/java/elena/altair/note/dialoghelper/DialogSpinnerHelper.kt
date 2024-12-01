@@ -36,9 +36,13 @@ class DialogSpinnerHelper {
 
 
     // обновляем адаптер в зависимости от результата поиска
-    private fun setSearchView(adapter: RcViewDialogSpinnerAdapter, list: ArrayList<String>, sv: SearchView?) {
+    private fun setSearchView(
+        adapter: RcViewDialogSpinnerAdapter,
+        list: ArrayList<String>,
+        sv: SearchView?
+    ) {
         // добавляем слушатель изменения текста
-        sv?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        sv?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }

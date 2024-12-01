@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 
-@Entity(tableName = "chapters",
+@Entity(
+    tableName = "chapters",
     foreignKeys = [
         ForeignKey(
             entity = BookEntity7::class,
@@ -17,7 +18,7 @@ import java.io.Serializable
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE,
         )]
-    )
+)
 data class ChapterEntity2(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
@@ -52,8 +53,10 @@ data class ChapterEntity2(
     @ColumnInfo(name = "uid_ad") // на тот случай, если пользователь решит создавать книги с разных устройств под одним аккаунтом
     var uidAd: String? = null,
 
-) : Serializable{
-    constructor():this(0L, 0L, "","","","",0,"0",
-        0L, "", null)//
+    ) : Serializable {
+    constructor() : this(
+        0L, 0L, "", "", "", "", 0, "0",
+        0L, "", null
+    )//
 }
 

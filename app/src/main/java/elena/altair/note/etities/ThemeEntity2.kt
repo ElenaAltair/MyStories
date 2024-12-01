@@ -6,7 +6,8 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "theme",
+@Entity(
+    tableName = "theme",
     foreignKeys = [
         ForeignKey(
             entity = BookEntity7::class,
@@ -48,13 +49,15 @@ data class ThemeEntity2(
     var desc8: String? = null,
 
     @ColumnInfo(name = "public")
-    var public:String = "0",
+    var public: String = "0",
 
     @ColumnInfo(name = "uid_ad") // на тот случай, если пользователь решит создавать книги с разных устройств под одним аккаунтом
     var uidAd: String? = null,
 
-) : Serializable{
-    constructor():this(0L, 0L, "","","","","",
+    ) : Serializable {
+    constructor() : this(
+        0L, 0L, "", "", "", "", "",
         "", "", "",
-        "0", null)
+        "0", null
+    )
 }

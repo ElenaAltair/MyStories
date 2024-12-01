@@ -6,7 +6,7 @@ import elena.altair.note.R
 import elena.altair.note.fragments.books.FragmentManager.currentFlag
 
 
-class SettingsFragment: PreferenceFragmentCompat() {
+class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         if (currentFlag?.toString()!!

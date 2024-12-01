@@ -110,7 +110,7 @@ object PdfTxtChapterListUtils {
 
                 mDoc.addAuthor(activity.resources.getString(R.string.app_name))
 
-                if(list.isNotEmpty()) {
+                if (list.isNotEmpty()) {
                     for (i in list.indices) {
                         val string = makeShareText(
                             createChapterEntity(list[i]),
@@ -120,7 +120,7 @@ object PdfTxtChapterListUtils {
                         )
                         mDoc.add(Paragraph(string, font))
                     }
-                }else {
+                } else {
                     mDoc.add(Paragraph(activity.resources.getString(R.string.list_empty), font))
                 }
 
@@ -162,7 +162,7 @@ object PdfTxtChapterListUtils {
 
                 val stringB = StringBuilder()
 
-                if(list.isNotEmpty()) {
+                if (list.isNotEmpty()) {
                     for (i in list.indices) {
                         val string = makeShareText(
                             createChapterEntity(list[i]),
@@ -172,7 +172,7 @@ object PdfTxtChapterListUtils {
                         )
                         stringB.append("$string \n\n")
                     }
-                }else {
+                } else {
                     stringB.append(activity.resources.getString(R.string.list_empty))
                 }
 
@@ -272,7 +272,7 @@ object PdfTxtChapterListUtils {
 
                 val stringB = StringBuilder()
 
-                if(list.isNotEmpty()) {
+                if (list.isNotEmpty()) {
                     for (i in list.indices) {
                         val string = makeShareText(
                             createChapterEntity(list[i]),
@@ -282,7 +282,7 @@ object PdfTxtChapterListUtils {
                         )
                         stringB.append("$string \n\n")
                     }
-                }else {
+                } else {
                     stringB.append(activity.resources.getString(R.string.list_empty))
                 }
 

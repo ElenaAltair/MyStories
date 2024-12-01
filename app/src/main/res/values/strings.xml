@@ -294,7 +294,7 @@
     <string name="the_poem">The poem</string>
     <string name="novel_in_verse">A novel in verse</string>
     <string name="list_ads">List of ads</string>
-    <string name="fill_ad">Please fill in all fields of your ad:</string>
+    <string name="fill_ad">Please fill in all fields:</string>
     <string name="home">Home</string>
     <string name="empty">There is nothing here yet.</string>
     <string name="guest">Guest</string>
@@ -325,4 +325,6 @@
     <string name="create">Create</string>
     <string name="nameless">Nameless</string>
     <string name="author">Author:</string>
+    <string name="downloading_from_cloud">When downloading a book from a cloud database, if this book is already on this device, it will be completely overwritten. Be extremely careful not to lose data. Continue?</string>
+    <string name="book_downloaded">The book was downloaded from a cloud database and saved on this device. If the book is saved on different devices, keep track of the relevance of the data on these devices yourself. By saving the book on different devices, you get the opportunity to make changes to the book stored in the cloud database from these devices. Be extremely careful not to lose data.</string>
 </resources>

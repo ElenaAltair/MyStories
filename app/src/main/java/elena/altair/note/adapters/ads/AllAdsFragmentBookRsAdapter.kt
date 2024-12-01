@@ -144,6 +144,7 @@ class AllAdsFragmentBookRsAdapter(
         fun onDeleteItem(ad: Ad)
         fun onAdViewed(ad: Ad)
         fun onFavClicked(ad: Ad)
+
         //fun onUpdateLocalBook(ad: Ad)
         fun onClickEdit(ad: Ad)
     }

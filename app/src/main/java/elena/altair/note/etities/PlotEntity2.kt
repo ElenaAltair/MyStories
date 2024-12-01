@@ -6,7 +6,8 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "plots",
+@Entity(
+    tableName = "plots",
     foreignKeys = [
         ForeignKey(
             entity = BookEntity7::class,
@@ -16,7 +17,7 @@ import java.io.Serializable
             onUpdate = ForeignKey.CASCADE
         )]
 )
-data class PlotEntity2 (
+data class PlotEntity2(
 
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
@@ -49,13 +50,15 @@ data class PlotEntity2 (
     var desc8: String? = null,
 
     @ColumnInfo(name = "public")
-    var public:String = "0",
+    var public: String = "0",
 
     @ColumnInfo(name = "uid_ad") // на тот случай, если пользователь решит создавать книги с разных устройств под одним аккаунтом
     var uidAd: String? = null,
 
-) : Serializable{
-    constructor():this(0L, 0L, "","","","","",
+    ) : Serializable {
+    constructor() : this(
+        0L, 0L, "", "", "", "", "",
         "", "", "",
-        "0", null)
+        "0", null
+    )
 }

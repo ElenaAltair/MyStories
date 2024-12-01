@@ -18,32 +18,32 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/library_book"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.BlueWithActionBar"
+        android:theme="@style/Base.Theme.BlueNoActionBar"
         tools:replace="android:theme"
         tools:targetApi="31">
         <activity
             android:name=".activities.books.ProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:exported="true" />
         <activity
             android:name=".activities.ads.ReadChapterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.ads.DescriptionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".settings.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.ads.EditAdsActivity"
@@ -55,37 +55,37 @@
             android:name=".activities.books.NewTermActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.books.NewPeopleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.books.NewLocationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.books.NewHeroActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.books.NewChapterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.books.NewBookActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:exported="true"
-            android:theme="@style/Base.Theme.BlueWithActionBar"
+            android:theme="@style/Base.Theme.BlueNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" /> <!--  -->
         <activity
             android:name=".activities.MainActivity"

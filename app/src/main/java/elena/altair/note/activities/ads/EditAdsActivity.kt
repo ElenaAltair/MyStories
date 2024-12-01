@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-//import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +34,8 @@ import elena.altair.note.model.Ad
 import elena.altair.note.model.ChapterPublic
 import elena.altair.note.model.DbManager
 import elena.altair.note.utils.InternetConnection.isOnline
+import elena.altair.note.utils.ViewExpandCollapse.collapse
+import elena.altair.note.utils.ViewExpandCollapse.expand
 import elena.altair.note.utils.ads.ImagePicker
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
@@ -62,7 +63,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
     private var listBooks = ArrayList<BookEntity7>()
     private var listChapters = ArrayList<ChapterEntity2>()
     private var selectBook: BookEntity7? = null
-
+    private var isCollapsed = false
     private var key: String? = null
 
 
@@ -75,6 +76,18 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         super.onCreate(savedInstanceState)
         binding = ActivityEditAdsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //binding.edDescription.collapse(300)
+        binding.ibExpander.setOnClickListener {
+            if (!isCollapsed) {
+                binding.edDescription.collapse(300)
+                isCollapsed = true
+            } else {
+                binding.edDescription.expand(300)
+                isCollapsed = false
+            }
+        }
+
 
         // зададим настройки текста
         setTextSize()
@@ -190,7 +203,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         edTitle2.visibility = View.VISIBLE
         edDescription.text = description ?: ad.description
 
-        getAllChapters()
+        getAllChaptersEdit()
         initRecycleViewChapter()
     }
 
@@ -233,15 +246,15 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
 
     @SuppressLint("SuspiciousIndentation")
     private fun getBookByKeyFirebase(key: String?) {
-        if(key != null)
-        mainViewModel.getBookByKeyFirebase(key).observe(this, Observer {
-            selectBook = it
-            //Log.d("MyLog", "it $it")
-            fillViews(ad!!, it)
-        })
+        if (key != null)
+            mainViewModel.getBookByKeyFirebase(key).observe(this, Observer {
+                selectBook = it
+                //Log.d("MyLog", "it $it")
+                fillViews(ad!!, it)
+            })
     }
 
-    // получим список глав для данной книги
+    // получим список глав для данной книги, если она публикуется в первый раз
     fun getAllChapters() {
         val id = getIdSelectBook()
         if (selectBook?.uidAd == ad?.key)
@@ -256,6 +269,22 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
                     //Log.d("MyLog", "listChapters ${listChapters.toString()}")
                 })
             }
+    }
+
+    fun getAllChaptersEdit() {
+
+        if (selectBook?.uidAd == ad?.key) {
+
+            val idBook = selectBook?.id!!
+            mainViewModel.allChaptersById(idBook).observe(this, Observer {
+                val list = it // it - это обновлённый список
+                if (!list.isNullOrEmpty())
+                    listChapters = list.toMutableList() as ArrayList
+
+                adapterChapter.submitList(it)
+                //Log.d("MyLog", "listChapters ${listChapters.toString()}")
+            })
+        }
     }
 
     private fun initRecycleViewChapter() = with(binding) {
@@ -360,7 +389,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
 
     fun onClickPublish(view: View) {
 
-        if(!isOnline(this)) {
+        if (!isOnline(this)) {
             createDialogInfo(resources.getString(R.string.network_exception), this)
             return
         }

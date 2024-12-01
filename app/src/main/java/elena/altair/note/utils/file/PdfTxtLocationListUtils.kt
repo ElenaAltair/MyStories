@@ -109,7 +109,7 @@ object PdfTxtLocationListUtils {
 
                 mDoc.addAuthor(activity.resources.getString(R.string.app_name))
 
-                if(list.isNotEmpty()) {
+                if (list.isNotEmpty()) {
                     for (i in list.indices) {
                         val string = makeShareText(
                             list[i],
@@ -160,7 +160,7 @@ object PdfTxtLocationListUtils {
 
                 val stringB = StringBuilder()
 
-                if(list.isNotEmpty()) {
+                if (list.isNotEmpty()) {
                     for (i in list.indices) {
                         val string = ShareHelperLocation.makeShareText(
                             list[i],
@@ -170,7 +170,7 @@ object PdfTxtLocationListUtils {
                         )
                         stringB.append("$string \n\n")
                     }
-                }else {
+                } else {
                     stringB.append(activity.resources.getString(R.string.list_empty))
                 }
 
@@ -269,7 +269,7 @@ object PdfTxtLocationListUtils {
 
                 val stringB = StringBuilder()
 
-                if(list.isNotEmpty()) {
+                if (list.isNotEmpty()) {
                     for (i in list.indices) {
                         val string = makeShareText(
                             list[i],
@@ -279,7 +279,7 @@ object PdfTxtLocationListUtils {
                         )
                         stringB.append("$string \n\n")
                     }
-                }else {
+                } else {
                     stringB.append(activity.resources.getString(R.string.list_empty))
                 }
 

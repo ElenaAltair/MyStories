@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 
 object TextStyle {
     // сделать жирным выбранный текст
-    fun setBoldForSelectedText(start: Int, end:Int, view: EditText){
+    fun setBoldForSelectedText(start: Int, end: Int, view: EditText) {
 
         // определим какой текст выбран для изменения стиля на жиррный
         val startPos = start
@@ -47,7 +47,7 @@ object TextStyle {
 
 
     // сделать курсивным выбранный текст
-    fun setItalicForSelectedText(start: Int, end:Int, view: EditText){
+    fun setItalicForSelectedText(start: Int, end: Int, view: EditText) {
 
         // определим какой текст выбран для изменения стиля на жиррный
         val startPos = start
@@ -81,7 +81,7 @@ object TextStyle {
 
 
     // сделать подчеркнутым выбранный текст
-    fun setUnderlineForSelectedText(start: Int, end:Int, view: EditText){
+    fun setUnderlineForSelectedText(start: Int, end: Int, view: EditText) {
 
         // определим какой текст выбран для изменения стиля на жиррный
         val startPos = start
@@ -110,7 +110,7 @@ object TextStyle {
 
 
     // сделать зачеркнутым выбранный текст
-    fun setStrikethroughForSelectedText(start: Int, end:Int, view: EditText){
+    fun setStrikethroughForSelectedText(start: Int, end: Int, view: EditText) {
 
         // определим какой текст выбран для изменения стиля на жиррный
         val startPos = start
@@ -122,11 +122,16 @@ object TextStyle {
         val styles = view.text.getSpans(startPos, endPos, StrikethroughSpan::class.java)
         val spannableString = SpannableString(view.getText().toString())
 
-        if (styles.isNotEmpty() ) {
+        if (styles.isNotEmpty()) {
             // styles[0] - удаляем стиль, который находится на нулевой позиции
             view.text.removeSpan(styles[0])
         } else {
-            view.text.setSpan(StrikethroughSpan(), startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            view.text.setSpan(
+                StrikethroughSpan(),
+                startPos,
+                endPos,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
 
         // после этой процедуры у нас добавятся пробелы, которые нужно убрать
@@ -141,7 +146,13 @@ object TextStyle {
 
     // поменять цвет выбранному тексту
     // эту функцию мы будем запускать, когда будем нажимать на какой-нибудь цвет в нашей палитре
-    fun setColorForSelectedText(colorId: Int, start: Int, end:Int, view: EditText, activity: Activity){
+    fun setColorForSelectedText(
+        colorId: Int,
+        start: Int,
+        end: Int,
+        view: EditText,
+        activity: Activity
+    ) {
         // определим какой текст выбран для изменения цвета
         val startPos = start
         val endPos = end
