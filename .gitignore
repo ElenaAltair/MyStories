@@ -16,6 +16,7 @@ local.properties
 build/
 .idea/
 app/google-services.json
+.kotlin/
 
 ### Android Studio ###
 captures/
