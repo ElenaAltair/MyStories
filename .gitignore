@@ -17,7 +17,6 @@ build/
 .idea/
 app/google-services.json
 .kotlin/
-.kotlin/errors
 
 ### Android Studio ###
 captures/
