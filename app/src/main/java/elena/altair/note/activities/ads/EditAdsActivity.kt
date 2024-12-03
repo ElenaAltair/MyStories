@@ -23,6 +23,15 @@ import elena.altair.note.activities.MainActivity.Companion.EDIT_STATE_AD
 import elena.altair.note.activities.MainActivity.Companion.currentUser
 import elena.altair.note.adapters.ads.EditAdsActivityChapterRsAdapter
 import elena.altair.note.adapters.ads.EditAdsActivityImageAdapter
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_BUTTON_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.databinding.ActivityEditAdsBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSpinnerHelper
@@ -526,122 +535,122 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        editTel.setTextSize(defPref.getString("content_size_key", "18"))
-        editEmail.setTextSize(defPref.getString("content_size_key", "18"))
-        tvLiter.setTextSize(defPref.getString("content_size_key", "18"))
-        tvAge.setTextSize(defPref.getString("content_size_key", "18"))
-        edTitle.setTextSize(defPref.getString("content_size_key", "18"))
-        edTitle2.setTextSize(defPref.getString("content_size_key", "18"))
-        tvAlias.setTextSize(defPref.getString("content_size_key", "18"))
-        edDescription.setTextSize(defPref.getString("content_size_key", "18"))
+        editTel.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        editEmail.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        tvLiter.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        tvAge.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edTitle.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edTitle2.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        tvAlias.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edDescription.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
 
-        tvTitleTel.setTextSize(defPref.getString("comments_size_key", "16"))
-        tvTitleEmail.setTextSize(defPref.getString("comments_size_key", "16"))
-        tvLiterCat.setTextSize(defPref.getString("comments_size_key", "16"))
-        tvAgeCat.setTextSize(defPref.getString("comments_size_key", "16"))
-        tvTitle.setTextSize(defPref.getString("comments_size_key", "16"))
-        tvAliasCat.setTextSize(defPref.getString("comments_size_key", "16"))
-        tvTitleDescription.setTextSize(defPref.getString("comments_size_key", "16"))
+        tvTitleTel.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tvTitleEmail.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tvLiterCat.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tvAgeCat.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tvTitle.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tvAliasCat.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tvTitleDescription.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
 
-        tvListChapters.setTextSize(defPref.getString("comments_size_key", "16"))
-        textView24.setTextSize(defPref.getString("comments_size_key", "16"))
-        comm1.setTextSize(defPref.getString("comments_size_key", "16"))
-        comm2.setTextSize(defPref.getString("comments_size_key", "16"))
+        tvListChapters.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView24.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        comm1.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        comm2.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
 
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         editTel.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         editEmail.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvLiter.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvAge.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         edTitle.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         edTitle2.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvAlias.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         edDescription.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
         tvListChapters.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
         textView24.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
         comm1.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
         comm2.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
         tvTitleTel.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvTitleEmail.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvAliasCat.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvLiterCat.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvAgeCat.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvTitle.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
         tvTitleDescription.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
 
         titBook.setTypeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
         btPublish.setTypeface(
-            defPref.getString("font_family_button_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_BUTTON_KEY, FONT_FAMILY_DEFAULT),
             this@EditAdsActivity
         )
 
@@ -652,7 +661,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
     }
 
     private fun updatePublicBook(book: BookEntity7, key: String?) {
-        Log.d("MyLog", "ad!!.key.toString() $key")
+        //Log.d("MyLog", "ad!!.key.toString() $key")
         //book.copy(public = "1")
         book.public = "1"
         book.uidAd = key

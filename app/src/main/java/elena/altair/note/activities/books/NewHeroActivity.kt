@@ -19,6 +19,16 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.ActivityNewHeroBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
@@ -595,231 +605,231 @@ class NewHeroActivity : AppCompatActivity() {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        edNameHero.setTextSize(pref?.getString("title_size_key", "18"))
-        edText2.setTextSize(pref?.getString("content_size_key", "18"))
-        edText3.setTextSize(pref?.getString("content_size_key", "18"))
-        edText4.setTextSize(pref?.getString("content_size_key", "18"))
-        edText5.setTextSize(pref?.getString("content_size_key", "18"))
-        edText6.setTextSize(pref?.getString("content_size_key", "18"))
-        edText7.setTextSize(pref?.getString("content_size_key", "18"))
-        edText8.setTextSize(pref?.getString("content_size_key", "18"))
-        edText9.setTextSize(pref?.getString("content_size_key", "18"))
-        edText10.setTextSize(pref?.getString("content_size_key", "18"))
-        edText11.setTextSize(pref?.getString("content_size_key", "18"))
-        edText12.setTextSize(pref?.getString("content_size_key", "18"))
-        edText13.setTextSize(pref?.getString("content_size_key", "18"))
-        edText14.setTextSize(pref?.getString("content_size_key", "18"))
-        edText15.setTextSize(pref?.getString("content_size_key", "18"))
-        edText16.setTextSize(pref?.getString("content_size_key", "18"))
-        edText17.setTextSize(pref?.getString("content_size_key", "18"))
-        edText18.setTextSize(pref?.getString("content_size_key", "18"))
-        edText19.setTextSize(pref?.getString("content_size_key", "18"))
-        edText20.setTextSize(pref?.getString("content_size_key", "18"))
-        edText21.setTextSize(pref?.getString("content_size_key", "18"))
+        edNameHero.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        edText2.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText3.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText4.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText5.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText6.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText7.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText8.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText9.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText10.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText11.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText12.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText13.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText14.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText15.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText16.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText17.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText18.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText19.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText20.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText21.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
 
-        nameHero.setTextSize(pref?.getString("comments_size_key", "16"))
-        titleBook.setTextSize(pref?.getString("title_size_key", "18"))
-        textView4.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView5.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView6.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView7.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView8.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView9.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView10.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView11.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView12.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView13.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView14.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView15.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView16.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView17.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView18.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView19.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView20.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView21.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView22.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView23.setTextSize(pref?.getString("comments_size_key", "16"))
+        nameHero.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        titleBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        textView4.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView5.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView6.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView7.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView8.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView9.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView10.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView11.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView12.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView13.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView14.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView15.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView16.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView17.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView18.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView19.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView20.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView21.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView22.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView23.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         edText2.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText3.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText4.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText5.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText6.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText7.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText8.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText9.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText10.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText11.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText12.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText13.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText14.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText15.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText16.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText17.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText18.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText19.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText20.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edText21.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         edNameHero.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
 
         titleBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
 
         nameHero.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView4.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView5.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView6.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView7.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView8.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView9.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView10.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView11.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView12.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView13.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView14.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView15.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView16.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView17.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView18.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView19.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView20.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView21.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView22.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         textView23.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
 
         val font: Typeface? = typeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewHeroActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)

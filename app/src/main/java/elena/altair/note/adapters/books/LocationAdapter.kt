@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
 import elena.altair.note.databinding.LocationItemBinding
 import elena.altair.note.etities.LocationEntity2
 import elena.altair.note.utils.font.setTypeface
@@ -44,7 +46,7 @@ class LocationAdapter(
                 tvTitle.text = location.titleLocation
 
                 tvTitle.setTypeface(
-                    defPref.getString("font_family_list_key", "sans-serif"),
+                    defPref.getString(FONT_FAMILY_LIST_KEY, FONT_FAMILY_DEFAULT),
                     mainActivity
                 )
 

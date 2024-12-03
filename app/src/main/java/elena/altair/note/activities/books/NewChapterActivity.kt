@@ -24,6 +24,16 @@ import androidx.core.content.FileProvider
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.ActivityNewChapterBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
@@ -991,89 +1001,89 @@ class NewChapterActivity : AppCompatActivity() {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        edTitleChapter.setTextSize(pref?.getString("title_size_key", "18"))
-        edDescription.setTextSize(pref?.getString("content_size_key", "18"))
-        editContent.setTextSize(pref?.getString("content_size_key", "18"))
-        titleBook.setTextSize(pref?.getString("title_size_key", "18"))
+        edTitleChapter.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        edDescription.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        editContent.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        titleBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
 
-        tw1.setTextSize(pref?.getString("comments_size_key", "16"))
-        tw2.setTextSize(pref?.getString("comments_size_key", "16"))
-        tw3.setTextSize(pref?.getString("comments_size_key", "16"))
-        tw4.setTextSize(pref?.getString("comments_size_key", "16"))
-        textComm0.setTextSize(pref?.getString("comments_size_key", "16"))
-        textComm1.setTextSize(pref?.getString("comments_size_key", "16"))
-        textComm2.setTextSize(pref?.getString("comments_size_key", "16"))
-        textComm3.setTextSize(pref?.getString("comments_size_key", "16"))
-        textComm4.setTextSize(pref?.getString("comments_size_key", "16"))
-        textComm5.setTextSize(pref?.getString("comments_size_key", "16"))
+        tw1.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw2.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw3.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw4.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textComm0.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textComm1.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textComm2.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textComm3.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textComm4.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textComm5.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         editContent.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         edDescription.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         edTitleChapter.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         titleBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         edNumber.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
 
         tw1.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         tw2.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         tw3.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         tw4.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         textComm0.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         textComm1.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         textComm2.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         textComm3.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         textComm4.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         textComm5.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
 
         val font: Typeface? = typeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewChapterActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)

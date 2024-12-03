@@ -12,6 +12,10 @@ import elena.altair.note.R
 import elena.altair.note.activities.ads.DescriptionActivity
 import elena.altair.note.activities.ads.DescriptionActivity.Companion.CHAPTER_KEY
 import elena.altair.note.activities.ads.ReadChapterActivity
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.databinding.ChapterItemForPublic2Binding
 import elena.altair.note.fragments.ads.AllAdsFragment.Companion.AD_KEY
 import elena.altair.note.model.Ad
@@ -63,19 +67,19 @@ class DescriptionActivityChapterRsAdapter(
 
         // функция для выбора размера текста
         private fun setTextSize() = with(binding) {
-            tvNumChap.setTextSize(defPref.getString("content_size_key", "18"))
-            tvChapTitle.setTextSize(defPref.getString("content_size_key", "18"))
+            tvNumChap.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+            tvChapTitle.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
         }
 
         //функция изменения fontFamily
         private fun setFontFamily() = with(binding) {
 
             tvNumChap.setTypeface(
-                defPref.getString("font_family_content_key", "sans-serif"),
+                defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
                 activity
             )
             tvChapTitle.setTypeface(
-                defPref.getString("font_family_content_key", "sans-serif"),
+                defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
                 activity
             )
 

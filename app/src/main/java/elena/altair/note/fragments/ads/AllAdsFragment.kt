@@ -12,10 +12,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +23,16 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
-import elena.altair.note.activities.MainActivity
 import elena.altair.note.activities.MainActivity.Companion.ADS_DATA
+import elena.altair.note.activities.MainActivity.Companion.ALL_ADS_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.ALL_PUBLISHED_BOOKS
 import elena.altair.note.activities.MainActivity.Companion.EDIT_STATE_AD
+import elena.altair.note.activities.MainActivity.Companion.MAIN_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.MY_PUBLISHED_BOOKS
+import elena.altair.note.activities.MainActivity.Companion.SELECTED_PUBLISHED_BOOKS
 import elena.altair.note.activities.MainActivity.Companion.USER_ANONYMOUS
 import elena.altair.note.activities.MainActivity.Companion.catPublic
+import elena.altair.note.activities.MainActivity.Companion.currentFrag
 import elena.altair.note.activities.MainActivity.Companion.currentUser
 import elena.altair.note.activities.ads.DescriptionActivity
 import elena.altair.note.activities.ads.EditAdsActivity
@@ -36,10 +40,11 @@ import elena.altair.note.adapters.ads.AllAdsFragmentBookRsAdapter
 import elena.altair.note.databinding.ContinueDialogBinding
 import elena.altair.note.databinding.DeleteDialogBinding
 import elena.altair.note.databinding.FragmentAllAdsBinding
-import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSpinnerHelper
-import elena.altair.note.dialoghelper.ProgressDialog.createProgressDialog
+import elena.altair.note.fragments.books.BackPressed
 import elena.altair.note.fragments.books.BaseFragment
+import elena.altair.note.fragments.books.DialogsAndOtherFunctions
+import elena.altair.note.fragments.books.MainListFragment
 import elena.altair.note.fragments.books.MainListFragment.Companion.SCROLL_DOWN
 import elena.altair.note.model.Ad
 import elena.altair.note.utils.InternetConnection.isOnline
@@ -48,7 +53,7 @@ import elena.altair.note.viewmodel.MainViewModel
 
 
 @AndroidEntryPoint
-class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
+class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, BackPressed {
 
     private lateinit var binding: FragmentAllAdsBinding
     private var pref: SharedPreferences? = null
@@ -64,17 +69,15 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     private var tempTime = "0"
     private lateinit var dialogProgres: AlertDialog
 
-
     override fun onClickNew() {
 
         if (mAuth.currentUser!!.isAnonymous || currentUser == USER_ANONYMOUS || currentUser == "" || currentUser == "null") {
-            createDialogInfo(
-                resources.getString(R.string.only_registered_users),
-                activity as MainActivity
+            (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                resources.getString(R.string.only_registered_users)
             )
             return
         }
-        val i = Intent(activity as MainActivity, EditAdsActivity::class.java)
+        val i = Intent(activity, EditAdsActivity::class.java)
         startActivity(i)
     }
 
@@ -91,9 +94,9 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        //val nv = act.findViewById<NavigationView>(R.id.navView)
+
         initFirebaseViewModal()
-        //tv.text = act.resources.getString(R.string.ad_my_ads)
+
         pref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
@@ -105,10 +108,10 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
 
         binding.edCatLiter2.setOnClickListener {
-            //tempFlagListEmpti = 0
+
             val listGenresLiter =
                 resources.getStringArray(R.array.genres_of_literature).toMutableList() as ArrayList
-            dialog.showSpinnerDialog(activity as MainActivity, listGenresLiter, binding.edCatLiter2)
+            dialog.showSpinnerDialog(activity as AppCompatActivity, listGenresLiter, binding.edCatLiter2)
 
 
         }
@@ -121,8 +124,6 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
                 tempTime = "0"
                 clearUpdate = true
                 currentCategory = binding.edCatLiter2.text.toString()
-                //val catLiterTime = "${currentCategory}_0"
-                //Log.d("MyLog", "catLiterTime $catLiterTime")
                 firebaseViewModel.loadAllAdsFromCatLiterFirstPage(currentCategory, dialogProgres)
 
             }
@@ -145,24 +146,18 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
     private fun initFirebaseViewModal() {
 
-        val act = activity as MainActivity
+        (activity as? DialogsAndOtherFunctions)?.viewButtons(ALL_ADS_FRAGMENT)
+
         tempTime = "0"
-        act.findViewById<View>(R.id.add).visibility = View.VISIBLE
-        //act.findViewById<View>(R.id.settings).visibility = View.GONE
-        act.findViewById<View>(R.id.tb).visibility = View.GONE
-        val toolbar =
-            act.findViewById<Toolbar>(R.id.toolbar) // import androidx.appcompat.widget.Toolbar
-        val tv: TextView = toolbar.getChildAt(0) as TextView
-        //Log.d("MyLog", "isInternetAvailable() ${isOnline(act)}")
-        dialogProgres = createProgressDialog(activity as MainActivity)
-        if (!isOnline(act)) {
+        dialogProgres = (activity as? DialogsAndOtherFunctions)!!.progressDialog()
+        if (!isOnline(activity as AppCompatActivity)) {
             dialogProgres.dismiss()
-            createDialogInfo(resources.getString(R.string.network_exception), act)
+            (activity as? DialogsAndOtherFunctions)?.createDialogI(resources.getString(R.string.network_exception))
         }
 
-        if (catPublic == 1) {
+        if (catPublic == MY_PUBLISHED_BOOKS) {
             clearUpdate = true
-            tv.text = act.resources.getString(R.string.ad_my_ads)
+
             if (currentCategory == "")
                 firebaseViewModel.loadMyAdsFirstPage(dialogProgres)
             else
@@ -172,9 +167,9 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
 
         }
-        if (catPublic == 2) {
+        if (catPublic == ALL_PUBLISHED_BOOKS) {
             clearUpdate = true
-            tv.text = act.resources.getString(R.string.ad_other_ads)
+
             if (currentCategory == "")
                 firebaseViewModel.loadAllAdsFirstPage(dialogProgres)
             else
@@ -183,11 +178,11 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
                 )
 
         }
-        if (catPublic == 3) {
+        if (catPublic == SELECTED_PUBLISHED_BOOKS) {
             binding.edCatLiter2.visibility = View.GONE
             binding.tvSelCatLit.visibility = View.GONE
             clearUpdate = true
-            tv.text = act.resources.getString(R.string.ad_favourites)
+
             firebaseViewModel.loadMyFavs(dialogProgres)
         }
 
@@ -196,7 +191,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
     private fun initViewModel() {
 
-        firebaseViewModel.liveAdsData.observe(activity as MainActivity) {
+        firebaseViewModel.liveAdsData.observe(activity as AppCompatActivity) {
             val list = getAdsByCategory(it)
 
             if (!clearUpdate) {
@@ -214,7 +209,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     private fun getAdsByCategory(list: ArrayList<Ad>): ArrayList<Ad> {
         val tempList = ArrayList<Ad>()
 
-        if (catPublic == 1) {
+        if (catPublic == MY_PUBLISHED_BOOKS) {
             list.forEach {
                 if (mAuth.uid == it.uidOwner)
                     tempList.add(it)
@@ -228,7 +223,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
             }
         }
 
-        if (catPublic == 2) {
+        if (catPublic == ALL_PUBLISHED_BOOKS) {
             tempList.addAll(list)
             if (currentCategory != "") {
                 tempList.clear()
@@ -239,7 +234,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
             }
         }
 
-        if (catPublic == 3) {
+        if (catPublic == SELECTED_PUBLISHED_BOOKS) {
             tempList.addAll(list)
 
         }
@@ -255,7 +250,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
     private fun initRecyclerView() {
         binding.apply {
-            rcViewAds.layoutManager = LinearLayoutManager(activity as MainActivity)
+            rcViewAds.layoutManager = LinearLayoutManager(activity as AppCompatActivity)
             rcViewAds.adapter = adapter
         }
 
@@ -264,10 +259,9 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
     override fun onDeleteItem(ad: Ad) {
 
-        if (!isOnline(activity as MainActivity)) {
-            createDialogInfo(
-                (activity as MainActivity).resources.getString(R.string.network_exception),
-                activity as MainActivity
+        if (!isOnline(activity as AppCompatActivity)) {
+            (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                (activity as AppCompatActivity).resources.getString(R.string.network_exception)
             )
             return
         }
@@ -285,7 +279,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
             if (it == null) {
                 if (flagDel == 0)
                     createDialogContinue(
-                        (activity as MainActivity).resources.getString(R.string.published_from_another_device),
+                        (activity as AppCompatActivity).resources.getString(R.string.published_from_another_device),
                         ad
                     )
             } else {
@@ -301,8 +295,8 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
         message: String,
         ad: Ad
     ) {
-        val builder = AlertDialog.Builder(activity as MainActivity)
-        val bindingDialog = ContinueDialogBinding.inflate((activity as MainActivity).layoutInflater)
+        val builder = AlertDialog.Builder(activity as AppCompatActivity)
+        val bindingDialog = ContinueDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -325,13 +319,10 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
     private fun createDialogDeletePublic(
         message: String,
-        //activity: MainActivity,
         ad: Ad,
-        //firebaseViewModel: FirebaseViewModel,
-        //mainViewModel: MainViewModel,
     ) {
-        val builder = AlertDialog.Builder(activity as MainActivity)
-        val bindingDialog = DeleteDialogBinding.inflate((activity as MainActivity).layoutInflater)
+        val builder = AlertDialog.Builder(activity as AppCompatActivity)
+        val bindingDialog = DeleteDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -364,7 +355,6 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
             mainViewModel.getBookByKeyFirebase(ad.key.toString()).observe(viewLifecycleOwner) {
                 val book = it
                 if (book != null) {
-                    //book.copy(public = "0")
                     book.public = "0"
                     book.uidAd = null
                     mainViewModel.updateBook(book)
@@ -377,10 +367,9 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
     }
 
     override fun onAdViewed(ad: Ad) { // увеличиваем счетчик просмотров
-        if (!isOnline(activity as MainActivity)) {
-            createDialogInfo(
-                (activity as MainActivity).resources.getString(R.string.network_exception),
-                activity as MainActivity
+        if (!isOnline(activity as AppCompatActivity)) {
+            (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                (activity as AppCompatActivity).resources.getString(R.string.network_exception)
             )
             return
         }
@@ -388,14 +377,13 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
         val i = Intent(context, DescriptionActivity::class.java)
         i.putExtra(AD_KEY, ad)
-        (activity as MainActivity).startActivity(i)
+        (activity as AppCompatActivity).startActivity(i)
     }
 
     override fun onFavClicked(ad: Ad) {
-        if (!isOnline(activity as MainActivity)) {
-            createDialogInfo(
-                (activity as MainActivity).resources.getString(R.string.network_exception),
-                activity as MainActivity
+        if (!isOnline(activity as AppCompatActivity)) {
+            (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                (activity as AppCompatActivity).resources.getString(R.string.network_exception)
             )
             return
         }
@@ -405,20 +393,19 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
 
 
     override fun onClickEdit(ad: Ad) {
-        if (!isOnline(activity as MainActivity)) {
-            createDialogInfo(
-                (activity as MainActivity).resources.getString(R.string.network_exception),
-                activity as MainActivity
+        if (!isOnline(activity as AppCompatActivity)) {
+            (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                (activity as AppCompatActivity).resources.getString(R.string.network_exception)
             )
             return
         }
-        val editIntent = Intent((activity as MainActivity), EditAdsActivity::class.java).apply {
+        val editIntent = Intent((activity as AppCompatActivity), EditAdsActivity::class.java).apply {
             // true - открыли объявление для редактирования
             // false - создаём новое объявление
             putExtra(EDIT_STATE_AD, true)
             putExtra(ADS_DATA, ad)
         }
-        (activity as MainActivity).startActivity(editIntent)
+        (activity as AppCompatActivity).startActivity(editIntent)
     }
 
 
@@ -433,17 +420,15 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
                     //Log.d("MyLog", "Can't scroll down")
                     clearUpdate = false
                     val adsList = firebaseViewModel.liveAdsData.value!!
-                    //Log.d("MyLog", "adsList ${adsList}")
-                    //Log.d("MyLog", "tempFlagListEmpti ${tempFlagListEmpti}")
 
-                    if (adsList.isNotEmpty()) {///
+                    if (adsList.isNotEmpty()) {
                         adsList[0]
                             .let {
                                 if (tempTime == "0" || tempTime > it.time) {
 
                                     tempTime = it.time
 
-                                    if (catPublic == 1) {
+                                    if (catPublic == MY_PUBLISHED_BOOKS) {
                                         if (filter == 0)
                                             firebaseViewModel.loadMyAdsNextPage(it.time)
                                         else {
@@ -453,7 +438,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
                                             )
                                         }
                                     }
-                                    if (catPublic == 2) {
+                                    if (catPublic == ALL_PUBLISHED_BOOKS) {
                                         if (filter == 0)
                                             firebaseViewModel.loadAllAdsNextPage(it.time)
                                         else {
@@ -461,10 +446,9 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
                                             firebaseViewModel.loadAllAdsFromCatLiterNextPage(
                                                 catLiterTime
                                             )
-                                            //Log.d("MyLog", "+++")
                                         }
                                     }
-                                    if (catPublic == 3) {
+                                    if (catPublic == SELECTED_PUBLISHED_BOOKS) {
                                         firebaseViewModel.loadMyFavs(dialogProgres)
                                     }
 
@@ -476,6 +460,12 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener {
         })
     }
 
+    override fun handleOnBackPressed() {
+        currentFrag = MAIN_LIST_FRAGMENT
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.placeHolder, MainListFragment.newInstance())
+        }
+    }
 
     companion object {
 

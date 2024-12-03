@@ -19,6 +19,16 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.ActivityNewPeopleBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
@@ -546,103 +556,103 @@ class NewPeopleActivity : AppCompatActivity() {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        edTitlePeople.setTextSize(pref?.getString("title_size_key", "18"))
-        edTerritoryResidence.setTextSize(pref?.getString("content_size_key", "18"))
-        edFeaturesAppearance.setTextSize(pref?.getString("content_size_key", "18"))
-        edLanguage.setTextSize(pref?.getString("content_size_key", "18"))
-        edReligion.setTextSize(pref?.getString("content_size_key", "18"))
-        edFeatures.setTextSize(pref?.getString("content_size_key", "18"))
-        edArt.setTextSize(pref?.getString("content_size_key", "18"))
-        edRole.setTextSize(pref?.getString("content_size_key", "18"))
+        edTitlePeople.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        edTerritoryResidence.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edFeaturesAppearance.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edLanguage.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edReligion.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edFeatures.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edArt.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edRole.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
 
-        namePeople.setTextSize(pref?.getString("comments_size_key", "16"))
-        titleBook.setTextSize(pref?.getString("title_size_key", "18"))
-        textView4.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView5.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView6.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView7.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView8.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView9.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView10.setTextSize(pref?.getString("comments_size_key", "16"))
+        namePeople.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        titleBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        textView4.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView5.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView6.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView7.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView8.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView9.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView10.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
 
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         edTerritoryResidence.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         edFeaturesAppearance.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         edLanguage.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         edReligion.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         edFeatures.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         edArt.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         edRole.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
 
         edTitlePeople.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
 
         titleBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
 
         namePeople.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView4.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView5.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView6.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView7.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView8.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView9.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         textView10.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
 
         val font: Typeface? = typeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewPeopleActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)

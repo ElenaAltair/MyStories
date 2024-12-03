@@ -19,6 +19,16 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.ActivityNewLocationBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.dialoghelper.DialogSave.DialogSaveAndGetOut
@@ -543,102 +553,102 @@ class NewLocationActivity : AppCompatActivity() {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        edTitleLocation.setTextSize(pref?.getString("title_size_key", "18"))
-        edGeography.setTextSize(pref?.getString("content_size_key", "18"))
-        edPopulation.setTextSize(pref?.getString("content_size_key", "18"))
-        edPolitics.setTextSize(pref?.getString("content_size_key", "18"))
-        edEconomy.setTextSize(pref?.getString("content_size_key", "18"))
-        edReligion.setTextSize(pref?.getString("content_size_key", "18"))
-        edHistory.setTextSize(pref?.getString("content_size_key", "18"))
-        edFeature.setTextSize(pref?.getString("content_size_key", "18"))
+        edTitleLocation.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        edGeography.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edPopulation.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edPolitics.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edEconomy.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edReligion.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edHistory.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edFeature.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
 
-        nameLocation.setTextSize(pref?.getString("comments_size_key", "16"))
-        titleBook.setTextSize(pref?.getString("title_size_key", "18"))
-        textView4.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView5.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView6.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView7.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView8.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView9.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView10.setTextSize(pref?.getString("comments_size_key", "16"))
+        nameLocation.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        titleBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        textView4.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView5.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView6.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView7.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView8.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView9.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView10.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         edGeography.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         edPopulation.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         edPolitics.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         edEconomy.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         edReligion.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         edHistory.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         edFeature.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
 
         edTitleLocation.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
 
         titleBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
 
         nameLocation.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView4.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView5.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView6.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView7.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView8.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView9.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         textView10.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
 
         val font: Typeface? = typeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
+            pref?.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@NewLocationActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)

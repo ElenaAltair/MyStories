@@ -21,6 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.adapters.ads.DescriptionActivityChapterRsAdapter
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.databinding.ActivityDescriptionBinding
 import elena.altair.note.databinding.ContinueDialogBinding
 import elena.altair.note.dialoghelper.DialogInfo
@@ -375,45 +379,45 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
         // не хочу менять размер текста
-        //literCat.setTextSize(defPref.getString("content_size_key", "18"))
-        //ageCat.setTextSize(defPref.getString("content_size_key", "18"))
-        //tvTitle.setTextSize(defPref.getString("title_size_key", "18"))
-        //desciption.setTextSize(defPref.getString("content_size_key", "18"))
+        //literCat.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        //ageCat.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        //tvTitle.setTextSize(defPref.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        //desciption.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         tvTitle.setTypeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         literCat.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         ageCat.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         email.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         alias.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         desciption.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         binding.textView31.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
 
         val font: Typeface? = typeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@DescriptionActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)

@@ -326,18 +326,4 @@ class MainViewModel @Inject constructor(database: MainDataBase) : ViewModel() {
         dao.deleteTerm(id)
     }
 
-    companion object {
-        const val BOOK_LIMIT = 20
-    }
-
-    // этот класс мы будем запускать, чтобы он инициализировал класс MainViewModel
-    class MainViewModalFactory(val database: MainDataBase) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MainViewModel(database) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModelClass")
-        }
-    }
 }

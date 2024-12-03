@@ -16,27 +16,31 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
+import elena.altair.note.activities.MainActivity.Companion.CHAPTER_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.MAIN_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.currentFrag
 import elena.altair.note.activities.books.NewChapterActivity
 import elena.altair.note.adapters.books.ChapterAdapter
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_DEFAULT
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_KEY
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_LINEAR
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.FragmentChapterListBinding
-import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
-import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
-import elena.altair.note.dialoghelper.ProgressDialog
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
-import elena.altair.note.utils.file.PdfTxtChapterListUtils.saveDocx
-import elena.altair.note.utils.file.PdfTxtChapterListUtils.savePdf
-import elena.altair.note.utils.file.PdfTxtChapterListUtils.saveTxt
 import elena.altair.note.utils.font.setTextSize
-import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,9 +63,6 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     private val mainViewModel: MainViewModel by activityViewModels()
     private val STORAGE_CODE: Int = 100
     private var job: Job? = null
-    //private val mainViewModel: MainViewModel by activityViewModels {
-    //MainViewModel.MainViewModalFactory((context?.applicationContext as MainApp).database)
-    //}
 
     // при нажатии на кнопку "добавить",
     // здесь будет запускаться логика, добавляющая новую запись(главу книги) в базу данных
@@ -94,12 +95,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val act = activity as MainActivity
-        act.findViewById<View>(R.id.add).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.mainlist).visibility = View.VISIBLE
-        val tab = act.findViewById<TabLayout>(R.id.tb)
-        tab.visibility = View.VISIBLE
-        tab.getTabAt(2)!!.select()
+        (activity as? DialogsAndOtherFunctions)?.viewButtons(CHAPTER_LIST_FRAGMENT)
 
         pref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
         setTextSize()
@@ -110,10 +106,12 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
         mainViewModel.bookTr.observe(viewLifecycleOwner) {
 
             binding.imListBook.setOnClickListener {
-                FragmentManager.setFragment(
-                    MainListFragment.newInstance(),
-                    activity as AppCompatActivity
-                )
+                currentFrag = MAIN_LIST_FRAGMENT
+                requireActivity().supportFragmentManager.commit {
+                    replace(R.id.placeHolder, MainListFragment.newInstance())
+                }
+
+                //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
             }
 
 
@@ -121,15 +119,14 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 val list = adapter.currentList
 
                 job = CoroutineScope(Dispatchers.Main).launch {
-                    val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                    val strMessage = saveDocx(
+                    val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                    val strMessage = (activity as? DialogsAndOtherFunctions)?.saveDocxChapters(
                         book?.titleBook ?: "book",
                         book?.nameAuthor ?: "author",
-                        list,
-                        activity as MainActivity
+                        list
                     )
-                    dialog.dismiss()
-                    createDialogInfo(strMessage, activity as MainActivity)
+                    dialog?.dismiss()
+                    (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                 }
 
             }
@@ -140,19 +137,18 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf(
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage = (activity as? DialogsAndOtherFunctions)?.savePdfChapters(
                             book?.titleBook ?: "book",
                             book?.nameAuthor ?: "author",
-                            list,
-                            activity as MainActivity
+                            list
                         )
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 } else {
 
-                    if ((activity as MainActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if ((activity as AppCompatActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_DENIED
                     ) {
                         //permission was not granted, request it
@@ -161,16 +157,15 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     } else {
                         //permission already granted, call savePdf() method
                         job = CoroutineScope(Dispatchers.Main).launch {
-                            val dialog =
-                                ProgressDialog.createProgressDialog(activity as MainActivity)
-                            val strMessage = savePdf(
-                                book?.titleBook ?: "book",
-                                book?.nameAuthor ?: "author",
-                                list,
-                                activity as MainActivity
-                            )
-                            dialog.dismiss()
-                            createDialogInfo(strMessage, activity as MainActivity)
+                            val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                            val strMessage =
+                                (activity as? DialogsAndOtherFunctions)?.savePdfChapters(
+                                    book?.titleBook ?: "book",
+                                    book?.nameAuthor ?: "author",
+                                    list
+                                )
+                            dialog?.dismiss()
+                            (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                         }
                     }
                 }
@@ -181,18 +176,17 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt(
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage = (activity as? DialogsAndOtherFunctions)?.saveTxtChapters(
                             book?.titleBook ?: "book",
                             book?.nameAuthor ?: "author",
-                            list,
-                            activity as MainActivity
+                            list
                         )
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 } else {
-                    if ((activity as MainActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if ((activity as AppCompatActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_DENIED
                     ) {
                         //permission was not granted, request it
@@ -201,16 +195,15 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     } else {
                         //permission already granted, call saveTxt() method
                         job = CoroutineScope(Dispatchers.Main).launch {
-                            val dialog =
-                                ProgressDialog.createProgressDialog(activity as MainActivity)
-                            val strMessage = saveTxt(
-                                book?.titleBook ?: "book",
-                                book?.nameAuthor ?: "author",
-                                list,
-                                activity as MainActivity
-                            )
-                            dialog.dismiss()
-                            createDialogInfo(strMessage, activity as MainActivity)
+                            val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                            val strMessage =
+                                (activity as? DialogsAndOtherFunctions)?.saveTxtChapters(
+                                    book?.titleBook ?: "book",
+                                    book?.nameAuthor ?: "author",
+                                    list
+                                )
+                            dialog?.dismiss()
+                            (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                         }
                     }
                 }
@@ -238,41 +231,38 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     binding.imListBook.setOnClickListener {
-                        FragmentManager.setFragment(
-                            MainListFragment.newInstance(),
-                            activity as AppCompatActivity
-                        )
+                        currentFrag = MAIN_LIST_FRAGMENT
+                        requireActivity().supportFragmentManager.commit {
+                            replace(R.id.placeHolder, MainListFragment.newInstance())
+                        }
                     }
 
                     val list = adapter.currentList
                     //permission from popup was granted, call savePdf() method
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf(
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage = (activity as? DialogsAndOtherFunctions)?.savePdfChapters(
                             "book",
                             book?.nameAuthor ?: "author",
-                            list,
-                            activity as MainActivity
+                            list
                         )
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt(
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage = (activity as? DialogsAndOtherFunctions)?.saveTxtChapters(
                             "book",
                             book?.nameAuthor ?: "author",
-                            list,
-                            activity as MainActivity
+                            list
                         )
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 } else {
                     //permission from popup was denied, show error message
-                    createDialogInfo(
-                        "ChapterListFragment " + resources.getString(R.string.permission_denied),
-                        activity as MainActivity
+                    (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                        "ChapterListFragment " + resources.getString(R.string.permission_denied)
                     )
                     //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
                 }
@@ -301,7 +291,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     // получаем нужный LayoutManager, который будем передавать в наш RecyclerView
     // в зависимости от того, что выбрано на экране настроек
     private fun getLayoutManager(): RecyclerView.LayoutManager {
-        return if (defPref.getString("note_style_key", "Linear") == "Linear") {
+        return if (defPref.getString(NOTE_STYLE_KEY, NOTE_STYLE_DEFAULT) == NOTE_STYLE_LINEAR) {
             LinearLayoutManager(activity)
         } else {
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -376,11 +366,9 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     }
 
     override fun deleteItem(id: Long) {
-        createDialogDelete(
+        (activity as? DialogsAndOtherFunctions)?.createDialogDelete(
             resources.getString(R.string.sure_delete_chapter),
-            activity as MainActivity,
-            id,
-            mainViewModel
+            id
         )
     }
 
@@ -405,33 +393,42 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        titBook.setTextSize(pref?.getString("title_size_key", "18"))
-        tvCT.setTextSize(pref?.getString("title_size_key", "18"))
+        titBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        tvCT.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
 
-        titBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), titBook
         )
-        tvCT.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), tvCT
         )
-        textView2.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView2
         )
 
     }
 
     override fun handleOnBackPressed() {
-        FragmentManager.setFragment(
-            MainListFragment.newInstance(),
-            activity as MainActivity
-        )
+        currentFrag = MAIN_LIST_FRAGMENT
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.placeHolder, MainListFragment.newInstance())
+        }
+        //FragmentManager.setFragment(MainListFragment.newInstance(),activity as MainActivity)
     }
 
     override fun onDestroy() {

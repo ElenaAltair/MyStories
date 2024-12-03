@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.TIME_FORMAT_DEFAULT
 import elena.altair.note.databinding.AdListItemBinding
 import elena.altair.note.fragments.ads.AllAdsFragment
 import elena.altair.note.model.Ad
@@ -26,7 +27,7 @@ class AllAdsFragmentBookRsAdapter(
     private var timeFormatter: SimpleDateFormat? = null
 
     init {
-        timeFormatter = SimpleDateFormat("HH:mm:ss - dd/MM/yyyy", Locale.getDefault())
+        timeFormatter = SimpleDateFormat(TIME_FORMAT_DEFAULT, Locale.getDefault())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdHolder {

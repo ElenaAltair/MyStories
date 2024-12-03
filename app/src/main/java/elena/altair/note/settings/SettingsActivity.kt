@@ -9,6 +9,22 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.BUTTON_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_BUTTON_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.LIST_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.THEME_DEFAULT
+import elena.altair.note.constants.MyConstants.THEME_KEY
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.ActivitySettingsBinding
 import elena.altair.note.utils.font.TypefaceUtils.setTitleActionBar
 import elena.altair.note.utils.font.TypefaceUtils.typeface
@@ -36,19 +52,23 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
-        currentTheme = defPref.getString("theme_key", "blue").toString()
+        currentTheme = defPref.getString(THEME_KEY, THEME_DEFAULT).toString()
 
-        currentFontFamilyTitle = defPref.getString("font_family_title_key", "sans-serif").toString()
+        currentFontFamilyTitle =
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT).toString()
         currentFontFamilyContent =
-            defPref.getString("font_family_content_key", "sans-serif").toString()
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT).toString()
         currentFontFamilyComment =
-            defPref.getString("font_family_comment_key", "sans-serif").toString()
-        currentFontFamilyList = defPref.getString("font_family_list_key", "sans-serif").toString()
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT).toString()
+        currentFontFamilyList =
+            defPref.getString(FONT_FAMILY_LIST_KEY, FONT_FAMILY_DEFAULT).toString()
         currentFontFamilyButton =
-            defPref.getString("font_family_button_key", "sans-serif").toString()
-        currentTextSizeTitle = defPref.getString("title_size_key", "18").toString()
-        currentTextSizeContent = defPref.getString("content_size_key", "18").toString()
-        currentTextSizeComment = defPref.getString("comments_size_key", "16").toString()
+            defPref.getString(FONT_FAMILY_BUTTON_KEY, FONT_FAMILY_DEFAULT).toString()
+        currentTextSizeTitle = defPref.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT).toString()
+        currentTextSizeContent =
+            defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT).toString()
+        currentTextSizeComment =
+            defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT).toString()
 
         setTheme(getSelectedTheme(defPref))
 
@@ -59,36 +79,36 @@ class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val font: Typeface? = typeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@SettingsActivity
         )
         setTitleActionBar(resources.getString(R.string.settings), font, supportActionBar)
 
         binding.idTestTitle.setTypeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@SettingsActivity
         )
-        binding.idTestTitle.setTextSize(defPref.getString("title_size_key", "18"))
+        binding.idTestTitle.setTextSize(defPref.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
         binding.idTestContent.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@SettingsActivity
         )
-        binding.idTestContent.setTextSize(defPref.getString("content_size_key", "18"))
+        binding.idTestContent.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
         binding.idTestComment.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@SettingsActivity
         )
-        binding.idTestComment.setTextSize(defPref.getString("comments_size_key", "16"))
+        binding.idTestComment.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
         binding.idTestList.setTypeface(
-            defPref.getString("font_family_list_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_LIST_KEY, FONT_FAMILY_DEFAULT),
             this@SettingsActivity
         )
-        binding.idTestList.setTextSize("16")
+        binding.idTestList.setTextSize(LIST_SIZE_DEFAULT)
         binding.idTestButton.setTypeface(
-            defPref.getString("font_family_button_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_BUTTON_KEY, FONT_FAMILY_DEFAULT),
             this@SettingsActivity
         )
-        binding.idTestButton.setTextSize("16")
+        binding.idTestButton.setTextSize(BUTTON_SIZE_DEFAULT)
 
 
         if (savedInstanceState == null) {
@@ -101,27 +121,36 @@ class SettingsActivity : AppCompatActivity() {
 
 
         listener = OnSharedPreferenceChangeListener { defValue, key ->
-            if (defPref.getString("theme_key", "blue") != currentTheme
+            if (defPref.getString(THEME_KEY, THEME_DEFAULT) != currentTheme
                 || defPref.getString(
-                    "font_family_title_key",
-                    "sans-serif"
+                    FONT_FAMILY_TITLE_KEY,
+                    FONT_FAMILY_DEFAULT
                 ) != currentFontFamilyTitle
                 || defPref.getString(
-                    "font_family_content_key",
-                    "sans-serif"
+                    FONT_FAMILY_CONTENT_KEY,
+                    FONT_FAMILY_DEFAULT
                 ) != currentFontFamilyContent
                 || defPref.getString(
-                    "font_family_comment_key",
-                    "sans-serif"
+                    FONT_FAMILY_COMMENT_KEY,
+                    FONT_FAMILY_DEFAULT
                 ) != currentFontFamilyComment
-                || defPref.getString("font_family_list_key", "sans-serif") != currentFontFamilyList
                 || defPref.getString(
-                    "font_family_button_key",
-                    "sans-serif"
+                    FONT_FAMILY_LIST_KEY,
+                    FONT_FAMILY_DEFAULT
+                ) != currentFontFamilyList
+                || defPref.getString(
+                    FONT_FAMILY_BUTTON_KEY,
+                    FONT_FAMILY_DEFAULT
                 ) != currentFontFamilyButton
-                || defPref.getString("title_size_key", "18") != currentTextSizeTitle
-                || defPref.getString("content_size_key", "18") != currentTextSizeContent
-                || defPref.getString("comments_size_key", "14") != currentTextSizeComment
+                || defPref.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT) != currentTextSizeTitle
+                || defPref.getString(
+                    CONTENT_SIZE_KEY,
+                    CONTENT_SIZE_DEFAULT
+                ) != currentTextSizeContent
+                || defPref.getString(
+                    COMMENT_SIZE_KEY,
+                    COMMENT_SIZE_DEFAULT
+                ) != currentTextSizeComment
             ) recreate() // эта функция пересоздает активити
         }
 

@@ -11,6 +11,15 @@ import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_BUTTON_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.databinding.ActivityProfileBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.etities.ProfileEntity2
@@ -110,67 +119,67 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setTextSize() = with(binding) {
-        twAkk.setTextSize(defPref.getString("content_size_key", "18"))
-        edName1.setTextSize(defPref.getString("content_size_key", "18"))
-        edName2.setTextSize(defPref.getString("content_size_key", "18"))
-        edName3.setTextSize(defPref.getString("content_size_key", "18"))
+        twAkk.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edName1.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edName2.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edName3.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
 
-        tw1.setTextSize(defPref.getString("comments_size_key", "16"))
-        tw2.setTextSize(defPref.getString("comments_size_key", "16"))
-        tw3.setTextSize(defPref.getString("comments_size_key", "16"))
-        tw4.setTextSize(defPref.getString("comments_size_key", "16"))
-        tw5.setTextSize(defPref.getString("comments_size_key", "16"))
+        tw1.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw2.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw3.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw4.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        tw5.setTextSize(defPref.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
     }
 
     private fun setFontFamily() = with(binding) {
         twAkk.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         edName1.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         edName2.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         edName3.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
 
 
         tw1.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         tw2.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         tw3.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         tw4.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         tw5.setTypeface(
-            defPref.getString("font_family_comment_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_COMMENT_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
 
 
         val font: Typeface? = typeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY , FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)
 
         bSave.setTypeface(
-            defPref.getString("font_family_button_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_BUTTON_KEY, FONT_FAMILY_DEFAULT),
             this@ProfileActivity
         )
 

@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
 import elena.altair.note.databinding.BookItemBinding
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.utils.font.setTypeface
@@ -46,15 +48,15 @@ class BookAdapter(
                 tvTime.text = TimeManager.getTimeFormat(book.time, defPref)
 
                 tvTitle.setTypeface(
-                    defPref.getString("font_family_list_key", "sans-serif"),
+                    defPref.getString(FONT_FAMILY_LIST_KEY, FONT_FAMILY_DEFAULT),
                     mainActivity
                 )
                 tvShotDescrip.setTypeface(
-                    defPref.getString("font_family_list_key", "sans-serif"),
+                    defPref.getString(FONT_FAMILY_LIST_KEY, FONT_FAMILY_DEFAULT),
                     mainActivity
                 )
                 tvTime.setTypeface(
-                    defPref.getString("font_family_list_key", "sans-serif"),
+                    defPref.getString(FONT_FAMILY_LIST_KEY, FONT_FAMILY_DEFAULT),
                     mainActivity
                 )
 

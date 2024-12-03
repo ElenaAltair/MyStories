@@ -5,16 +5,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,19 +20,27 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
+import elena.altair.note.activities.MainActivity.Companion.CHAPTER_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.MAIN_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.currentFrag
 import elena.altair.note.activities.MainActivity.Companion.currentUser
 import elena.altair.note.activities.books.NewBookActivity
 import elena.altair.note.adapters.books.BookAdapter
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_DEFAULT
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_KEY
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_LINEAR
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.FragmentMainListBinding
-import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.utils.font.setTextSize
-import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.viewmodel.MainViewModel
 
 @AndroidEntryPoint
-class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
-
+class MainListFragment() : BaseFragment(), BookAdapter.Listener {
 
     private lateinit var binding: FragmentMainListBinding
     private lateinit var defPref: SharedPreferences
@@ -46,10 +52,6 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
     private lateinit var adapter: BookAdapter
     private val mainViewModel: MainViewModel by activityViewModels()
 
-
-    //private val mainViewModel: MainViewModel by activityViewModels {
-    //MainViewModel.MainViewModalFactory((context?.applicationContext as MainApp).database)
-    //}
 
     // при нажатии на кнопку "добавить",
     // здесь будет запускаться логика, добавляющая новую запись(книги) в базу данных, для каждого фрагмента своя логика
@@ -79,16 +81,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
     // функция запускается, когда все View уже созданы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val act = activity as MainActivity
-
-        act.findViewById<View>(R.id.settings).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.add).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.mainlist).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.tb).visibility = View.GONE
-        val toolbar =
-            act.findViewById<Toolbar>(R.id.toolbar) // import androidx.appcompat.widget.Toolbar
-        val tv: TextView = toolbar.getChildAt(0) as TextView
-        tv.text = act.resources.getString(R.string.app_name)
+        (activity as? DialogsAndOtherFunctions)?.viewButtons(MAIN_LIST_FRAGMENT)
 
 
         pref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
@@ -103,7 +96,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
     // функция для инициализации нашего Recycle View
     // здесь же мы инициализируем наш adapter
     private fun initRcView() = with(binding) {
-        defPref = PreferenceManager.getDefaultSharedPreferences(activity as MainActivity)
+        defPref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
         rcViewNote.layoutManager = getLayoutManager()
 
         adapter = BookAdapter(
@@ -119,7 +112,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
     // получаем нужный LayoutManager, который будем передавать в наш RecyclerView
     // в зависимости от того, что выбрано на экране настроек
     private fun getLayoutManager(): RecyclerView.LayoutManager {
-        return if (defPref.getString("note_style_key", "Linear") == "Linear") {
+        return if (defPref.getString(NOTE_STYLE_KEY, NOTE_STYLE_DEFAULT) == NOTE_STYLE_LINEAR) {
             LinearLayoutManager(activity)
         } else {
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -190,33 +183,27 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
         editLauncher.launch(intent)
     }
 
-    override fun deleteItem(id: Long) { // нажали на маленькую кнопку удалить книгу
-        createDialogDelete(
-            resources.getString(R.string.sure_delete_book),
-            activity as MainActivity,
-            id,
-            mainViewModel
-        )
-    }
 
     // нажали на элемент списка (на какую-нибудь книгу)
     // открывается фрагмент с меню для новой книги
     override fun onClickItem(book: BookEntity7) {
         mainViewModel.bookTr.value = book
-        FragmentManager.setFragment(
-            ChapterListFragment.newInstance(),
-            activity as AppCompatActivity
-        )
+        currentFrag = CHAPTER_LIST_FRAGMENT
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.placeHolder, ChapterListFragment.newInstance())
+        }
+
     }
 
     // нажали на маленьку кнопку edit_in
     // открывается фрагмент с меню для новой книги
     override fun editInItem(book: BookEntity7) {
         mainViewModel.bookTr.value = book
-        FragmentManager.setFragment(
-            ChapterListFragment.newInstance(),
-            activity as AppCompatActivity
-        )
+        currentFrag = CHAPTER_LIST_FRAGMENT
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.placeHolder, ChapterListFragment.newInstance())
+        }
+
     }
 
 
@@ -227,7 +214,7 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
                 super.onScrollStateChanged(recView, newState)
                 // не может скролиться вниз и новое состояние это состояние покоя
                 if (!recView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    Log.d("MyLog", "Can't scroll down")
+                    //Log.d("MyLog", "Can't scroll down")
                 }
             }
         })
@@ -235,26 +222,32 @@ class MainListFragment() : BaseFragment(), BookAdapter.Listener {//, BackPressed
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        textView.setTextSize(pref?.getString("title_size_key", "18"))
-        //textView2.setTextSize(pref?.getString("comment_size_key", "16"))
+        textView.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        //textView2.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView
+        )
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView2
+        )
+    }
 
-        textView.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
-        )
-        textView2.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
-        )
-        textView2.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
-        )
 
+    override fun deleteItem(id: Long) { // нажали на маленькую кнопку удалить книгу
+        (activity as? DialogsAndOtherFunctions)?.createDialogDelete(
+            resources.getString(R.string.sure_delete_book),
+            id,
+        )
     }
 
     companion object {

@@ -1,7 +1,6 @@
 package elena.altair.note.fragments.books
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -12,23 +11,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
-import elena.altair.note.activities.MainActivity
+//import elena.altair.note.activities.MainActivity
+import elena.altair.note.activities.MainActivity.Companion.MAIN_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.PLOT_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.currentFrag
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.FragmentPlotBinding
-import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
-import elena.altair.note.dialoghelper.DialogSave.dialogSavePlot
-import elena.altair.note.dialoghelper.ProgressDialog
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.PlotEntity2
-import elena.altair.note.utils.file.DOCXUtils.saveDocx
-import elena.altair.note.utils.file.PDFUtils.savePdf
-import elena.altair.note.utils.file.TXTUtils.saveTxt
 import elena.altair.note.utils.font.setTextSize
-import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.share.ShareHelperPlot
-import elena.altair.note.utils.share.ShareHelperPlot.makeShareText
 import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,11 +55,6 @@ class PlotFragment : BaseFragment(), BackPressed {
     private var newPlot: PlotEntity2? = null
     private var indicatorOldPlot = 0
 
-    //private val mainViewModel: MainViewModel by activityViewModels {
-    //MainViewModel.MainViewModalFactory((context?.applicationContext as MainApp).database)
-    //}
-
-    var alertDialog: AlertDialog? = null
 
     override fun onClickNew() {
         saveMess = 1
@@ -78,10 +78,7 @@ class PlotFragment : BaseFragment(), BackPressed {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val act = activity as MainActivity
-        act.findViewById<View>(R.id.add).visibility = View.GONE
-        act.findViewById<View>(R.id.mainlist).visibility = View.GONE
-        act.findViewById<View>(R.id.tb).visibility = View.VISIBLE
+        (activity as? DialogsAndOtherFunctions)?.viewButtons(PLOT_FRAGMENT)
 
         pref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
         setTextSize()
@@ -95,11 +92,10 @@ class PlotFragment : BaseFragment(), BackPressed {
 
         binding.imPdf.setOnClickListener {
             // хочу сделать сохранение в PDF
-            val string = makeShareText(
+            val string = (activity as? DialogsAndOtherFunctions)?.makeShareTextPlot(
                 createNewPlot(),
                 book?.titleBook.toString(),
-                book?.nameAuthor.toString(),
-                activity as MainActivity
+                book?.nameAuthor.toString()
             )
 
             var titleTemp = book?.titleBook.toString()
@@ -110,15 +106,20 @@ class PlotFragment : BaseFragment(), BackPressed {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                 job = CoroutineScope(Dispatchers.Main).launch {
-                    val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                    val strMessage = savePdf(title, string, activity as MainActivity)
-                    dialog.dismiss()
-                    createDialogInfo(strMessage, activity as MainActivity)
+                    val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                    val strMessage = string?.let { it1 ->
+                        (activity as? DialogsAndOtherFunctions)?.savePdf(
+                            title,
+                            it1
+                        )
+                    }
+                    dialog?.dismiss()
+                    (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                 }
 
             } else {
 
-                if ((activity as MainActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if ((activity as AppCompatActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_DENIED
                 ) {
                     //permission was not granted, request it
@@ -127,10 +128,15 @@ class PlotFragment : BaseFragment(), BackPressed {
                 } else {
                     //permission already granted, call savePdf() method
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf(title, string, activity as MainActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage = string?.let { it1 ->
+                            (activity as? DialogsAndOtherFunctions)?.savePdf(
+                                title,
+                                it1
+                            )
+                        }
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 }
             }
@@ -138,11 +144,10 @@ class PlotFragment : BaseFragment(), BackPressed {
 
         binding.imTxt.setOnClickListener {
             // хочу сделать сохранение в TXT
-            val string = makeShareText(
+            val string = (activity as? DialogsAndOtherFunctions)?.makeShareTextPlot(
                 createNewPlot(),
                 book?.titleBook.toString(),
-                book?.nameAuthor.toString(),
-                activity as MainActivity
+                book?.nameAuthor.toString()
             )
             var titleTemp = book?.titleBook.toString()
             if (titleTemp.length > 10) {
@@ -152,13 +157,18 @@ class PlotFragment : BaseFragment(), BackPressed {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                 job = CoroutineScope(Dispatchers.Main).launch {
-                    val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                    val strMessage = saveTxt(title, string, activity as MainActivity)
-                    dialog.dismiss()
-                    createDialogInfo(strMessage, activity as MainActivity)
+                    val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                    val strMessage = string?.let { it1 ->
+                        (activity as? DialogsAndOtherFunctions)?.saveTxt(
+                            title,
+                            it1
+                        )
+                    }
+                    dialog?.dismiss()
+                    (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                 }
             } else {
-                if ((activity as MainActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if ((activity as AppCompatActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_DENIED
                 ) {
                     //permission was not granted, request it
@@ -167,21 +177,25 @@ class PlotFragment : BaseFragment(), BackPressed {
                 } else {
                     //permission already granted, call saveTxt() method
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt(title, string, activity as MainActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage = string?.let { it1 ->
+                            (activity as? DialogsAndOtherFunctions)?.saveTxt(
+                                title,
+                                it1
+                            )
+                        }
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 }
             }
         }
 
         binding.imDocx.setOnClickListener {
-            val string = makeShareText(
+            val string = (activity as? DialogsAndOtherFunctions)?.makeShareTextPlot(
                 createNewPlot(),
                 book?.titleBook.toString(),
-                book?.nameAuthor.toString(),
-                activity as MainActivity
+                book?.nameAuthor.toString()
             )
             var titleTemp = book?.titleBook.toString()
             if (titleTemp.length > 10) {
@@ -190,10 +204,15 @@ class PlotFragment : BaseFragment(), BackPressed {
             val title = titleTemp + "_plot"
 
             job = CoroutineScope(Dispatchers.Main).launch {
-                val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                val strMessage = saveDocx(title, string, activity as MainActivity)
-                dialog.dismiss()
-                createDialogInfo(strMessage, activity as MainActivity)
+                val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                val strMessage = string?.let { it1 ->
+                    (activity as? DialogsAndOtherFunctions)?.saveDocx(
+                        title,
+                        it1
+                    )
+                }
+                dialog?.dismiss()
+                (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
             }
 
         }
@@ -213,10 +232,11 @@ class PlotFragment : BaseFragment(), BackPressed {
         }
 
         binding.imListBook.setOnClickListener {
-            FragmentManager.setFragment(
-                MainListFragment.newInstance(),
-                activity as AppCompatActivity
-            )
+            currentFrag = MAIN_LIST_FRAGMENT
+            requireActivity().supportFragmentManager.commit {
+                replace(R.id.placeHolder, MainListFragment.newInstance())
+            }
+            //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
         }
 
         // получаем объект BookEntity из предыдущего фрагмента
@@ -241,11 +261,10 @@ class PlotFragment : BaseFragment(), BackPressed {
             STORAGE_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    val string = makeShareText(
+                    val string = (activity as? DialogsAndOtherFunctions)?.makeShareTextPlot(
                         createNewPlot(),
                         book?.titleBook.toString(),
-                        book?.nameAuthor.toString(),
-                        activity as MainActivity
+                        book?.nameAuthor.toString()
                     )
                     var titleTemp = book?.titleBook.toString()
                     if (titleTemp.length > 10) {
@@ -254,22 +273,33 @@ class PlotFragment : BaseFragment(), BackPressed {
                     val title = titleTemp + "_plot"
                     //permission from popup was granted, call savePdf() method
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = savePdf(title, string, activity as MainActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage =
+                            string?.let {
+                                (activity as? DialogsAndOtherFunctions)?.savePdf(
+                                    title,
+                                    it
+                                )
+                            }
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
-                        val strMessage = saveTxt(title, string, activity as MainActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
+                        val strMessage =
+                            string?.let {
+                                (activity as? DialogsAndOtherFunctions)?.saveTxt(
+                                    title,
+                                    it
+                                )
+                            }
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 } else {
                     //permission from popup was denied, show error message
-                    createDialogInfo(
-                        "PlotFragment " + resources.getString(R.string.permission_denied),
-                        activity as MainActivity
+                    (activity as? DialogsAndOtherFunctions)?.createDialogI(
+                        "PlotFragment " + resources.getString(R.string.permission_denied)
                     )
                     //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
                 }
@@ -282,9 +312,7 @@ class PlotFragment : BaseFragment(), BackPressed {
         var mess = activity?.resources!!.getString(R.string.sure_save_plot)
         if (saveMess == 2)
             mess = activity?.resources!!.getString(R.string.save_changes_plot_2)
-        dialogSavePlot(
-            mess, activity as MainActivity, true, mainViewModel, createNewPlot()
-        )
+        (activity as? DialogsAndOtherFunctions)?.dialogSavePlot(mess, true, createNewPlot())
 
     }
 
@@ -339,115 +367,166 @@ class PlotFragment : BaseFragment(), BackPressed {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        edText1.setTextSize(pref?.getString("content_size_key", "18"))
-        edText2.setTextSize(pref?.getString("content_size_key", "18"))
-        edText3.setTextSize(pref?.getString("content_size_key", "18"))
-        edText4.setTextSize(pref?.getString("content_size_key", "18"))
-        edText5.setTextSize(pref?.getString("content_size_key", "18"))
-        edText6.setTextSize(pref?.getString("content_size_key", "18"))
-        edText7.setTextSize(pref?.getString("content_size_key", "18"))
-        edText8.setTextSize(pref?.getString("content_size_key", "18"))
+        edText1.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText2.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText3.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText4.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText5.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText6.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText7.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
+        edText8.setTextSize(pref?.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
 
-        tBook.setTextSize(pref?.getString("title_size_key", "18"))
-        tvCT.setTextSize(pref?.getString("title_size_key", "18"))
-        textView4.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView5.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView6.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView7.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView8.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView9.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView10.setTextSize(pref?.getString("comments_size_key", "16"))
-        textView11.setTextSize(pref?.getString("comments_size_key", "16"))
+        tBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        tvCT.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        textView4.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView5.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView6.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView7.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView8.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView9.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView10.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
+        textView11.setTextSize(pref?.getString(COMMENT_SIZE_KEY, COMMENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
-        edText1.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText1
         )
-        edText2.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText2
         )
-        edText3.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText3
         )
-        edText4.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText4
         )
-        edText5.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText5
         )
-        edText6.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText6
         )
-        edText7.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText7
         )
-        edText8.setTypeface(
-            pref?.getString("font_family_content_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_CONTENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), edText8
         )
 
 
-
-        tBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), tBook
         )
 
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), tvCT
+        )
 
-        textView4.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView4
         )
-        textView5.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView5
         )
-        textView6.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView6
         )
-        textView7.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView7
         )
-        textView8.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView8
         )
-        textView9.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView9
         )
-        textView10.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView10
         )
-        textView11.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
-        )
-        tvCT.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView11
         )
 
     }
 
 
     override fun handleOnBackPressed() {
-        FragmentManager.setFragment(
-            MainListFragment.newInstance(),
-            activity as AppCompatActivity
-        )
+        currentFrag = MAIN_LIST_FRAGMENT
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.placeHolder, MainListFragment.newInstance())
+        }
+        //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
     }
 
     override fun onDestroy() {

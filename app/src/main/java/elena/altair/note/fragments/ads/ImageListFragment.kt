@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elena.altair.note.R
 import elena.altair.note.activities.ads.EditAdsActivity
 import elena.altair.note.adapters.ads.ImageListFragmentSelectImageRvAdapter
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.databinding.ListImageFragBinding
 import elena.altair.note.dialoghelper.ProgressDialog
 import elena.altair.note.utils.ads.AdapterCallback
@@ -169,7 +171,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface) 
         val tv: TextView = binding.tb.getChildAt(0) as TextView
 
         tv.setTypeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             activity as EditAdsActivity
         )
     }

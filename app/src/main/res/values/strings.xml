@@ -309,7 +309,7 @@
     <string name="corr">Published:</string>
     <string name="edit_publish">To publish a book, all fields must be filled in! 1. Go back to the application section where you created your book and fill in all the fields: book title, type of literature, genre of literature, short description. (Later, if you want to change these fields in a published book, also first make changes in the section where you are creating a book, then select this book from the published ones, click the "Edit" button, and in the window that opens, click the "Publish" button.) 2. Open at least one chapter for publication. 3. Do not forget to specify the email address.</string>
     <string name="selection_section_empty">If the book selection section is empty, it means that you do not have unpublished books, i.e. all books created on this device have been published, or you have not created any books yet.</string>
-    <string name="only_registered_users">Only registered users can publish their books.</string>
+    <string name="only_registered_users">Only registered users can create and publish their books.</string>
     <string name="published_from_another_device">This book was created and published from another device. If you now remove it from the published ones from this device, then you will not be able to publish it again from the device from which you originally published it.</string>
     <string name="continue_">Continue</string>
     <string name="profile">Profile</string>

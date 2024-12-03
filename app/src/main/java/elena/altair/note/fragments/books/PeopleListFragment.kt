@@ -2,7 +2,6 @@ package elena.altair.note.fragments.books
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -15,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,19 +22,23 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
+import elena.altair.note.activities.MainActivity.Companion.MAIN_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.PEOPLE_LIST_FRAGMENT
+import elena.altair.note.activities.MainActivity.Companion.currentFrag
 import elena.altair.note.activities.books.NewPeopleActivity
 import elena.altair.note.adapters.books.PeopleAdapter
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_COMMENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_DEFAULT
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_KEY
+import elena.altair.note.constants.MyConstants.NOTE_STYLE_LINEAR
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.TITLE_SIZE_KEY
 import elena.altair.note.databinding.FragmentPeopleListBinding
-import elena.altair.note.dialoghelper.DialogDelete.createDialogDelete
-import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
-import elena.altair.note.dialoghelper.ProgressDialog
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.PeopleEntity2
-import elena.altair.note.utils.file.PdfTxtPeopleListUtils.saveDocx
-import elena.altair.note.utils.file.PdfTxtPeopleListUtils.savePdf
-import elena.altair.note.utils.file.PdfTxtPeopleListUtils.saveTxt
 import elena.altair.note.utils.font.setTextSize
-import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,11 +59,6 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
     // переменная, в которую будем записывать наш adapter
     private lateinit var adapter: PeopleAdapter
     private val mainViewModel: MainViewModel by activityViewModels()
-    //private val mainViewModel: MainViewModel by activityViewModels {
-    //MainViewModel.MainViewModalFactory((context?.applicationContext as MainApp).database)
-    //}
-
-    var alertDialog: AlertDialog? = null
 
     override fun onClickNew() {
         // передаем book на активити, чтобы знать заголовок книги и id книги
@@ -86,10 +85,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val act = activity as MainActivity
-        act.findViewById<View>(R.id.add).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.mainlist).visibility = View.VISIBLE
-        act.findViewById<View>(R.id.tb).visibility = View.VISIBLE
+        (activity as? DialogsAndOtherFunctions)?.viewButtons(PEOPLE_LIST_FRAGMENT)
 
         pref = PreferenceManager.getDefaultSharedPreferences(activity as AppCompatActivity)
         setTextSize()
@@ -100,26 +96,26 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
         mainViewModel.bookTr.observe(viewLifecycleOwner) {
 
             binding.imListBook.setOnClickListener {
-                FragmentManager.setFragment(
-                    MainListFragment.newInstance(),
-                    activity as AppCompatActivity
-                )
+                currentFrag = MAIN_LIST_FRAGMENT
+                requireActivity().supportFragmentManager.commit {
+                    replace(R.id.placeHolder, MainListFragment.newInstance())
+                }
+                //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
             }
 
             binding.imDocx.setOnClickListener {
                 val list = adapter.currentList
 
                 job = CoroutineScope(Dispatchers.Main).launch {
-                    val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
+                    val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                     val strMessage =
-                        saveDocx(
+                        (activity as? DialogsAndOtherFunctions)?.saveDocxPeople(
                             book?.titleBook ?: "book",
                             book?.nameAuthor ?: "author",
-                            list,
-                            activity as MainActivity
+                            list
                         )
-                    dialog.dismiss()
-                    createDialogInfo(strMessage, activity as MainActivity)
+                    dialog?.dismiss()
+                    (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                 }
             }
 
@@ -128,20 +124,19 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage =
-                            savePdf(
+                            (activity as? DialogsAndOtherFunctions)?.savePdfPeople(
                                 book?.titleBook ?: "book",
                                 book?.nameAuthor ?: "author",
-                                list,
-                                activity as MainActivity
+                                list
                             )
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 } else {
 
-                    if ((activity as MainActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if ((activity as AppCompatActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_DENIED
                     ) {
                         //permission was not granted, request it
@@ -150,17 +145,15 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                     } else {
                         //permission already granted, call savePdf() method
                         job = CoroutineScope(Dispatchers.Main).launch {
-                            val dialog =
-                                ProgressDialog.createProgressDialog(activity as MainActivity)
+                            val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                             val strMessage =
-                                savePdf(
+                                (activity as? DialogsAndOtherFunctions)?.savePdfPeople(
                                     book?.titleBook ?: "book",
                                     book?.nameAuthor ?: "author",
-                                    list,
-                                    activity as MainActivity
+                                    list
                                 )
-                            dialog.dismiss()
-                            createDialogInfo(strMessage, activity as MainActivity)
+                            dialog?.dismiss()
+                            (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                         }
                     }
                 }
@@ -171,19 +164,18 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
                     job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(activity as MainActivity)
+                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage =
-                            saveTxt(
+                            (activity as? DialogsAndOtherFunctions)?.saveTxtPeople(
                                 book?.titleBook ?: "book",
                                 book?.nameAuthor ?: "author",
-                                list,
-                                activity as MainActivity
+                                list
                             )
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, activity as MainActivity)
+                        dialog?.dismiss()
+                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                     }
                 } else {
-                    if ((activity as MainActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if ((activity as AppCompatActivity).checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_DENIED
                     ) {
                         //permission was not granted, request it
@@ -192,17 +184,15 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                     } else {
                         //permission already granted, call saveTxt() method
                         job = CoroutineScope(Dispatchers.Main).launch {
-                            val dialog =
-                                ProgressDialog.createProgressDialog(activity as MainActivity)
+                            val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                             val strMessage =
-                                saveTxt(
+                                (activity as? DialogsAndOtherFunctions)?.saveTxtPeople(
                                     book?.titleBook ?: "book",
                                     book?.nameAuthor ?: "author",
-                                    list,
-                                    activity as MainActivity
+                                    list
                                 )
-                            dialog.dismiss()
-                            createDialogInfo(strMessage, activity as MainActivity)
+                            dialog?.dismiss()
+                            (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
                         }
                     }
                 }
@@ -238,7 +228,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
     // получаем нужный LayoutManager, который будем передавать в наш RecyclerView
     // в зависимости от того, что выбрано на экране настроек
     private fun getLayoutManager(): RecyclerView.LayoutManager {
-        return if (defPref.getString("note_style_key", "Linear") == "Linear") {
+        return if (defPref.getString(NOTE_STYLE_KEY, NOTE_STYLE_DEFAULT) == NOTE_STYLE_LINEAR) {
             LinearLayoutManager(activity)
         } else {
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -313,11 +303,9 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
     }
 
     override fun deleteItem(id: Long) {
-        createDialogDelete(
+        (activity as? DialogsAndOtherFunctions)?.createDialogDelete(
             resources.getString(R.string.sure_delete_people),
-            activity as MainActivity,
             id,
-            mainViewModel
         )
     }
 
@@ -331,33 +319,41 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        titBook.setTextSize(pref?.getString("title_size_key", "18"))
-        tvCT.setTextSize(pref?.getString("title_size_key", "18"))
+        titBook.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
+        tvCT.setTextSize(pref?.getString(TITLE_SIZE_KEY, TITLE_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), titBook
+        )
 
-        titBook.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_TITLE_KEY,
+                FONT_FAMILY_DEFAULT
+            ), tvCT
         )
-        tvCT.setTypeface(
-            pref?.getString("font_family_title_key", "sans-serif"),
-            activity as MainActivity
-        )
-        textView2.setTypeface(
-            pref?.getString("font_family_comment_key", "sans-serif"),
-            activity as MainActivity
+
+        (activity as? DialogsAndOtherFunctions)?.textViewSetTypeface(
+            pref?.getString(
+                FONT_FAMILY_COMMENT_KEY,
+                FONT_FAMILY_DEFAULT
+            ), textView2
         )
 
     }
 
     override fun handleOnBackPressed() {
-        FragmentManager.setFragment(
-            MainListFragment.newInstance(),
-            activity as AppCompatActivity
-        )
+        currentFrag = MAIN_LIST_FRAGMENT
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.placeHolder, MainListFragment.newInstance())
+        }
+        //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
     }
 
     override fun onDestroy() {

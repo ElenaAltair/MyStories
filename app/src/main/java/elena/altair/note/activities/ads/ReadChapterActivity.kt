@@ -10,6 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import elena.altair.note.R
 import elena.altair.note.activities.ads.DescriptionActivity.Companion.CHAPTER_KEY
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
+import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
+import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.databinding.ActivityReadChapterBinding
 import elena.altair.note.fragments.ads.AllAdsFragment.Companion.AD_KEY
 import elena.altair.note.model.Ad
@@ -95,26 +100,26 @@ class ReadChapterActivity : AppCompatActivity() {
 
     // функция для выбора размера текста
     private fun setTextSize() = with(binding) {
-        content.setTextSize(defPref.getString("content_size_key", "18"))
+        content.setTextSize(defPref.getString(CONTENT_SIZE_KEY, CONTENT_SIZE_DEFAULT))
     }
 
     //функция изменения fontFamily
     private fun setFontFamily() = with(binding) {
         bookName.setTypeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@ReadChapterActivity
         )
         chapterName.setTypeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@ReadChapterActivity
         )
         content.setTypeface(
-            defPref.getString("font_family_content_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_CONTENT_KEY, FONT_FAMILY_DEFAULT),
             this@ReadChapterActivity
         )
 
         val font: Typeface? = typeface(
-            defPref.getString("font_family_title_key", "sans-serif"),
+            defPref.getString(FONT_FAMILY_TITLE_KEY, FONT_FAMILY_DEFAULT),
             this@ReadChapterActivity
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)
