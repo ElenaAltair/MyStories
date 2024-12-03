@@ -1,5 +1,8 @@
 package elena.altair.note.activities.ads
 
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
@@ -9,9 +12,11 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -130,6 +135,29 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
 
             }
         }
+
+        requestMultiplePermissions.launch(
+            arrayOf(
+                CAMERA,
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE,
+            )
+        )
+    }
+
+    private val requestMultiplePermissions = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        permissions.entries.forEach {
+            Log.d("MyLog", "${it.key} = ${it.value}")
+        }
+        if (permissions[READ_EXTERNAL_STORAGE] == true && permissions[WRITE_EXTERNAL_STORAGE] == true) {
+            Log.d("MyLog", "Permission granted")
+
+        } else {
+            Log.d("MyLog", "Permission not granted")
+
+        }
     }
 
     private fun dialogSaveBookLocal(
@@ -183,7 +211,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
 
     // активируем стрелку на верхнем меню
     private fun actionBarSetting() {
-        val ab = supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

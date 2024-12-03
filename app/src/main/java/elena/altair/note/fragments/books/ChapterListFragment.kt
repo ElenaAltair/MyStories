@@ -2,6 +2,9 @@ package elena.altair.note.fragments.books
 
 
 import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -9,6 +12,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,9 +47,7 @@ import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -62,7 +65,6 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     private lateinit var adapter: ChapterAdapter
     private val mainViewModel: MainViewModel by activityViewModels()
     private val STORAGE_CODE: Int = 100
-    private var job: Job? = null
 
     // при нажатии на кнопку "добавить",
     // здесь будет запускаться логика, добавляющая новую запись(главу книги) в базу данных
@@ -111,14 +113,13 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                     replace(R.id.placeHolder, MainListFragment.newInstance())
                 }
 
-                //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
             }
 
 
             binding.imDocx.setOnClickListener {
                 val list = adapter.currentList
 
-                job = CoroutineScope(Dispatchers.Main).launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                     val strMessage = (activity as? DialogsAndOtherFunctions)?.saveDocxChapters(
                         book?.titleBook ?: "book",
@@ -136,7 +137,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 val list = adapter.currentList
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage = (activity as? DialogsAndOtherFunctions)?.savePdfChapters(
                             book?.titleBook ?: "book",
@@ -156,7 +157,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                         requestPermissions(permissions, STORAGE_CODE)
                     } else {
                         //permission already granted, call savePdf() method
-                        job = CoroutineScope(Dispatchers.Main).launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                             val strMessage =
                                 (activity as? DialogsAndOtherFunctions)?.savePdfChapters(
@@ -175,7 +176,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                 val list = adapter.currentList
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage = (activity as? DialogsAndOtherFunctions)?.saveTxtChapters(
                             book?.titleBook ?: "book",
@@ -194,7 +195,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
                         requestPermissions(permissions, STORAGE_CODE)
                     } else {
                         //permission already granted, call saveTxt() method
-                        job = CoroutineScope(Dispatchers.Main).launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                             val strMessage =
                                 (activity as? DialogsAndOtherFunctions)?.saveTxtChapters(
@@ -216,59 +217,10 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
             initRcView()
             observer()
         }
+
+
     }
 
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        when (requestCode) {
-            STORAGE_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    binding.imListBook.setOnClickListener {
-                        currentFrag = MAIN_LIST_FRAGMENT
-                        requireActivity().supportFragmentManager.commit {
-                            replace(R.id.placeHolder, MainListFragment.newInstance())
-                        }
-                    }
-
-                    val list = adapter.currentList
-                    //permission from popup was granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
-                        val strMessage = (activity as? DialogsAndOtherFunctions)?.savePdfChapters(
-                            "book",
-                            book?.nameAuthor ?: "author",
-                            list
-                        )
-                        dialog?.dismiss()
-                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
-                    }
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
-                        val strMessage = (activity as? DialogsAndOtherFunctions)?.saveTxtChapters(
-                            "book",
-                            book?.nameAuthor ?: "author",
-                            list
-                        )
-                        dialog?.dismiss()
-                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
-                    }
-                } else {
-                    //permission from popup was denied, show error message
-                    (activity as? DialogsAndOtherFunctions)?.createDialogI(
-                        "ChapterListFragment " + resources.getString(R.string.permission_denied)
-                    )
-                    //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
 
 
     // функция для инициализации нашего Recycle View
@@ -360,7 +312,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
 
     override fun editItem(chapter: ChapterEntity2) {
-        job = CoroutineScope(Dispatchers.Main).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             openChapter(chapter)
         }
     }
@@ -373,7 +325,7 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
     }
 
     override fun onClickItem(chapter: ChapterEntity2) {
-        job = CoroutineScope(Dispatchers.Main).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             openChapter(chapter)
         }
     }

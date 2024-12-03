@@ -1,6 +1,9 @@
 package elena.altair.note.activities.books
 
 import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
@@ -10,6 +13,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -124,8 +128,8 @@ class NewBookActivity : AppCompatActivity() {
         actionBarSetting()
         ActivityCompat.requestPermissions(
             this, arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE
             ),
             PackageManager.PERMISSION_GRANTED
         )
@@ -140,6 +144,30 @@ class NewBookActivity : AppCompatActivity() {
                     finish()
             }
         })
+
+
+        requestMultiplePermissions.launch(
+            arrayOf(
+                CAMERA,
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE,
+            )
+        )
+    }
+
+    private val requestMultiplePermissions = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        permissions.entries.forEach {
+            Log.d("MyLog", "${it.key} = ${it.value}")
+        }
+        if (permissions[READ_EXTERNAL_STORAGE] == true && permissions[WRITE_EXTERNAL_STORAGE] == true) {
+            Log.d("MyLog", "Permission granted")
+
+        } else {
+            Log.d("MyLog", "Permission not granted")
+
+        }
     }
 
 
@@ -526,11 +554,11 @@ class NewBookActivity : AppCompatActivity() {
                 }
             } else {
 
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (checkSelfPermission(WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_DENIED
                 ) {
                     //permission was not granted, request it
-                    val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    val permissions = arrayOf(WRITE_EXTERNAL_STORAGE)
                     requestPermissions(permissions, STORAGE_CODE)
                 } else {
                     //permission already granted, call savePdf() method
@@ -564,11 +592,11 @@ class NewBookActivity : AppCompatActivity() {
                     createDialogInfo(strMessage, this@NewBookActivity)
                 }
             } else {
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (checkSelfPermission(WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_DENIED
                 ) {
                     //permission was not granted, request it
-                    val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    val permissions = arrayOf(WRITE_EXTERNAL_STORAGE)
                     requestPermissions(permissions, STORAGE_CODE)
                 } else {
                     //permission already granted, call saveTxt() method
@@ -610,8 +638,6 @@ class NewBookActivity : AppCompatActivity() {
             // извлечение текста из docx
             launcherDOCX.launch("application/docx")
         } else if (item.itemId == android.R.id.home) { // нажимаем на кнопку стрелка на верхнем меню
-            //createDialogSaveBookAndGetOut()
-            //alertDialog?.show()
 
             newBook = createNewBookForOldAndNew()
             if (newBook != oldBook) {
@@ -746,53 +772,6 @@ class NewBookActivity : AppCompatActivity() {
                     resources.getString(R.string.different_format),
                     this@NewBookActivity
                 )
-            }
-        }
-    }
-
-
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        when (requestCode) {
-            STORAGE_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    val string = makeShareTextBook(
-                        createNewBookForShare(),
-                        book?.titleBook.toString(),
-                        this
-                    )
-                    var titleTemp = book?.titleBook.toString()
-                    if (titleTemp.length > 10) {
-                        titleTemp = titleTemp.substring(0, 10)
-                    }
-                    val title = titleTemp
-                    //permission from popup was granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(this@NewBookActivity)
-                        val strMessage = savePdf(title, string, this@NewBookActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, this@NewBookActivity)
-                    }
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(this@NewBookActivity)
-                        val strMessage = saveTxt(title, string, this@NewBookActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, this@NewBookActivity)
-                    }
-                } else {
-                    //permission from popup was denied, show error message
-                    createDialogInfo(
-                        "NewBookActivity " + resources.getString(R.string.permission_denied),
-                        this
-                    )
-                    //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
-                }
             }
         }
     }
@@ -1133,6 +1112,5 @@ class NewBookActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
     }
-
 
 }

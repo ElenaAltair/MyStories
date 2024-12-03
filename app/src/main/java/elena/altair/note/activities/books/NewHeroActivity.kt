@@ -1,6 +1,9 @@
 package elena.altair.note.activities.books
 
 import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,6 +12,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
@@ -109,6 +113,29 @@ class NewHeroActivity : AppCompatActivity() {
                     finish()
             }
         })
+
+        requestMultiplePermissions.launch(
+            arrayOf(
+                CAMERA,
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE,
+            )
+        )
+    }
+
+    private val requestMultiplePermissions = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        permissions.entries.forEach {
+            Log.d("MyLog", "${it.key} = ${it.value}")
+        }
+        if (permissions[READ_EXTERNAL_STORAGE] == true && permissions[WRITE_EXTERNAL_STORAGE] == true) {
+            Log.d("MyLog", "Permission granted")
+
+        } else {
+            Log.d("MyLog", "Permission not granted")
+
+        }
     }
 
     private fun init() {
@@ -443,55 +470,6 @@ class NewHeroActivity : AppCompatActivity() {
         }
     }
 
-
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        when (requestCode) {
-            STORAGE_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    val string = makeShareText(
-                        createNewHero(),
-                        book?.titleBook.toString(),
-                        book?.nameAuthor.toString(),
-                        this
-                    )
-
-                    var titleTemp = hero?.desc1.toString()
-                    if (titleTemp.length > 10) {
-                        titleTemp = titleTemp.substring(0, 10)
-                    }
-                    val title = titleTemp
-
-                    //permission from popup was granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(this@NewHeroActivity)
-                        val strMessage = savePdf(title, string, this@NewHeroActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, this@NewHeroActivity)
-                    }
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(this@NewHeroActivity)
-                        val strMessage = saveTxt(title, string, this@NewHeroActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, this@NewHeroActivity)
-                    }
-                } else {
-                    //permission from popup was denied, show error message
-                    createDialogInfo(
-                        "NewHeroActivity " + resources.getString(R.string.permission_denied),
-                        this
-                    )
-                    //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
 
 
     // нажимаем на открыть героя во фрагменте со списком героев,

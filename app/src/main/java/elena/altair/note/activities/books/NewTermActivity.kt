@@ -1,6 +1,9 @@
 package elena.altair.note.activities.books
 
 import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,6 +12,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -107,10 +111,11 @@ class NewTermActivity : AppCompatActivity() {
         onClickColorPicker()
         // активируем стрелку на верхнем меню
         actionBarSetting()
+
         ActivityCompat.requestPermissions(
             this, arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE
             ),
             PackageManager.PERMISSION_GRANTED
         )
@@ -124,6 +129,31 @@ class NewTermActivity : AppCompatActivity() {
                     finish()
             }
         })
+
+
+
+        requestMultiplePermissions.launch(
+            arrayOf(
+                CAMERA,
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE,
+            )
+        )
+    }
+
+    private val requestMultiplePermissions = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        permissions.entries.forEach {
+            Log.d("MyLog", "${it.key} = ${it.value}")
+        }
+        if (permissions[READ_EXTERNAL_STORAGE] == true && permissions[WRITE_EXTERNAL_STORAGE] == true) {
+            Log.d("MyLog", "Permission granted")
+
+        } else {
+            Log.d("MyLog", "Permission not granted")
+
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -352,7 +382,7 @@ class NewTermActivity : AppCompatActivity() {
         ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
-            val cursor = contentResolver.query(uri!!, null, null, null, null)
+            val cursor = contentResolver.query(uri, null, null, null, null)
             var nameFile = ""
             if (cursor != null && cursor.moveToFirst()) {
                 // получим имя файла по индексу
@@ -432,52 +462,6 @@ class NewTermActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        when (requestCode) {
-            STORAGE_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    val string = makeShareText(
-                        createNewTermForShare(),
-                        book?.titleBook.toString(),
-                        book?.nameAuthor.toString(),
-                        this
-                    )
-                    var titleTemp = term?.titleTerm.toString()
-                    if (titleTemp.length > 10) {
-                        titleTemp = titleTemp.substring(0, 10)
-                    }
-                    val title = titleTemp
-                    //permission from popup was granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(this@NewTermActivity)
-                        val strMessage = savePdf(title, string, this@NewTermActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, this@NewTermActivity)
-                    }
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = ProgressDialog.createProgressDialog(this@NewTermActivity)
-                        val strMessage = saveTxt(title, string, this@NewTermActivity)
-                        dialog.dismiss()
-                        createDialogInfo(strMessage, this@NewTermActivity)
-                    }
-                } else {
-                    //permission from popup was denied, show error message
-                    createDialogInfo(
-                        "NewTermActivity " + resources.getString(R.string.permission_denied),
-                        this
-                    )
-                    //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
 
     // нажимаем на открыть термин во фрагменте со списком терминов,
     // если оттуда ничего не передали, то значит мы в этот момент создаем новый термин,
@@ -574,7 +558,7 @@ class NewTermActivity : AppCompatActivity() {
     }
 
 
-    fun onClickImageColor() = with(binding) {
+    private fun onClickImageColor() = with(binding) {
         imageColor.setOnClickListener {
             // проверяем видимость нашего layout с палитрой
             if (binding.colorPicker.isShown) {

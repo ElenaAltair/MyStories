@@ -86,7 +86,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         binding = ActivityEditAdsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //binding.edDescription.collapse(300)
+
         binding.ibExpander.setOnClickListener {
             if (!isCollapsed) {
                 binding.edDescription.collapse(300)
@@ -143,16 +143,6 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
             }
         })
 
-    }
-
-
-    // функция на запрос разрешений у пользователя для доступа к памяти и камере
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     // Функция проверки зашли мы для редактирования или создаем новое объявление
@@ -226,24 +216,6 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
         finish()
     }
 
-
-    // реализовала автозаполнение при выборе книги, поэтому закомментировала
-    //fun onClickSelectAgeCat(view: View) {
-    // список возрастных ограничений
-    //val listGenresLiter = LiterKindHelper.getAgeCat("age", this)
-    //dialog.showSpinnerDialog(this, listGenresLiter, binding.tvAge)
-    //}
-
-    /*
-    // реализовала автозаполнение при выборе книги, поэтому закомментировала
-    fun onClickSelectGenresLiter(view: View) {
-        // список жанров литературы
-        //val listGenresLiter = LiterKindHelper.getGenresLiterFromAll("genres", this)
-        val listGenresLiter =
-            resources.getStringArray(R.array.genres_of_literature).toMutableList() as ArrayList
-        dialog.showSpinnerDialog(this, listGenresLiter, binding.tvLiter)
-    } */
-
     // получим список всех неопубликованных книг данного пользователя
     private fun getAllBooksNotPublic() {
         mainViewModel.allBooksNotPublic(currentUser).observe(this, Observer {
@@ -280,7 +252,7 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface,
             }
     }
 
-    fun getAllChaptersEdit() {
+    private fun getAllChaptersEdit() {
 
         if (selectBook?.uidAd == ad?.key) {
 

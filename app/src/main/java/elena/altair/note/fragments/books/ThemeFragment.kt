@@ -1,21 +1,27 @@
 package elena.altair.note.fragments.books
 
+//import elena.altair.note.activities.MainActivity
 import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
-//import elena.altair.note.activities.MainActivity
 import elena.altair.note.activities.MainActivity.Companion.MAIN_LIST_FRAGMENT
 import elena.altair.note.activities.MainActivity.Companion.THEME_FRAGMENT
 import elena.altair.note.activities.MainActivity.Companion.currentFrag
@@ -35,9 +41,6 @@ import elena.altair.note.etities.ThemeEntity2
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.share.ShareHelperTheme
 import elena.altair.note.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -49,15 +52,14 @@ class ThemeFragment : BaseFragment(), BackPressed {
     private var theme: ThemeEntity2? = null
     private val mainViewModel: MainViewModel by activityViewModels()
     private val STORAGE_CODE: Int = 100
-    private var job: Job? = null
-    private var saveTheme = 1
+    private var saveTheme = SAVE_THEME_AND_STAY_ON_FRAGMENT
     private var oldTheme: ThemeEntity2? = null
     private var newTheme: ThemeEntity2? = null
     private var indicatorOldTheme = 0
 
 
     override fun onClickNew() {
-        saveTheme = 1
+        saveTheme = SAVE_THEME_AND_STAY_ON_FRAGMENT
         newTheme = createNewTheme()
         if (newTheme != oldTheme)
             editTheme()
@@ -82,7 +84,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
         setFontFamily()
 
         binding.imSave.setOnClickListener {
-            saveTheme = 1
+            saveTheme = SAVE_THEME_AND_STAY_ON_FRAGMENT
             editTheme()
         }
 
@@ -100,7 +102,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
             val title = titleTemp + "_theme"
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                job = CoroutineScope(Dispatchers.Main).launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                     val strMessage = string?.let { it1 ->
                         (activity as? DialogsAndOtherFunctions)?.savePdf(
@@ -121,7 +123,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
                     requestPermissions(permissions, STORAGE_CODE)
                 } else {
                     //permission already granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage = string?.let { it1 ->
                             (activity as? DialogsAndOtherFunctions)?.savePdf(
@@ -150,7 +152,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
             val title = titleTemp + "_theme"
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                job = CoroutineScope(Dispatchers.Main).launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                     val strMessage = string?.let { it1 ->
                         (activity as? DialogsAndOtherFunctions)?.saveTxt(
@@ -170,7 +172,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
                     requestPermissions(permissions, STORAGE_CODE)
                 } else {
                     //permission already granted, call saveTxt() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage = string?.let { it1 ->
                             (activity as? DialogsAndOtherFunctions)?.saveTxt(
@@ -206,7 +208,6 @@ class ThemeFragment : BaseFragment(), BackPressed {
             requireActivity().supportFragmentManager.commit {
                 replace(R.id.placeHolder, MainListFragment.newInstance())
             }
-            //FragmentManager.setFragment(MainListFragment.newInstance(),activity as AppCompatActivity)
         }
 
         binding.imDocx.setOnClickListener {
@@ -220,7 +221,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
                 titleTemp = titleTemp.substring(0, 10)
             }
             val title = titleTemp + "_theme"
-            job = CoroutineScope(Dispatchers.Main).launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                 val strMessage = string?.let { it1 ->
                     (activity as? DialogsAndOtherFunctions)?.saveDocx(
@@ -242,63 +243,6 @@ class ThemeFragment : BaseFragment(), BackPressed {
             observer(book?.id)
         }
 
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        when (requestCode) {
-            STORAGE_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    val string = (activity as? DialogsAndOtherFunctions)?.makeShareTextTheme(
-                        createNewTheme(),
-                        book?.titleBook.toString(),
-                        book?.nameAuthor.toString()
-                    )
-                    var titleTemp = book?.titleBook.toString()
-                    if (titleTemp.length > 10) {
-                        titleTemp = titleTemp.substring(0, 10)
-                    }
-                    val title = titleTemp + "_theme"
-                    //permission from popup was granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
-                        val strMessage =
-                            string?.let {
-                                (activity as? DialogsAndOtherFunctions)?.savePdf(
-                                    title,
-                                    it
-                                )
-                            }
-                        dialog?.dismiss()
-                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
-                    }
-                    job = CoroutineScope(Dispatchers.Main).launch {
-                        val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
-                        val strMessage =
-                            string?.let {
-                                (activity as? DialogsAndOtherFunctions)?.saveTxt(
-                                    title,
-                                    it
-                                )
-                            }
-                        dialog?.dismiss()
-                        (activity as? DialogsAndOtherFunctions)?.createDialogI(strMessage!!)
-                    }
-                } else {
-                    //permission from popup was denied, show error message
-                    (activity as? DialogsAndOtherFunctions)?.createDialogI(
-                        "ThemeFragment " + resources.getString(R.string.permission_denied)
-                    )
-                    //Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
 
@@ -332,7 +276,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
     private fun editTheme() {
         // записываем в базу данных нашу тему
         var mess = activity?.resources!!.getString(R.string.sure_save_theme)
-        if (saveTheme == 2)
+        if (saveTheme == SAVE_THEME_AND_LEAVE_FRAGMENT)
             mess = activity?.resources!!.getString(R.string.save_changes_theme_2)
         (activity as? DialogsAndOtherFunctions)?.dialogSaveTheme(mess, true, createNewTheme())
     }
@@ -520,7 +464,7 @@ class ThemeFragment : BaseFragment(), BackPressed {
     }
 
     override fun onDestroy() {
-        saveTheme = 2
+        saveTheme = SAVE_THEME_AND_LEAVE_FRAGMENT
         newTheme = createNewTheme()
         if (newTheme != oldTheme)
             editTheme()
@@ -530,6 +474,9 @@ class ThemeFragment : BaseFragment(), BackPressed {
 
 
     companion object {
+
+        const val SAVE_THEME_AND_LEAVE_FRAGMENT = 2
+        const val SAVE_THEME_AND_STAY_ON_FRAGMENT = 1
 
         @JvmStatic
         fun newInstance() = ThemeFragment()

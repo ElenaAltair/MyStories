@@ -350,8 +350,8 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
             dialog?.dismiss()
 
 
-            val id = ad.idBookLocal!!.toLong()
-            Log.d("MyLog", "key ${ad.key}")
+            //val id = ad.idBookLocal!!.toLong()
+            //Log.d("MyLog", "key ${ad.key}")
             mainViewModel.getBookByKeyFirebase(ad.key.toString()).observe(viewLifecycleOwner) {
                 val book = it
                 if (book != null) {

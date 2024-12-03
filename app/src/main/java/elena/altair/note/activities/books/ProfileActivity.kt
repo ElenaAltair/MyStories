@@ -73,6 +73,8 @@ class ProfileActivity : AppCompatActivity() {
 
         }
 
+
+
     }
 
     private fun createNewProfile(): ProfileEntity2 {

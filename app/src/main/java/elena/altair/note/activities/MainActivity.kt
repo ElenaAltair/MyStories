@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -42,6 +41,8 @@ import elena.altair.note.databinding.HelpDialogBinding
 import elena.altair.note.dialoghelper.DialogConst
 import elena.altair.note.dialoghelper.DialogHelper
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
+import elena.altair.note.dialoghelper.DialogSave.dialogSavePlot
+import elena.altair.note.dialoghelper.DialogSave.dialogSaveTheme
 import elena.altair.note.dialoghelper.ProgressDialog.createProgressDialog
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.etities.HeroEntity2
@@ -63,6 +64,8 @@ import elena.altair.note.fragments.books.PlotFragment
 import elena.altair.note.fragments.books.TermListFragment
 import elena.altair.note.fragments.books.ThemeFragment
 import elena.altair.note.settings.SettingsActivity
+import elena.altair.note.utils.file.DOCXUtils.saveDocx
+import elena.altair.note.utils.file.PDFUtils.savePdf
 import elena.altair.note.utils.file.PdfTxtChapterListUtils.saveDocx
 import elena.altair.note.utils.file.PdfTxtChapterListUtils.savePdf
 import elena.altair.note.utils.file.PdfTxtChapterListUtils.saveTxt
@@ -78,8 +81,6 @@ import elena.altair.note.utils.file.PdfTxtPeopleListUtils.saveTxt
 import elena.altair.note.utils.file.PdfTxtTermListUtils.saveDocx
 import elena.altair.note.utils.file.PdfTxtTermListUtils.savePdf
 import elena.altair.note.utils.file.PdfTxtTermListUtils.saveTxt
-import elena.altair.note.utils.file.DOCXUtils.saveDocx
-import elena.altair.note.utils.file.PDFUtils.savePdf
 import elena.altair.note.utils.file.TXTUtils.saveTxt
 import elena.altair.note.utils.font.TypefaceUtils.setTextBottomNav
 import elena.altair.note.utils.font.TypefaceUtils.setTitleToolBar
@@ -90,12 +91,11 @@ import elena.altair.note.utils.share.ShareHelperTheme.makeShareText
 import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
 import elena.altair.note.viewmodel.MainViewModel
 import javax.inject.Inject
-import elena.altair.note.dialoghelper.DialogSave.dialogSaveTheme
-import elena.altair.note.dialoghelper.DialogSave.dialogSavePlot
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, DialogsAndOtherFunctions {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    DialogsAndOtherFunctions {
 
     private lateinit var tvAccount: TextView
     private lateinit var binding: ActivityMainBinding
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (backPressedTime + 3000 > System.currentTimeMillis()) {
                     finish()
                 } else { // инача обработаем нажатие на кнопку назад во фрагментах сюжета и темы
-                    if(back == BACK_IS_NOT_PRESSED) {
+                    if (back == BACK_IS_NOT_PRESSED) {
                         back = BACK_WAS_PRESSED_ONCE
                         val fragment = getCurrentFragment()
                         //Log.d("MyLog", "fragment $fragment")
@@ -734,13 +734,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             findViewById<View>(R.id.mainlist).visibility = View.GONE
             findViewById<View>(R.id.tb).visibility = View.VISIBLE
 
-        }  else if (currentFragment == ALL_ADS_FRAGMENT) {
+        } else if (currentFragment == ALL_ADS_FRAGMENT) {
             findViewById<View>(R.id.add).visibility = View.VISIBLE
             findViewById<View>(R.id.tb).visibility = View.GONE
             val toolbar =
                 findViewById<Toolbar>(R.id.toolbar)
             val tv: TextView = toolbar.getChildAt(0) as TextView
-            if(catPublic == MY_PUBLISHED_BOOKS)
+            if (catPublic == MY_PUBLISHED_BOOKS)
                 tv.text = resources.getString(R.string.ad_my_ads)
             if (catPublic == ALL_PUBLISHED_BOOKS)
                 tv.text = resources.getString(R.string.ad_other_ads)
@@ -755,7 +755,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun textViewSetTypeface(fontFamily: String?, textView: TextView) {
-        textView.setTypeface(fontFamily,this)
+        textView.setTypeface(fontFamily, this)
     }
 
     override fun editTextSetTypeface(fontFamily: String?, editText: EditText) {
@@ -767,7 +767,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nameAuthor: String,
         list: List<ChapterEntity2>
     ): String {
-         return saveDocx(titleBook, nameAuthor, list, this@MainActivity)
+        return saveDocx(titleBook, nameAuthor, list, this@MainActivity)
     }
 
     override suspend fun saveDocxHero(

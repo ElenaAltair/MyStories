@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,9 +41,6 @@ import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -54,7 +52,6 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
     private var book: BookEntity7? = null
     private val STORAGE_CODE: Int = 100
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
-    private var job: Job? = null
 
     // переменная, в которую будем записывать наш adapter
     private lateinit var adapter: PeopleAdapter
@@ -106,7 +103,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
             binding.imDocx.setOnClickListener {
                 val list = adapter.currentList
 
-                job = CoroutineScope(Dispatchers.Main).launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                     val strMessage =
                         (activity as? DialogsAndOtherFunctions)?.saveDocxPeople(
@@ -123,7 +120,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                 val list = adapter.currentList
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage =
                             (activity as? DialogsAndOtherFunctions)?.savePdfPeople(
@@ -144,7 +141,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                         requestPermissions(permissions, STORAGE_CODE)
                     } else {
                         //permission already granted, call savePdf() method
-                        job = CoroutineScope(Dispatchers.Main).launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                             val strMessage =
                                 (activity as? DialogsAndOtherFunctions)?.savePdfPeople(
@@ -163,7 +160,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                 val list = adapter.currentList
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                         val strMessage =
                             (activity as? DialogsAndOtherFunctions)?.saveTxtPeople(
@@ -183,7 +180,7 @@ class PeopleListFragment : BaseFragment(), PeopleAdapter.Listener, BackPressed {
                         requestPermissions(permissions, STORAGE_CODE)
                     } else {
                         //permission already granted, call saveTxt() method
-                        job = CoroutineScope(Dispatchers.Main).launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             val dialog = (activity as? DialogsAndOtherFunctions)?.progressDialog()
                             val strMessage =
                                 (activity as? DialogsAndOtherFunctions)?.saveTxtPeople(
