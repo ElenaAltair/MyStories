@@ -5,12 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/noteBgColor"
+    android:background="?attr/noteBg0Color"
     tools:context=".activities.books.NewHeroActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@mipmap/ic_banner_foreground"
+        android:backgroundTint="?attr/noteBgColor"
         android:gravity="top"
         android:orientation="vertical">
 
@@ -28,7 +30,7 @@
             android:id="@+id/titleBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/actionModeBackground"
+            android:background="@color/white"
             android:ellipsize="end"
             android:maxLines="1"
             android:padding="10dp"
@@ -39,6 +41,11 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?attr/noteBg3Color"
+            android:orientation="horizontal"></LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"

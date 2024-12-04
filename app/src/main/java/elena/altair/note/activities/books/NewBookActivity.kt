@@ -1,7 +1,5 @@
 package elena.altair.note.activities.books
 
-import android.Manifest
-import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
@@ -148,7 +146,7 @@ class NewBookActivity : AppCompatActivity() {
 
         requestMultiplePermissions.launch(
             arrayOf(
-                CAMERA,
+                //CAMERA,
                 READ_EXTERNAL_STORAGE,
                 WRITE_EXTERNAL_STORAGE,
             )

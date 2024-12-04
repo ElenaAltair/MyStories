@@ -309,7 +309,7 @@
     <string name="corr">Published:</string>
     <string name="edit_publish">To publish a book, all fields must be filled in! 1. Go back to the application section where you created your book and fill in all the fields: book title, type of literature, genre of literature, short description. (Later, if you want to change these fields in a published book, also first make changes in the section where you are creating a book, then select this book from the published ones, click the "Edit" button, and in the window that opens, click the "Publish" button.) 2. Open at least one chapter for publication. 3. Do not forget to specify the email address.</string>
     <string name="selection_section_empty">If the book selection section is empty, it means that you do not have unpublished books, i.e. all books created on this device have been published, or you have not created any books yet.</string>
-    <string name="only_registered_users">Only registered users can create and publish their books.</string>
+    <string name="only_registered_users">Only guests and registered users can only create books. Only registered users can publish books.</string>
     <string name="published_from_another_device">This book was created and published from another device. If you now remove it from the published ones from this device, then you will not be able to publish it again from the device from which you originally published it.</string>
     <string name="continue_">Continue</string>
     <string name="profile">Profile</string>
@@ -327,4 +327,8 @@
     <string name="author">Author:</string>
     <string name="downloading_from_cloud">When downloading a book from a cloud database, if this book is already on this device, it will be completely overwritten. Be extremely careful not to lose data. Continue?</string>
     <string name="book_downloaded">The book was downloaded from a cloud database and saved on this device. If the book is saved on different devices, keep track of the relevance of the data on these devices yourself. By saving the book on different devices, you get the opportunity to make changes to the book stored in the cloud database from these devices. Be extremely careful not to lose data.</string>
+    <string name="cat_pref_1" translatable="false">cat_pref_1</string>
+    <string name="background_sun" translatable="false">Sun</string>
+    <string name="background_moon" translatable="false">Moon</string>
+    <string name="background_stars" translatable="false">Stars</string>
 </resources>

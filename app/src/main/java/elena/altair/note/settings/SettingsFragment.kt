@@ -1,5 +1,6 @@
 package elena.altair.note.settings
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import elena.altair.note.R
@@ -17,5 +18,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         } else {
             setPreferencesFromResource(R.xml.settings_preference2, rootKey)
         }
+
+
     }
 }

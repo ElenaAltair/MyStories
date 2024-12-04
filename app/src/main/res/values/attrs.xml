@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="noteBg0Color" format="color"/>
     <attr name="noteBgColor" format="color"/>
     <attr name="noteBg2Color" format="color"/>
     <attr name="noteBg3Color" format="color"/>

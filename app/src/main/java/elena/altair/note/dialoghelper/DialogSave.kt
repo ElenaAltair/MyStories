@@ -42,7 +42,8 @@ object DialogSave {
             } else {
                 mainViewModel.updateBook(tempBook)
             }
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
+            if (!new)
+                createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()
@@ -70,7 +71,8 @@ object DialogSave {
             } else {
                 mainViewModel.updateChapter(tempChapter)
             }
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
+            if (!new)
+                createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()
@@ -98,7 +100,8 @@ object DialogSave {
             } else {
                 mainViewModel.updateHero(tempHero)
             }
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
+            if (!new)
+                createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()
@@ -126,7 +129,8 @@ object DialogSave {
             } else {
                 mainViewModel.updateLocation(tempLocation)
             }
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
+            if (!new)
+                createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()
@@ -154,7 +158,8 @@ object DialogSave {
             } else {
                 mainViewModel.updatePeople(tempPeople)
             }
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
+            if (!new)
+                createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()
@@ -182,7 +187,8 @@ object DialogSave {
             } else {
                 mainViewModel.updateTerm(tempTerm)
             }
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
+            if (!new)
+                createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()
@@ -259,8 +265,6 @@ object DialogSave {
 
             activity.setResult(RESULT_OK, i)
             activity.finish()
-
-            createDialogInfo(activity.resources.getString(R.string.changes_saved), activity)
             dialog?.dismiss()
         }
         dialog.show()

@@ -560,7 +560,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.commit {
                     replace(R.id.placeHolder, MainListFragment.newInstance())
                 }
-                createDialogI(resources.getString(R.string.attention_work_offline))
+                //createDialogI(resources.getString(R.string.attention_work_offline))
             }
 
             R.id.id_sign_out -> {

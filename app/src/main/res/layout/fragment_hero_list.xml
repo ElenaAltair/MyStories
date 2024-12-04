@@ -5,7 +5,8 @@
     android:id="@+id/fragChapter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/noteBgColor"
+    android:background="@mipmap/ic_banner_foreground"
+    android:backgroundTint="?attr/noteBgColor"
     tools:context=".fragments.books.HeroListFragment">
 
     <LinearLayout
@@ -105,7 +106,6 @@
                 app:srcCompat="@drawable/ic_docx" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
         <ScrollView

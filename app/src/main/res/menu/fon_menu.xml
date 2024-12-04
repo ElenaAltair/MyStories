@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/b_sun"
+        android:title="@string/background_sun"
+        android:icon="@drawable/ic_sunny"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/b_moon"
+        android:title="@string/background_moon"
+        android:icon="@drawable/ic_nightlight"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/b_star"
+        android:title="@string/background_stars"
+        android:icon="@drawable/ic_star_24"
+        app:showAsAction="ifRoom"
+        />
+</menu>

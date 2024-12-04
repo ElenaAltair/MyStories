@@ -1,6 +1,5 @@
 package elena.altair.note.accounthelper
 
-import android.util.Log
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -169,10 +168,12 @@ class AccountHelper(private val act: MainActivity) {
 
     fun signInAnonymously(listener: Listener) { //
         act.mAuth.signInAnonymously().addOnCompleteListener { task ->
-            Log.d("MyLog", "signInAnonymously")
+            //Log.d("MyLog", "signInAnonymously")
             if (task.isSuccessful) {
                 listener.onComplete()
-                act.createDialog(act.resources.getString(R.string.entered_guest))
+                val mess =
+                    act.resources.getString(R.string.entered_guest) + "\n" + act.getString(R.string.attention_work_offline)
+                act.createDialog(mess)
             } //else {
             //act.createDialog(act.resources.getString(R.string.not_entered_guest))
             //}

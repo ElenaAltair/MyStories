@@ -1,10 +1,8 @@
 package elena.altair.note.activities.books
 
 import android.Manifest
-import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -116,7 +114,7 @@ class NewHeroActivity : AppCompatActivity() {
 
         requestMultiplePermissions.launch(
             arrayOf(
-                CAMERA,
+                //CAMERA,
                 READ_EXTERNAL_STORAGE,
                 WRITE_EXTERNAL_STORAGE,
             )
@@ -469,7 +467,6 @@ class NewHeroActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
     // нажимаем на открыть героя во фрагменте со списком героев,

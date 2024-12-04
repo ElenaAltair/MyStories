@@ -54,7 +54,7 @@
         <item>32</item>
         <item>36</item>
     </string-array>
-    <!-- <font color="#FF3700B3">abighaustitul3d: </font> -->
+    <!-- <font color="?attr/noteBg4Color">abighaustitul3d: </font> -->
     <string-array name="font_family_array">
         <item>asylbekm29kz</item>
         <item>capsmall</item>

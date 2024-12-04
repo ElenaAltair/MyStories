@@ -5,13 +5,14 @@
     android:id="@+id/fragChapter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/noteBg0Color"
     tools:context=".fragments.books.ChapterListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/noteBgColor"
+        android:background="@mipmap/ic_banner_foreground"
+        android:backgroundTint="?attr/noteBgColor"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 

@@ -1,5 +1,6 @@
 package elena.altair.note.activities.ads
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Build
@@ -55,12 +56,44 @@ class ReadChapterActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.fon_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) { // нажимаем на кнопку стрелка на верхнем меню
             finish()
+        } else if (item.itemId == R.id.b_star) {
+            binding.main.setBackgroundResource(R.color.black)
+            binding.toolbar.setBackgroundResource(R.color.blue_dark_dark4)
+            binding.chapterName.setBackgroundResource(R.color.blue_dark_dark4)
+            binding.bookName.setBackgroundResource(R.color.blue_dark_dark4)
+            binding.cvRead.setBackgroundResource(R.color.black)
+
+            binding.chapterName.setTextColor(resources.getColor(R.color.blue_dark, resources.newTheme()))
+            binding.bookName.setTextColor(resources.getColor(R.color.blue_dark, resources.newTheme()))
+            binding.content.setTextColor(resources.getColor(R.color.blue_dark, resources.newTheme()))
+        } else if (item.itemId == R.id.b_moon) {
+            binding.main.setBackgroundResource(R.color.purple_500)
+            binding.toolbar.setBackgroundResource(R.color.purple_700)
+            binding.chapterName.setBackgroundResource(R.color.purple_700)
+            binding.bookName.setBackgroundResource(R.color.purple_700)
+            binding.cvRead.setBackgroundResource(R.color.purple_500)
+
+            binding.chapterName.setTextColor(resources.getColor(R.color.blue_dark, resources.newTheme()))
+            binding.bookName.setTextColor(resources.getColor(R.color.blue_dark, resources.newTheme()))
+            binding.content.setTextColor(resources.getColor(R.color.blue_dark, resources.newTheme()))
+        } else if (item.itemId == R.id.b_sun) {
+            binding.main.setBackgroundResource(R.color.orange_light_bg)
+            binding.toolbar.setBackgroundResource(R.color.orange_light_bg2)
+            binding.chapterName.setBackgroundResource(R.color.orange_light_bg2)
+            binding.bookName.setBackgroundResource(R.color.orange_light_bg2)
+            binding.cvRead.setBackgroundResource(R.color.orange_light_bg)
+
+            binding.chapterName.setTextColor(resources.getColor(R.color.red_dark_dark4, resources.newTheme()))
+            binding.bookName.setTextColor(resources.getColor(R.color.red_dark_dark4, resources.newTheme()))
+            binding.content.setTextColor(resources.getColor(R.color.black, resources.newTheme()))
         }
         return super.onOptionsItemSelected(item)
     }

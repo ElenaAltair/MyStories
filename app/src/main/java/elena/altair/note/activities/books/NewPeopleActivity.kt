@@ -1,10 +1,8 @@
 package elena.altair.note.activities.books
 
 import android.Manifest
-import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -98,8 +96,8 @@ class NewPeopleActivity : AppCompatActivity() {
         actionBarSetting()
         ActivityCompat.requestPermissions(
             this, arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                READ_EXTERNAL_STORAGE,
+                WRITE_EXTERNAL_STORAGE
             ),
             PackageManager.PERMISSION_GRANTED
         )
@@ -116,7 +114,7 @@ class NewPeopleActivity : AppCompatActivity() {
 
         requestMultiplePermissions.launch(
             arrayOf(
-                CAMERA,
+                //CAMERA,
                 READ_EXTERNAL_STORAGE,
                 WRITE_EXTERNAL_STORAGE,
             )
@@ -448,7 +446,6 @@ class NewPeopleActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
     // нажимаем на открыть народ во фрагменте со списком народов,

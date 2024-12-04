@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <PreferenceCategory
+        android:layout="@layout/preference_category_companion"
         android:title="@string/general">
 
         <ListPreference
@@ -24,9 +25,11 @@
 
     </PreferenceCategory>
     <PreferenceCategory
+        android:layout="@layout/preference_category_companion"
         android:title="@string/theme_settings_no">
     </PreferenceCategory>
     <PreferenceCategory
+        android:layout="@layout/preference_category_companion"
         android:title="@string/note_text_settings">
 
         <ListPreference

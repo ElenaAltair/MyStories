@@ -1,6 +1,5 @@
 package elena.altair.note.activities.ads
 
-import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
@@ -138,7 +137,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
 
         requestMultiplePermissions.launch(
             arrayOf(
-                CAMERA,
+                //CAMERA,
                 READ_EXTERNAL_STORAGE,
                 WRITE_EXTERNAL_STORAGE,
             )

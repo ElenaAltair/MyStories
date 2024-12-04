@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/blue_dark</item>
         <item name="colorPrimaryVariant">@color/blue_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/blue_light_bg0</item>
         <item name="noteBgColor">@color/blue_light_bg</item>
         <item name="noteBg2Color">@color/blue_light_bg2</item>
         <item name="noteBg3Color">@color/blue_dark</item>
@@ -25,6 +26,7 @@
         <item name="colorPrimary">@color/blue_dark</item>
         <item name="colorPrimaryVariant">@color/blue_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/blue_light_bg0</item>
         <item name="noteBgColor">@color/blue_light_bg</item>
         <item name="noteBg2Color">@color/blue_light_bg2</item>
         <item name="noteBg3Color">@color/blue_dark</item>
@@ -44,6 +46,7 @@
         <item name="colorPrimary">@color/blue_dark</item>
         <item name="colorPrimaryVariant">@color/blue_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/blue_light_bg0</item>
         <item name="noteBgColor">@color/blue_light_bg</item>
         <item name="noteBg2Color">@color/blue_light_bg2</item>
         <item name="noteBg3Color">@color/blue_dark</item>
@@ -69,6 +72,7 @@
         <item name="colorPrimary">@color/red_dark</item>
         <item name="colorPrimaryVariant">@color/red_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/red_light_bg0</item>
         <item name="noteBgColor">@color/red_light_bg</item>
         <item name="noteBg2Color">@color/red_light_bg2</item>
         <item name="noteBg3Color">@color/red_dark</item>
@@ -90,6 +94,7 @@
         <item name="colorPrimary">@color/red_dark</item>
         <item name="colorPrimaryVariant">@color/red_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/red_light_bg0</item>
         <item name="noteBgColor">@color/red_light_bg</item>
         <item name="noteBg2Color">@color/red_light_bg2</item>
         <item name="noteBg3Color">@color/red_dark</item>
@@ -109,6 +114,7 @@
         <item name="colorPrimary">@color/red_dark</item>
         <item name="colorPrimaryVariant">@color/red_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/red_light_bg0</item>
         <item name="noteBgColor">@color/red_light_bg</item>
         <item name="noteBg2Color">@color/red_light_bg2</item>
         <item name="noteBg3Color">@color/red_dark</item>
@@ -125,6 +131,7 @@
         <item name="colorPrimary">@color/green_dark_new</item>
         <item name="colorPrimaryVariant">@color/green_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/green_light_bg0</item>
         <item name="noteBgColor">@color/green_light_bg</item>
         <item name="noteBg2Color">@color/green_light_bg2</item>
         <item name="noteBg3Color">@color/green_dark_new</item>
@@ -146,6 +153,7 @@
         <item name="colorPrimary">@color/green_dark_new</item>
         <item name="colorPrimaryVariant">@color/green_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/green_light_bg0</item>
         <item name="noteBgColor">@color/green_light_bg</item>
         <item name="noteBg2Color">@color/green_light_bg2</item>
         <item name="noteBg3Color">@color/green_dark_new</item>
@@ -165,6 +173,7 @@
         <item name="colorPrimary">@color/green_dark_new</item>
         <item name="colorPrimaryVariant">@color/green_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/green_light_bg0</item>
         <item name="noteBgColor">@color/green_light_bg</item>
         <item name="noteBg2Color">@color/green_light_bg2</item>
         <item name="noteBg3Color">@color/green_dark_new</item>
@@ -181,6 +190,7 @@
         <item name="colorPrimary">@color/orange_dark_new</item>
         <item name="colorPrimaryVariant">@color/orange_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/orange_light_bg0</item>
         <item name="noteBgColor">@color/orange_light_bg</item>
         <item name="noteBg2Color">@color/orange_light_bg2</item>
         <item name="noteBg3Color">@color/orange_dark_new</item>
@@ -202,6 +212,7 @@
         <item name="colorPrimary">@color/orange_dark_new</item>
         <item name="colorPrimaryVariant">@color/orange_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/orange_light_bg0</item>
         <item name="noteBgColor">@color/orange_light_bg</item>
         <item name="noteBg2Color">@color/orange_light_bg2</item>
         <item name="noteBg3Color">@color/orange_dark_new</item>
@@ -221,6 +232,7 @@
         <item name="colorPrimary">@color/orange_dark_new</item>
         <item name="colorPrimaryVariant">@color/orange_dark_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBg0Color">@color/orange_light_bg0</item>
         <item name="noteBgColor">@color/orange_light_bg</item>
         <item name="noteBg2Color">@color/orange_light_bg2</item>
         <item name="noteBg3Color">@color/orange_dark_new</item>

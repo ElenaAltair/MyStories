@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,7 +110,11 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
 
             val listGenresLiter =
                 resources.getStringArray(R.array.genres_of_literature).toMutableList() as ArrayList
-            dialog.showSpinnerDialog(activity as AppCompatActivity, listGenresLiter, binding.edCatLiter2)
+            dialog.showSpinnerDialog(
+                activity as AppCompatActivity,
+                listGenresLiter,
+                binding.edCatLiter2
+            )
 
 
         }
@@ -296,7 +299,8 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
         ad: Ad
     ) {
         val builder = AlertDialog.Builder(activity as AppCompatActivity)
-        val bindingDialog = ContinueDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
+        val bindingDialog =
+            ContinueDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -322,7 +326,8 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
         ad: Ad,
     ) {
         val builder = AlertDialog.Builder(activity as AppCompatActivity)
-        val bindingDialog = DeleteDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
+        val bindingDialog =
+            DeleteDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -399,12 +404,13 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
             )
             return
         }
-        val editIntent = Intent((activity as AppCompatActivity), EditAdsActivity::class.java).apply {
-            // true - открыли объявление для редактирования
-            // false - создаём новое объявление
-            putExtra(EDIT_STATE_AD, true)
-            putExtra(ADS_DATA, ad)
-        }
+        val editIntent =
+            Intent((activity as AppCompatActivity), EditAdsActivity::class.java).apply {
+                // true - открыли объявление для редактирования
+                // false - создаём новое объявление
+                putExtra(EDIT_STATE_AD, true)
+                putExtra(ADS_DATA, ad)
+            }
         (activity as AppCompatActivity).startActivity(editIntent)
     }
 

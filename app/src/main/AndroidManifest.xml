@@ -9,7 +9,8 @@
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.CAMERA"
+    <uses-permission
+        android:name="android.permission.CAMERA"
         tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
 
     <application
@@ -25,10 +26,10 @@
         tools:targetApi="31">
         <activity
             android:name=".activities.books.ProfileActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
+            android:exported="true"
             android:theme="@style/Base.Theme.BlueNoActionBar"
-            android:exported="true" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.ads.ReadChapterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"

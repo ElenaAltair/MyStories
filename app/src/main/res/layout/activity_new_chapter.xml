@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/noteBgColor"
+    android:background="@mipmap/ic_banner_foreground"
+    android:backgroundTint="?attr/noteBgColor"
     tools:context=".activities.books.NewChapterActivity">
 
     <LinearLayout
@@ -27,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/actionModeBackground">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/titleBook"
@@ -112,6 +113,12 @@
                 app:srcCompat="@drawable/ic_strikethrough" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?attr/noteBg3Color"
+            android:orientation="horizontal"></LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"

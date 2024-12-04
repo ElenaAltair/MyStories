@@ -2,9 +2,6 @@ package elena.altair.note.fragments.books
 
 
 import android.Manifest
-import android.Manifest.permission.CAMERA
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -12,7 +9,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -220,7 +216,6 @@ class ChapterListFragment : BaseFragment(), ChapterAdapter.Listener, BackPressed
 
 
     }
-
 
 
     // функция для инициализации нашего Recycle View
