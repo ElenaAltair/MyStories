@@ -5,8 +5,6 @@
     android:id="@+id/fragChapter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/ic_banner_foreground"
-    android:backgroundTint="?attr/noteBgColor"
     tools:context=".fragments.books.TermListFragment">
 
     <LinearLayout
@@ -139,13 +137,6 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginEnd="5dp"
-                    android:src="@mipmap/ic_book_7_background" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -5,14 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/noteBg0Color"
+    android:background="?attr/noteBgColor"
     tools:context=".activities.books.NewLocationActivity">
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/ic_banner_foreground"
-        android:backgroundTint="?attr/noteBgColor"
+        android:background="@drawable/app_background_stars"
+        android:backgroundTint="?attr/noteBg0Color"
         android:gravity="top"
         android:orientation="vertical">
 

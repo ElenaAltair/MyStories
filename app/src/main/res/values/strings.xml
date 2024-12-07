@@ -331,4 +331,55 @@
     <string name="background_sun" translatable="false">Sun</string>
     <string name="background_moon" translatable="false">Moon</string>
     <string name="background_stars" translatable="false">Stars</string>
+    <string name="screen_brightness">Get permission to change the screen brightness</string>
+    <string name="permission_denied_2">Permissions have not been received!</string>
+    <string name="background_selection">Background selection</string>
+    <string name="stars">Stars</string>
+    <string name="snow">Snow</string>
+    <string name="cats">Cats</string>
+    <string name="flowers">Flowers</string>
+    <string name="trees">Trees</string>
+    <string name="without_drawings">Without drawings</string>
+    <string name="halloween">Halloween</string>
+    <string name="emoji">Emoji</string>
+    <string name="landscape">Landscape</string>
+
+    <string name="eat">Eat</string>
+    <string name="toys">Toys</string>
+    <string name="love">Love</string>
+    <string name="science">Science</string>
+    <string name="sea">Sea</string>
+    <string name="secret">Secret</string>
+    <string name="thanks">Thanks</string>
+    <string name="thanks_for_icons">Thanks for the icons!</string>
+    <string name="about_app">About the app</string>
+    <string name="icons" translatable="false">alexdndz (www.freepik.com)
+        \t\n\t\nАндика Праманто (https://iconscout.com/icons/)
+        \t\n\t\nAnditii Studio · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nBootstrap · MIT License (https://icon-icons.com/ru/)
+        \t\n\t\nDaniel Rodriguez · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nDarius Dan · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nDea Jae · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nDooder · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nGraficon (www.freepik.com)
+        \t\n\t\nFahmi Hidayat · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nFermam Aziz · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nHand Drawn Goods · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nHat Tech (https://ru.freepik.com/icon/)
+        \t\n\t\nIcons8 · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nIcon-Icons · Icon-Icons free license (https://icon-icons.com/ru/)
+        \t\n\t\nIconic_ux · Icon-Icons free license (https://icon-icons.com/ru/)
+        \t\n\t\nIconoir · MIT License (https://icon-icons.com/ru/)
+        \t\n\t\nmaxicons · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nProsymbols Premium (https://iconscout.com/icons/)
+        \t\n\t\nРанг Сол (https://iconscout.com/icons/)
+        \t\n\t\nRecep Kutuk · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nrecognizeapp.com · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nrunninstd · Apache 2.0 (https://icon-icons.com/ru/)
+        \t\n\t\nSana Khan · Free for commercial use (https://icon-icons.com/ru/)
+        \t\n\t\nSumit Saengthong · CC Atribution (https://icon-icons.com/ru/)
+        \t\n\t\nTemplet JJ · Free for commercial use (https://icon-icons.com/ru/)
+        \t\n\t\nThose Icons · CC Atribution (https://icon-icons.com/ru/)
+    </string>
+
 </resources>

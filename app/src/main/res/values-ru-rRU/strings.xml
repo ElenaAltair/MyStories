@@ -321,4 +321,25 @@
     <string name="author">"Автор: "</string>
     <string name="downloading_from_cloud">При скачивании книги с облачной базы данных, если данная книга уже есть на данном устройстве, то она будет полностью перезаписана. Будьте предельно внимательны, чтобы не потерять данные. Продолжить?</string>
     <string name="book_downloaded">Книга скачена с облачной базы данных и сохранена на данном устройстве. Если книга сохранена на разных устройствах, за актуальностью данных на этих устройствах следите самостоятельно. Сохранив, книгу на разных устройствах, вы получаете возможность, вносите изменения в книгу, хранящуюся в облачной базе данных с этих устройств. Проявляйте предельную внимательность, чтобы не потерять данные.</string>
+    <string name="screen_brightness">Получить разрешение на изменение яркости экрана</string>
+    <string name="permission_denied_2">Разрешения не получены!</string>
+    <string name="background_selection">Выбор фона</string>
+    <string name="stars">Звезды</string>
+    <string name="snow">Снежок</string>
+    <string name="cats">Котики</string>
+    <string name="flowers">Цветы</string>
+    <string name="trees">Деревья</string>
+    <string name="without_drawings">Без рисунков</string>
+    <string name="halloween">Хэллоуин</string>
+    <string name="emoji">Эмодзи</string>
+    <string name="landscape">Ландшафт</string>
+    <string name="eat">Еда</string>
+    <string name="toys">Игрушки</string>
+    <string name="love">Любовь</string>
+    <string name="science">Наука</string>
+    <string name="sea">Море</string>
+    <string name="secret">Тайна</string>
+    <string name="thanks">Благодарности</string>
+    <string name="thanks_for_icons">Благодарю за иконки!</string>
+    <string name="about_app">О приложении</string>
 </resources>

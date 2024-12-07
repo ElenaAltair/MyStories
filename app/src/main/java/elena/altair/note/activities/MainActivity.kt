@@ -5,8 +5,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -17,7 +20,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import androidx.preference.PreferenceManager
@@ -30,6 +35,23 @@ import elena.altair.note.R
 import elena.altair.note.accounthelper.AccountHelper
 import elena.altair.note.activities.ads.EditAdsActivity
 import elena.altair.note.activities.books.ProfileActivity
+import elena.altair.note.constants.MyConstants.BACKGROUND_CATS
+import elena.altair.note.constants.MyConstants.BACKGROUND_DEFAULT
+import elena.altair.note.constants.MyConstants.BACKGROUND_EAT
+import elena.altair.note.constants.MyConstants.BACKGROUND_EMOJI
+import elena.altair.note.constants.MyConstants.BACKGROUND_EMPTY
+import elena.altair.note.constants.MyConstants.BACKGROUND_FLOWERS
+import elena.altair.note.constants.MyConstants.BACKGROUND_HALLOWEEN
+import elena.altair.note.constants.MyConstants.BACKGROUND_KEY
+import elena.altair.note.constants.MyConstants.BACKGROUND_LANDSCAPE
+import elena.altair.note.constants.MyConstants.BACKGROUND_LOVE
+import elena.altair.note.constants.MyConstants.BACKGROUND_SCIENCE
+import elena.altair.note.constants.MyConstants.BACKGROUND_SEA
+import elena.altair.note.constants.MyConstants.BACKGROUND_SECRET
+import elena.altair.note.constants.MyConstants.BACKGROUND_SNOW
+import elena.altair.note.constants.MyConstants.BACKGROUND_STARS
+import elena.altair.note.constants.MyConstants.BACKGROUND_TOYS
+import elena.altair.note.constants.MyConstants.BACKGROUND_TREES
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_BUTTON_KEY
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
@@ -38,6 +60,7 @@ import elena.altair.note.constants.MyConstants.THEME_KEY
 import elena.altair.note.databinding.ActivityMainBinding
 import elena.altair.note.databinding.DeleteDialogBinding
 import elena.altair.note.databinding.HelpDialogBinding
+import elena.altair.note.databinding.ThanksDialogBinding
 import elena.altair.note.dialoghelper.DialogConst
 import elena.altair.note.dialoghelper.DialogHelper
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
@@ -103,6 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var defPref: SharedPreferences
     private var pref: SharedPreferences? = null
     private var currentTheme = ""
+    private var currentBackground = ""
     private val dialogHelper = DialogHelper(this)
     private var backPressedTime: Long = 0
     private val mainViewModel: MainViewModel by viewModels()
@@ -145,6 +169,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onStart() {
         setFontFamily()
         super.onStart()
+
 
         if (currentUser != USER_ANONYMOUS) {
             currentUser = mAuth.currentUser?.email.toString()
@@ -207,20 +232,55 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             binding.navView.menu.findItem(R.id.profile).isVisible = true
         }
 
+
     }
 
+
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         currentTheme = defPref.getString(THEME_KEY, THEME_DEFAULT).toString()
+        currentBackground = defPref.getString(BACKGROUND_KEY, BACKGROUND_DEFAULT).toString()
         pref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme(defPref))
 
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Log.d ("MyLog", "currentBackground $currentBackground")
+        if (currentBackground == BACKGROUND_STARS) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_stars)
+        } else if (currentBackground == BACKGROUND_SNOW) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_snow)
+        } else if (currentBackground == BACKGROUND_CATS) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_cat)
+        } else if (currentBackground == BACKGROUND_FLOWERS) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_flowers)
+        } else if (currentBackground == BACKGROUND_TREES) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_trees)
+        } else if (currentBackground == BACKGROUND_EMPTY) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_empty)
+        } else if (currentBackground == BACKGROUND_HALLOWEEN) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_halloween)
+        } else if (currentBackground == BACKGROUND_EMOJI) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_emoji)
+        } else if (currentBackground == BACKGROUND_LANDSCAPE) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_landscape)
+        } else if (currentBackground == BACKGROUND_EAT) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_eat)
+        } else if (currentBackground == BACKGROUND_TOYS) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_toys)
+        } else if (currentBackground == BACKGROUND_LOVE) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_love)
+        } else if (currentBackground == BACKGROUND_SCIENCE) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_science)
+        } else if (currentBackground == BACKGROUND_SEA) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_sea)
+        } else if (currentBackground == BACKGROUND_SECRET) {
+            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_secret)
+        }
 
 
         init()
@@ -451,7 +511,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (defPref.getString(
                 THEME_KEY,
                 THEME_DEFAULT
-            ) != currentTheme
+            ) != currentTheme || defPref.getString(
+                BACKGROUND_KEY,
+                BACKGROUND_DEFAULT
+            ) != currentBackground
         ) recreate() // эта функция пересоздает активити
     }
 
@@ -560,7 +623,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.commit {
                     replace(R.id.placeHolder, MainListFragment.newInstance())
                 }
-                //createDialogI(resources.getString(R.string.attention_work_offline))
             }
 
             R.id.id_sign_out -> {
@@ -578,6 +640,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     replace(R.id.placeHolder, MainListFragment.newInstance())
                 }
                 createDialog(resources.getString(R.string.you_logged_out))
+            }
+
+            R.id.thanks -> {
+                createDialogThanks()
             }
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -618,6 +684,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         bindingDialog.bOk.setOnClickListener {
             recreate() // эта функция пересоздает наше активити
+            dialog?.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    fun createDialogThanks() { // 0 - регистрация, 1 - вход
+        val builder = AlertDialog.Builder(this)
+        val bindingDialog = ThanksDialogBinding.inflate(this.layoutInflater)
+        val view = bindingDialog.root
+        builder.setView(view)
+
+        val dialog = builder.create()
+
+        bindingDialog.bOk.setOnClickListener {
             dialog?.dismiss()
         }
 
@@ -960,3 +1041,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 }
+

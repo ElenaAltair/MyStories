@@ -38,6 +38,15 @@
             android:icon="@drawable/ic_style"
             app:useSimpleSummaryProvider="true"
             android:title="@string/chose_theme" />
+
+        <ListPreference
+            android:defaultValue="stars"
+            android:entries="@array/chose_background_array"
+            android:entryValues="@array/chose_background_values"
+            android:key="background_key"
+            android:icon="@drawable/ic_style"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/background_selection" />
     </PreferenceCategory>
 
     <PreferenceCategory

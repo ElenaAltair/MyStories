@@ -2,6 +2,7 @@ package elena.altair.note.activities.books
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_SETTINGS
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
@@ -28,6 +29,23 @@ import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.activities.MainActivity.Companion.USER_ANONYMOUS
+import elena.altair.note.constants.MyConstants.BACKGROUND_CATS
+import elena.altair.note.constants.MyConstants.BACKGROUND_DEFAULT
+import elena.altair.note.constants.MyConstants.BACKGROUND_EAT
+import elena.altair.note.constants.MyConstants.BACKGROUND_EMOJI
+import elena.altair.note.constants.MyConstants.BACKGROUND_EMPTY
+import elena.altair.note.constants.MyConstants.BACKGROUND_FLOWERS
+import elena.altair.note.constants.MyConstants.BACKGROUND_HALLOWEEN
+import elena.altair.note.constants.MyConstants.BACKGROUND_KEY
+import elena.altair.note.constants.MyConstants.BACKGROUND_LANDSCAPE
+import elena.altair.note.constants.MyConstants.BACKGROUND_LOVE
+import elena.altair.note.constants.MyConstants.BACKGROUND_SCIENCE
+import elena.altair.note.constants.MyConstants.BACKGROUND_SEA
+import elena.altair.note.constants.MyConstants.BACKGROUND_SECRET
+import elena.altair.note.constants.MyConstants.BACKGROUND_SNOW
+import elena.altair.note.constants.MyConstants.BACKGROUND_STARS
+import elena.altair.note.constants.MyConstants.BACKGROUND_TOYS
+import elena.altair.note.constants.MyConstants.BACKGROUND_TREES
 import elena.altair.note.constants.MyConstants.COMMENT_SIZE_DEFAULT
 import elena.altair.note.constants.MyConstants.COMMENT_SIZE_KEY
 import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
@@ -102,12 +120,43 @@ class NewBookActivity : AppCompatActivity() {
 
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme(defPref))
-
+        val currentBackground = defPref.getString(BACKGROUND_KEY, BACKGROUND_DEFAULT).toString()
         super.onCreate(savedInstanceState)
 
         binding = ActivityNewBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (currentBackground == BACKGROUND_STARS) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
+        } else if (currentBackground == BACKGROUND_SNOW) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
+        } else if (currentBackground == BACKGROUND_CATS) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
+        } else if (currentBackground == BACKGROUND_FLOWERS) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
+        } else if (currentBackground == BACKGROUND_TREES) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
+        } else if (currentBackground == BACKGROUND_EMPTY) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
+        } else if (currentBackground == BACKGROUND_HALLOWEEN) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
+        } else if (currentBackground == BACKGROUND_EMOJI) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
+        } else if (currentBackground == BACKGROUND_LANDSCAPE) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
+        } else if (currentBackground == BACKGROUND_EAT) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
+        } else if (currentBackground == BACKGROUND_TOYS) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
+        } else if (currentBackground == BACKGROUND_LOVE) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_love)
+        } else if (currentBackground == BACKGROUND_SCIENCE) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_science)
+        } else if (currentBackground == BACKGROUND_SEA) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
+        } else if (currentBackground == BACKGROUND_SECRET) {
+            binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+        }
 
 
         getBook()
@@ -147,6 +196,7 @@ class NewBookActivity : AppCompatActivity() {
         requestMultiplePermissions.launch(
             arrayOf(
                 //CAMERA,
+                WRITE_SETTINGS,
                 READ_EXTERNAL_STORAGE,
                 WRITE_EXTERNAL_STORAGE,
             )

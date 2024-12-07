@@ -11,7 +11,7 @@
         android:id="@+id/place__holder_ads"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_light">
+        android:background="?attr/noteBg0Color">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -563,8 +563,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
                         android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
                         android:background="@color/white"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp">
@@ -572,6 +573,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
                             android:orientation="vertical">
 
                             <TextView

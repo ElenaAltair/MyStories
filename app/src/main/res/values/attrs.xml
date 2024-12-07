@@ -6,4 +6,5 @@
     <attr name="noteBg3Color" format="color"/>
     <attr name="noteBg4Color" format="color"/>
     <attr name="colorPrimary" format="color"/>
+    <attr name="fon" />
 </resources>

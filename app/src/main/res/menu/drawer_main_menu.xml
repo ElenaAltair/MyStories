@@ -57,5 +57,13 @@
                 />
         </menu>
     </item>
+    <item android:title="@string/about_app">
+        <menu>
+            <item
+                android:id="@+id/thanks"
+                android:title="@string/thanks"
+                />
+        </menu>
+    </item>
 
 </menu>

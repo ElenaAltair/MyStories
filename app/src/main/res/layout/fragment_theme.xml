@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/ic_banner_foreground"
-    android:backgroundTint="?attr/noteBgColor"
     tools:context=".fragments.books.ThemeFragment">
 
     <LinearLayout

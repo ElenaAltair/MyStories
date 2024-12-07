@@ -10,8 +10,11 @@
 
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/app_background_stars"
+        android:backgroundTint="?attr/noteBg0Color"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

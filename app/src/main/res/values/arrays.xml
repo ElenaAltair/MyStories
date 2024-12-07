@@ -17,6 +17,43 @@
         <item>HH:mm:ss - yyyy/MM/dd</item>
         <item>HH:mm:ss - dd/MM/yyyy</item>
     </string-array>
+
+    <string-array name="chose_background_array">
+        <item>@string/without_drawings</item>
+        <item>@string/stars</item>
+        <item>@string/snow</item>
+        <item>@string/cats</item>
+        <item>@string/flowers</item>
+        <item>@string/trees</item>
+        <item>@string/halloween</item>
+        <item>@string/emoji</item>
+        <item>@string/landscape</item>
+        <item>@string/eat</item>
+        <item>@string/toys</item>
+        <item>@string/love</item>
+        <item>@string/science</item>
+        <item>@string/sea</item>
+        <item>@string/secret</item>
+    </string-array>
+    <string-array name="chose_background_values">
+        <item>empty</item>
+        <item>stars</item>
+        <item>snow</item>
+        <item>cats</item>
+        <item>flowers</item>
+        <item>trees</item>
+        <item>halloween</item>
+        <item>emoji</item>
+        <item>landscape</item>
+        <item>eat</item>
+        <item>toys</item>
+        <item>love</item>
+        <item>science</item>
+        <item>sea</item>
+        <item>secret</item>
+    </string-array>
+
+
     <string-array name="chose_theme_array">
         <item>@string/blue_theme</item>
         <item>@string/red_theme</item>

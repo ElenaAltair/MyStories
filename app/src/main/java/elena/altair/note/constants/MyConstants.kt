@@ -2,6 +2,24 @@ package elena.altair.note.constants
 
 object MyConstants {
     const val THEME_KEY = "theme_key"
+    const val BACKGROUND_KEY = "background_key"
+
+    const val BACKGROUND_DEFAULT = "stars"
+    const val BACKGROUND_STARS = "stars"
+    const val BACKGROUND_SNOW = "snow"
+    const val BACKGROUND_CATS = "cats"
+    const val BACKGROUND_FLOWERS = "flowers"
+    const val BACKGROUND_TREES = "trees"
+    const val BACKGROUND_EMPTY = "empty"
+    const val BACKGROUND_HALLOWEEN = "halloween"
+    const val BACKGROUND_EMOJI = "emoji"
+    const val BACKGROUND_LANDSCAPE = "landscape"
+    const val BACKGROUND_EAT = "eat"
+    const val BACKGROUND_TOYS = "toys"
+    const val BACKGROUND_LOVE = "love"
+    const val BACKGROUND_SCIENCE = "science"
+    const val BACKGROUND_SEA = "sea"
+    const val BACKGROUND_SECRET = "secret"
 
     const val FONT_FAMILY_TITLE_KEY = "font_family_title_key"
     const val FONT_FAMILY_CONTENT_KEY = "font_family_content_key"

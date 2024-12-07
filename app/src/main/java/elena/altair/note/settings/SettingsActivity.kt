@@ -158,6 +158,7 @@ class SettingsActivity : AppCompatActivity() {
 
         // покажем кнопку стрелку в верхнм меню
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#0E002E</color>
-    <color name="purple_700">#240075</color>
+    <color name="purple_200">#4A4678</color>
+    <color name="purple_500">#060123</color>
+    <color name="purple_700">#252242</color>
     <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="teal_700">#356868</color>
+    <color name="picker_grey_n">#242424</color>
+    <color name="picker_grey_nd">#161616</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
@@ -33,7 +36,7 @@
     <color name="blue_light">#A4DCD1</color>
 
     <color name="blue_light_new">#02ADF8</color>
-    <color name="blue_light_bg0">#DDF7FB</color>
+    <color name="blue_light_bg0">#EEFDFF</color>
     <color name="blue_light_bg">#BEF1FD</color>
     <color name="blue_light_bg2">#65BDE4</color>
     <color name="blue_dark">#0276A9</color>
@@ -42,23 +45,23 @@
 
     <color name="red_light">#CF1414</color>
     <color name="red_light_bg0">#FAF0F0</color>
-    <color name="red_light_bg">#FBE3E3</color>
+    <color name="red_light_bg">#FFD9D9</color>
     <color name="red_light_bg2">#D58181</color>
     <color name="red_dark">#951212</color>
     <color name="red_dark_dark">#620202</color>
     <color name="red_dark_dark4">#4B0101</color>
 
     <color name="green_light_new">#019589</color>
-    <color name="green_light_bg0">#E1FBF6</color>
-    <color name="green_light_bg">#CDF8EC</color>
+    <color name="green_light_bg0">#F3FDFB</color>
+    <color name="green_light_bg">#C6F2E6</color>
     <color name="green_light_bg2">#6BBAB4</color>
     <color name="green_dark_new">#028075</color>
     <color name="green_dark_dark">#015250</color>
     <color name="green_dark_dark4">#003732</color>
 
     <color name="orange_light_new">#D78025</color>
-    <color name="orange_light_bg0">#FBF6F0</color>
-    <color name="orange_light_bg">#FBEFE1</color>
+    <color name="orange_light_bg0">#FFFBF7</color>
+    <color name="orange_light_bg">#F6E5CF</color>
     <color name="orange_light_bg2">#E9B47E</color>
     <color name="orange_dark_new">#B65F02</color>
     <color name="orange_dark_dark">#7A4002</color>

@@ -78,6 +78,7 @@
         <item name="noteBg3Color">@color/red_dark</item>
         <item name="noteBg4Color">@color/red_dark_dark4</item>
 
+
         <item name="colorSecondary">@color/red_dark</item>
         <item name="colorSecondaryVariant">@color/red_dark_dark</item>
         <item name="colorOnSecondary">@color/black</item>
@@ -244,5 +245,7 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">@color/orange_dark_dark</item>
     </style>
+
+
 
 </resources>
