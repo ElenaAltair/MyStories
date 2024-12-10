@@ -11,7 +11,7 @@ import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
-import elena.altair.note.databinding.BookItemBinding
+import elena.altair.note.databinding.ItemBookBinding
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.settings.TimeManager
@@ -38,7 +38,7 @@ class BookAdapter(
     class ItemHolder(view: View, private val mainActivity: MainActivity) :
         RecyclerView.ViewHolder(view) {
 
-        private val binding = BookItemBinding.bind(view)
+        private val binding = ItemBookBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в book_item, беря данные из базы данных
         fun setData(book: BookEntity7, listener: Listener, defPref: SharedPreferences) =
@@ -78,7 +78,7 @@ class BookAdapter(
             fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.book_item, parent, false),
+                        .inflate(R.layout.item_book, parent, false),
                     mainActivity
                 )
             }

@@ -11,7 +11,7 @@ import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
-import elena.altair.note.databinding.TermItemBinding
+import elena.altair.note.databinding.ItemTermBinding
 import elena.altair.note.etities.TermEntity2
 import elena.altair.note.utils.font.setTypeface
 import elena.altair.note.utils.text.textRedactor.HtmlManager
@@ -37,7 +37,7 @@ class TermAdapter(
     class ItemHolder(val view: View, private val mainActivity: MainActivity) :
         RecyclerView.ViewHolder(view) {
 
-        private val binding = TermItemBinding.bind(view)
+        private val binding = ItemTermBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в term_item, беря данные из базы данных
         fun setData(term: TermEntity2, listener: Listener, defPref: SharedPreferences) =
@@ -71,7 +71,7 @@ class TermAdapter(
 
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.term_item, parent, false),
+                        .inflate(R.layout.item_term, parent, false),
                     mainActivity
                 )
             }

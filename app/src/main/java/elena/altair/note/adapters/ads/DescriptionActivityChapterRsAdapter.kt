@@ -16,7 +16,7 @@ import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
 import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
-import elena.altair.note.databinding.ChapterItemForPublic2Binding
+import elena.altair.note.databinding.ItemChapterForPublic2Binding
 import elena.altair.note.fragments.ads.AllAdsFragment.Companion.AD_KEY
 import elena.altair.note.model.Ad
 import elena.altair.note.model.ChapterPublic
@@ -44,7 +44,7 @@ class DescriptionActivityChapterRsAdapter(
         val defPref: SharedPreferences,
     ) : RecyclerView.ViewHolder(view) {
 
-        private val binding = ChapterItemForPublic2Binding.bind(view)
+        private val binding = ItemChapterForPublic2Binding.bind(view)
 
         fun setDate(
             chapter: ChapterPublic,
@@ -94,7 +94,7 @@ class DescriptionActivityChapterRsAdapter(
             ): ChapHolder {
                 return ChapHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.chapter_item_for_public_2, parent, false),
+                        .inflate(R.layout.item_chapter_for_public_2, parent, false),
                     parent, activity, defPref
                 )
             }

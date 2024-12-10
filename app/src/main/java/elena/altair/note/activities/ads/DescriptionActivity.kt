@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +48,7 @@ import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.databinding.ActivityDescriptionBinding
-import elena.altair.note.databinding.ContinueDialogBinding
+import elena.altair.note.databinding.DialogContinueBinding
 import elena.altair.note.dialoghelper.DialogInfo
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.etities.BookEntity7
@@ -64,9 +65,6 @@ import elena.altair.note.utils.settings.TimeManager.getCurrentTime
 import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
 import elena.altair.note.viewmodel.FirebaseViewModel
 import elena.altair.note.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -82,7 +80,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
     private var isCollapsed = true
     private val mainViewModel: MainViewModel by viewModels()
     private var bookFromSqlite: BookEntity7? = null
-    private var job: Job? = null
+    private var timer: CountDownTimer? = null
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,36 +94,66 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
         binding = ActivityDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (currentBackground == BACKGROUND_STARS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
-        } else if (currentBackground == BACKGROUND_SNOW) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
-        } else if (currentBackground == BACKGROUND_CATS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
-        } else if (currentBackground == BACKGROUND_FLOWERS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
-        } else if (currentBackground == BACKGROUND_TREES) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
-        } else if (currentBackground == BACKGROUND_EMPTY) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
-        } else if (currentBackground == BACKGROUND_HALLOWEEN) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
-        } else if (currentBackground == BACKGROUND_EMOJI) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
-        } else if (currentBackground == BACKGROUND_LANDSCAPE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
-        } else if (currentBackground == BACKGROUND_EAT) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
-        } else if (currentBackground == BACKGROUND_TOYS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
-        } else if (currentBackground == BACKGROUND_LOVE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_love)
-        } else if (currentBackground == BACKGROUND_SCIENCE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_science)
-        } else if (currentBackground == BACKGROUND_SEA) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
-        } else if (currentBackground == BACKGROUND_SECRET) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+        when (currentBackground) {
+            BACKGROUND_STARS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
+            }
+
+            BACKGROUND_SNOW -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
+            }
+
+            BACKGROUND_CATS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
+            }
+
+            BACKGROUND_FLOWERS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
+            }
+
+            BACKGROUND_TREES -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
+            }
+
+            BACKGROUND_EMPTY -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
+            }
+
+            BACKGROUND_HALLOWEEN -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
+            }
+
+            BACKGROUND_EMOJI -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
+            }
+
+            BACKGROUND_LANDSCAPE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
+            }
+
+            BACKGROUND_EAT -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
+            }
+
+            BACKGROUND_TOYS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
+            }
+
+            BACKGROUND_LOVE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_love)
+            }
+
+            BACKGROUND_SCIENCE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_science)
+            }
+
+            BACKGROUND_SEA -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
+            }
+
+            BACKGROUND_SECRET -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+            }
         }
 
         init()
@@ -165,7 +193,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
 
             ibFromClaud.setOnClickListener {
                 // проверим есть ли книга на данном устройстве
-                job = CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {
                     if (bookFromSqlite?.id == null) {
                         dialogSaveBookLocal(
                             resources.getString(R.string.downloading_from_cloud),
@@ -217,7 +245,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
         tempBook: BookEntity7
     ) {
         val builder = AlertDialog.Builder(this)
-        val bindingDialog = ContinueDialogBinding.inflate(this.layoutInflater)
+        val bindingDialog = DialogContinueBinding.inflate(this.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -225,7 +253,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
         bindingDialog.bContinue.visibility = View.INVISIBLE
         val dialog = builder.create()
 
-        object : CountDownTimer(10000, 1000) {
+        timer = object : CountDownTimer(10000, 1000) {
 
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
@@ -235,11 +263,14 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
             override fun onFinish() {
                 bindingDialog.bContinue.visibility = View.VISIBLE
             }
-        }.start()
+        }
+        if(this.timer != null)
+            timer!!.start()
 
 
         bindingDialog.bNo.setOnClickListener {
             saveLocal = 0
+            timer?.onFinish()
             dialog?.dismiss()
         }
 
@@ -254,6 +285,7 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
 
 
             createDialogInfo(resources.getString(R.string.book_downloaded), this)
+            timer?.onFinish()
             dialog?.dismiss()
         }
         dialog.show()
@@ -501,6 +533,11 @@ class DescriptionActivity : AppCompatActivity(), DescriptionActivityChapterRsAda
         )
         setTitleActionBar(resources.getString(R.string.app_name), font, supportActionBar)
 
+    }
+
+    override fun onDestroy() {
+        timer?.onFinish()
+        super.onDestroy()
     }
 
     companion object {

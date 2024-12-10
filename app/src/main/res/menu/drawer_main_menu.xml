@@ -63,6 +63,10 @@
                 android:id="@+id/thanks"
                 android:title="@string/thanks"
                 />
+            <item
+                android:id="@+id/authors"
+                android:title="@string/authors"
+                />
         </menu>
     </item>
 

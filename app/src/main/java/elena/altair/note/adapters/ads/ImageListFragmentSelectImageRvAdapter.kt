@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elena.altair.note.R
 import elena.altair.note.activities.ads.EditAdsActivity
-import elena.altair.note.databinding.SelectImageFragItemBinding
+import elena.altair.note.databinding.ItemSelectImageFragBinding
 import elena.altair.note.utils.ads.AdapterCallback
 import elena.altair.note.utils.ads.ImageManager
 import elena.altair.note.utils.ads.ImagePicker
@@ -25,7 +25,7 @@ class ImageListFragmentSelectImageRvAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val viewBinding =
-            SelectImageFragItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemSelectImageFragBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ImageHolder(viewBinding, parent.context, this)//, editAdsActivity, defPref
     }
 
@@ -53,7 +53,7 @@ class ImageListFragmentSelectImageRvAdapter(
     }
 
     class ImageHolder(
-        private val viewBinding: SelectImageFragItemBinding,
+        private val viewBinding: ItemSelectImageFragBinding,
         val context: Context,
         val adapter: ImageListFragmentSelectImageRvAdapter,
         // private val editAdsActivity: EditAdsActivity,

@@ -5,11 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -20,9 +17,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import androidx.preference.PreferenceManager
@@ -58,9 +53,10 @@ import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
 import elena.altair.note.constants.MyConstants.THEME_DEFAULT
 import elena.altair.note.constants.MyConstants.THEME_KEY
 import elena.altair.note.databinding.ActivityMainBinding
-import elena.altair.note.databinding.DeleteDialogBinding
-import elena.altair.note.databinding.HelpDialogBinding
-import elena.altair.note.databinding.ThanksDialogBinding
+import elena.altair.note.databinding.DialogAuthorsBinding
+import elena.altair.note.databinding.DialogDeleteBinding
+import elena.altair.note.databinding.DialogHelpBinding
+import elena.altair.note.databinding.DialogThanksBinding
 import elena.altair.note.dialoghelper.DialogConst
 import elena.altair.note.dialoghelper.DialogHelper
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
@@ -131,6 +127,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var backPressedTime: Long = 0
     private val mainViewModel: MainViewModel by viewModels()
     var back = BACK_IS_NOT_PRESSED
+    private var timer: CountDownTimer? = null
     //private val firebaseViewModel: FirebaseViewModel by viewModels()
 
     // обработаем нажатие на кнопку назад во фрагментах сюжета и темы
@@ -250,36 +247,52 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //Log.d ("MyLog", "currentBackground $currentBackground")
-        if (currentBackground == BACKGROUND_STARS) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_stars)
-        } else if (currentBackground == BACKGROUND_SNOW) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_snow)
-        } else if (currentBackground == BACKGROUND_CATS) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_cat)
-        } else if (currentBackground == BACKGROUND_FLOWERS) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_flowers)
-        } else if (currentBackground == BACKGROUND_TREES) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_trees)
-        } else if (currentBackground == BACKGROUND_EMPTY) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_empty)
-        } else if (currentBackground == BACKGROUND_HALLOWEEN) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_halloween)
-        } else if (currentBackground == BACKGROUND_EMOJI) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_emoji)
-        } else if (currentBackground == BACKGROUND_LANDSCAPE) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_landscape)
-        } else if (currentBackground == BACKGROUND_EAT) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_eat)
-        } else if (currentBackground == BACKGROUND_TOYS) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_toys)
-        } else if (currentBackground == BACKGROUND_LOVE) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_love)
-        } else if (currentBackground == BACKGROUND_SCIENCE) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_science)
-        } else if (currentBackground == BACKGROUND_SEA) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_sea)
-        } else if (currentBackground == BACKGROUND_SECRET) {
-            binding.mainContent.main.setBackgroundResource(R.drawable.app_background_secret)
+        when (currentBackground) {
+            BACKGROUND_STARS -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_stars)
+            }
+            BACKGROUND_SNOW -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_snow)
+            }
+            BACKGROUND_CATS -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_cat)
+            }
+            BACKGROUND_FLOWERS -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_flowers)
+            }
+            BACKGROUND_TREES -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_trees)
+            }
+            BACKGROUND_EMPTY -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_empty)
+            }
+            BACKGROUND_HALLOWEEN -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_halloween)
+            }
+            BACKGROUND_EMOJI -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_emoji)
+            }
+            BACKGROUND_LANDSCAPE -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_landscape)
+            }
+            BACKGROUND_EAT -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_eat)
+            }
+            BACKGROUND_TOYS -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_toys)
+            }
+            BACKGROUND_LOVE -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_love)
+            }
+            BACKGROUND_SCIENCE -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_science)
+            }
+            BACKGROUND_SEA -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_sea)
+            }
+            BACKGROUND_SECRET -> {
+                binding.mainContent.main.setBackgroundResource(R.drawable.app_background_secret)
+            }
         }
 
 
@@ -382,6 +395,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         (fragment as? BackPressed)?.onDestroy()?.let {
             super.onDestroy()
         }
+        timer?.onFinish()
         super.onDestroy()
     }
 
@@ -645,6 +659,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.thanks -> {
                 createDialogThanks()
             }
+
+            R.id.authors -> {
+                createDialogAuthors()
+            }
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -675,7 +693,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun createDialog(message: String) { // 0 - регистрация, 1 - вход
         val builder = AlertDialog.Builder(this)
-        val bindingDialog = HelpDialogBinding.inflate(this.layoutInflater)
+        val bindingDialog = DialogHelpBinding.inflate(this.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvInfo.text = message
@@ -690,9 +708,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dialog.show()
     }
 
-    fun createDialogThanks() { // 0 - регистрация, 1 - вход
+    private fun createDialogThanks() { // 0 - регистрация, 1 - вход
         val builder = AlertDialog.Builder(this)
-        val bindingDialog = ThanksDialogBinding.inflate(this.layoutInflater)
+        val bindingDialog = DialogThanksBinding.inflate(this.layoutInflater)
+        val view = bindingDialog.root
+        builder.setView(view)
+
+        val dialog = builder.create()
+
+        bindingDialog.bOk.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun createDialogAuthors() { // 0 - регистрация, 1 - вход
+        val builder = AlertDialog.Builder(this)
+        val bindingDialog = DialogAuthorsBinding.inflate(this.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
 
@@ -745,14 +778,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         id: Long,
     ) {
         val builder = AlertDialog.Builder(this)
-        val bindingDialog = DeleteDialogBinding.inflate(layoutInflater)
+        val bindingDialog = DialogDeleteBinding.inflate(layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
         val dialog = builder.create()
 
-        object : CountDownTimer(10000, 1000) {
-
+        timer = object : CountDownTimer(10000, 1000) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 bindingDialog.tvCounter.text = "" + (millisUntilFinished / 1000)
@@ -761,10 +793,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onFinish() {
                 bindingDialog.bDelete.visibility = View.VISIBLE
             }
-        }.start()
-
+        }
+        if(this.timer != null)
+            timer!!.start()
 
         bindingDialog.bNo.setOnClickListener {
+            timer?.onFinish()
             dialog?.dismiss()
         }
         bindingDialog.bDelete.setOnClickListener {
@@ -780,6 +814,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 mainViewModel.deletePeople(id)
             if (message == resources.getString(R.string.sure_delete_term))
                 mainViewModel.deleteTerm(id)
+            timer?.onFinish()
             dialog?.dismiss()
         }
         dialog.show()

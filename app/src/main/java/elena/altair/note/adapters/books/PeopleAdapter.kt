@@ -11,7 +11,7 @@ import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
-import elena.altair.note.databinding.PeopleItemBinding
+import elena.altair.note.databinding.ItemPeopleBinding
 import elena.altair.note.etities.PeopleEntity2
 import elena.altair.note.utils.font.setTypeface
 
@@ -36,7 +36,7 @@ class PeopleAdapter(
     class ItemHolder(view: View, private val mainActivity: MainActivity) :
         RecyclerView.ViewHolder(view) {
 
-        private val binding = PeopleItemBinding.bind(view)
+        private val binding = ItemPeopleBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в people_item, беря данные из базы данных
         fun setData(people: PeopleEntity2, listener: Listener, defPref: SharedPreferences) =
@@ -63,7 +63,7 @@ class PeopleAdapter(
             fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.people_item, parent, false),
+                        .inflate(R.layout.item_people, parent, false),
                     mainActivity
                 )
             }

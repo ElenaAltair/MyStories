@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import elena.altair.note.R
-import elena.altair.note.databinding.SaveDialogBinding
+import elena.altair.note.databinding.DialogSaveBinding
 import elena.altair.note.dialoghelper.DialogInfo.createDialogInfo
 import elena.altair.note.etities.BookEntity7
 import elena.altair.note.etities.ChapterEntity2
@@ -27,7 +27,7 @@ object DialogSave {
         tempBook: BookEntity7
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -57,7 +57,7 @@ object DialogSave {
         tempChapter: ChapterEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -86,7 +86,7 @@ object DialogSave {
         tempHero: HeroEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -115,7 +115,7 @@ object DialogSave {
         tempLocation: LocationEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -144,7 +144,7 @@ object DialogSave {
         tempPeople: PeopleEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -173,7 +173,7 @@ object DialogSave {
         tempTerm: TermEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -202,7 +202,7 @@ object DialogSave {
         tempPlot: PlotEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -229,7 +229,7 @@ object DialogSave {
         tempTheme: ThemeEntity2
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -252,7 +252,7 @@ object DialogSave {
         i: Intent,
     ) {
         val builder = AlertDialog.Builder(activity)
-        val bindingDialog = SaveDialogBinding.inflate(activity.layoutInflater)
+        val bindingDialog = DialogSaveBinding.inflate(activity.layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = activity.resources.getString(R.string.sure_save)

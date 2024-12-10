@@ -25,9 +25,9 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="to_create_a_new_chapter_click_on_the_quot_add_quot_button_in_the_lower_right_corner">To create a new chapter, click on the \"Add\" button in the lower right corner</string>
+    <string name="to_create_a_new_chapter_click_on_the_quot_add_quot_button_in_the_lower_right_corner">To create a new chapter, click on the \"Add\" button in the lower right corner.\t\nIf you have created a chapter and it does not appear in the \"List\", click on the list button located in the center of the lower menu of the screen.</string>
     <string name="list_of_chapters">List of chapters</string>
-    <string name="to_create_a_new_book_click_on_the_quot_add_quot_button_in_the_lower_right_corner">To create a new book, click on the \"Add\" button in the lower right corner.</string>
+    <string name="to_create_a_new_book_click_on_the_quot_add_quot_button_in_the_lower_right_corner">To create a new book, click on the \"Add\" button in the lower right corner.\t\nIf you have created a book and it does not appear in the list, click on the \"List\" button located in the center of the lower menu of the screen.</string>
     <string name="list_of_books">List of books</string>
     <string name="go_to_the_list_of_books">Go to the list of books</string>
     <string name="yes">Yes</string>
@@ -83,7 +83,7 @@
     <string name="theme_edit_8">Negative points and ideas:</string>
     <string name="sure_save_theme">Do you want to save the theme of the work?</string>
     <string name="list_of_heroes">List of heroes</string>
-    <string name="to_create_a_new_hero">To create a new hero click on the \"Add\" button in the lower right corner</string>
+    <string name="to_create_a_new_hero">To create a new hero click on the \"Add\" button in the lower right corner\t\nIf you have created a character and it does not appear in the list, click on the \"List\" button located in the center of the lower menu of the screen.</string>
     <string name="delete_a_hero">Delete a hero</string>
     <string name="sure_delete_hero">Are you sure you want to delete the hero?</string>
     <string name="sure_save_hero">Are you sure you want to save the hero?</string>
@@ -111,11 +111,11 @@
     <string name="term_title">The name of the term:</string>
     <string name="term_content">Interpretation of the term:</string>
     <string name="list_of_locations">List of locations</string>
-    <string name="to_create_a_new_location">To create a new location click on the \"Add\" button in the lower right corner</string>
+    <string name="to_create_a_new_location">To create a new location click on the \"Add\" button in the lower right corner.\t\nIf you have created a location and it does not appear in the list, click on the \"List\" button located in the center of the lower menu of the screen.</string>
     <string name="list_of_peoples">List of peoples</string>
-    <string name="to_create_a_new_people">To create a new people click on the \"Add\" button in the lower right corner</string>
+    <string name="to_create_a_new_people">To create a new people click on the \"Add\" button in the lower right corner.\t\nIf you have created a nation and it does not appear in the list, click on the \"List\" button located in the center of the lower menu of the screen.</string>
     <string name="list_of_terms">List of terms</string>
-    <string name="to_create_a_new_term">To create a new term click on the \"Add\" button in the lower right corner</string>
+    <string name="to_create_a_new_term">To create a new term click on the \"Add\" button in the lower right corner.\t\nIf you have created a term and it does not appear in the list, click on the \"List\" button located in the center of the lower menu of the screen.</string>
     <string name="location_title">Location name:</string>
     <string name="geography">Geography of the location (geographical location, relief, nature, wildlife):</string>
     <string name="population">Population:</string>
@@ -307,9 +307,9 @@
     <string name="sure_delete_book_published">Are you sure you want to delete the book from the published ones?</string>
     <string name="cannot_make_changes">You cannot make changes to a published book because it is not available on your device.</string>
     <string name="corr">Published:</string>
-    <string name="edit_publish">To publish a book, all fields must be filled in! 1. Go back to the application section where you created your book and fill in all the fields: book title, type of literature, genre of literature, short description. (Later, if you want to change these fields in a published book, also first make changes in the section where you are creating a book, then select this book from the published ones, click the "Edit" button, and in the window that opens, click the "Publish" button.) 2. Open at least one chapter for publication. 3. Do not forget to specify the email address.</string>
+    <string name="edit_publish">To publish a book, all fields must be filled in! \t\n1. Go back to the application section where you created your book and fill in all the fields: book title, type of literature, genre of literature, short description. (Later, if you want to change these fields in a published book, also first make changes in the section where you are creating a book, then select this book from the published ones, click the "Edit" button, and in the window that opens, click the "Publish" button.) \t\n2. Open at least one chapter for publication. \t\n3. Do not forget to specify the email address.</string>
     <string name="selection_section_empty">If the book selection section is empty, it means that you do not have unpublished books, i.e. all books created on this device have been published, or you have not created any books yet.</string>
-    <string name="only_registered_users">Only guests and registered users can only create books. Only registered users can publish books.</string>
+    <string name="only_registered_users">Only guests and registered users can create books.\t\n\t\nOnly registered users can publish books.</string>
     <string name="published_from_another_device">This book was created and published from another device. If you now remove it from the published ones from this device, then you will not be able to publish it again from the device from which you originally published it.</string>
     <string name="continue_">Continue</string>
     <string name="profile">Profile</string>
@@ -381,5 +381,9 @@
         \t\n\t\nTemplet JJ · Free for commercial use (https://icon-icons.com/ru/)
         \t\n\t\nThose Icons · CC Atribution (https://icon-icons.com/ru/)
     </string>
+    <string name="programmer">Programmer: Elena Petrova</string>
+    <string name="idea_generator">An idea generator: Ekaterina Petrova</string>
+    <string name="authors">Authors</string>
+
 
 </resources>

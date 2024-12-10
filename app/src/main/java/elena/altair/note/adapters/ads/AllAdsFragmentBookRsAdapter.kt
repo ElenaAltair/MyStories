@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import elena.altair.note.R
 import elena.altair.note.constants.MyConstants.TIME_FORMAT_DEFAULT
-import elena.altair.note.databinding.AdListItemBinding
+import elena.altair.note.databinding.ItemAdListBinding
 import elena.altair.note.fragments.ads.AllAdsFragment
 import elena.altair.note.model.Ad
 import elena.altair.note.utils.settings.TimeManager
@@ -31,7 +31,7 @@ class AllAdsFragmentBookRsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdHolder {
-        val binding = AdListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemAdListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AdHolder(binding, auth, parent.context, listener, timeFormatter)
     }
 
@@ -70,7 +70,7 @@ class AllAdsFragmentBookRsAdapter(
 
 
     class AdHolder(
-        private val binding: AdListItemBinding,
+        private val binding: ItemAdListBinding,
         private val auth: FirebaseAuth,
         private val context: Context,
         private val listener: AdListener,

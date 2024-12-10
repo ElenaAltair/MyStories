@@ -15,7 +15,7 @@ class EditAdsActivityImageAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.image_adapter_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_image_adapter, parent, false)
         return ImageHolder(view)
     }
 

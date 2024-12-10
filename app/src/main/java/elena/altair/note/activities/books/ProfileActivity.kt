@@ -69,36 +69,52 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (currentBackground == BACKGROUND_STARS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
-        } else if (currentBackground == BACKGROUND_SNOW) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
-        } else if (currentBackground == BACKGROUND_CATS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
-        } else if (currentBackground == BACKGROUND_FLOWERS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
-        } else if (currentBackground == BACKGROUND_TREES) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
-        } else if (currentBackground == BACKGROUND_EMPTY) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
-        } else if (currentBackground == BACKGROUND_HALLOWEEN) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
-        } else if (currentBackground == BACKGROUND_EMOJI) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
-        } else if (currentBackground == BACKGROUND_LANDSCAPE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
-        } else if (currentBackground == BACKGROUND_EAT) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
-        } else if (currentBackground == BACKGROUND_TOYS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
-        } else if (currentBackground == BACKGROUND_LOVE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_love)
-        } else if (currentBackground == BACKGROUND_SCIENCE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_science)
-        } else if (currentBackground == BACKGROUND_SEA) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
-        } else if (currentBackground == BACKGROUND_SECRET) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+        when (currentBackground) {
+            BACKGROUND_STARS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
+            }
+            BACKGROUND_SNOW -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
+            }
+            BACKGROUND_CATS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
+            }
+            BACKGROUND_FLOWERS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
+            }
+            BACKGROUND_TREES -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
+            }
+            BACKGROUND_EMPTY -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
+            }
+            BACKGROUND_HALLOWEEN -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
+            }
+            BACKGROUND_EMOJI -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
+            }
+            BACKGROUND_LANDSCAPE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
+            }
+            BACKGROUND_EAT -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
+            }
+            BACKGROUND_TOYS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
+            }
+            BACKGROUND_LOVE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_love)
+            }
+            BACKGROUND_SCIENCE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_science)
+            }
+            BACKGROUND_SEA -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
+            }
+            BACKGROUND_SECRET -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+            }
         }
 
         // подключим наш собсвенный Action Bar к нашему активити

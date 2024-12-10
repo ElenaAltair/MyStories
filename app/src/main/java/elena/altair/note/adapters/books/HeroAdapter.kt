@@ -11,7 +11,7 @@ import elena.altair.note.R
 import elena.altair.note.activities.MainActivity
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_LIST_KEY
-import elena.altair.note.databinding.HeroItemBinding
+import elena.altair.note.databinding.ItemHeroBinding
 import elena.altair.note.etities.HeroEntity2
 import elena.altair.note.utils.font.setTypeface
 
@@ -36,7 +36,7 @@ class HeroAdapter(
     class ItemHolder(view: View, private val mainActivity: MainActivity) :
         RecyclerView.ViewHolder(view) {
 
-        private val binding = HeroItemBinding.bind(view)
+        private val binding = ItemHeroBinding.bind(view)
 
         // от сюда будем заполнять наши TextView в hero_item, беря данные из базы данных
         fun setData(hero: HeroEntity2, listener: Listener, defPref: SharedPreferences) =
@@ -63,7 +63,7 @@ class HeroAdapter(
             fun create(parent: ViewGroup, mainActivity: MainActivity): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.hero_item, parent, false),
+                        .inflate(R.layout.item_hero, parent, false),
                     mainActivity
                 )
             }

@@ -13,7 +13,7 @@ import elena.altair.note.constants.MyConstants.CONTENT_SIZE_DEFAULT
 import elena.altair.note.constants.MyConstants.CONTENT_SIZE_KEY
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_CONTENT_KEY
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
-import elena.altair.note.databinding.ChapterItemForPublicBinding
+import elena.altair.note.databinding.ItemChapterForPublicBinding
 import elena.altair.note.etities.ChapterEntity2
 import elena.altair.note.utils.font.setTextSize
 import elena.altair.note.utils.font.setTypeface
@@ -38,7 +38,7 @@ class EditAdsActivityChapterRsAdapter(
         val act: EditAdsActivity,
     ) : RecyclerView.ViewHolder(view) {
 
-        private val binding = ChapterItemForPublicBinding.bind(view)
+        private val binding = ItemChapterForPublicBinding.bind(view)
 
         fun setDate(chapter: ChapterEntity2, listenerP: ChapPListener) = with(binding) {
             tvIdChap.text = chapter.id.toString()
@@ -100,7 +100,7 @@ class EditAdsActivityChapterRsAdapter(
             ): ChapHolder {
                 return ChapHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.chapter_item_for_public, parent, false),
+                        .inflate(R.layout.item_chapter_for_public, parent, false),
                     defPref, act
                 )
             }

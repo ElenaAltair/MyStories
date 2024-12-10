@@ -20,7 +20,7 @@ import elena.altair.note.activities.ads.EditAdsActivity
 import elena.altair.note.adapters.ads.ImageListFragmentSelectImageRvAdapter
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_DEFAULT
 import elena.altair.note.constants.MyConstants.FONT_FAMILY_TITLE_KEY
-import elena.altair.note.databinding.ListImageFragBinding
+import elena.altair.note.databinding.FragmentListImageBinding
 import elena.altair.note.dialoghelper.ProgressDialog
 import elena.altair.note.utils.ads.AdapterCallback
 import elena.altair.note.utils.ads.ImageManager
@@ -41,7 +41,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface) 
     private var touchHelper = ItemTouchHelper(dragCallback)
     private var job: Job? = null
     private var addImageItem: MenuItem? = null
-    lateinit var binding: ListImageFragBinding
+    lateinit var binding: FragmentListImageBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +49,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface) 
         savedInstanceState: Bundle?
     ): View {
         defPref = PreferenceManager.getDefaultSharedPreferences(activity as EditAdsActivity)
-        binding = ListImageFragBinding.inflate(layoutInflater, container, false)
+        binding = FragmentListImageBinding.inflate(layoutInflater, container, false)
         return binding.root
 
 

@@ -68,13 +68,6 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginEnd="5dp"
-                    android:src="@mipmap/ic_book_5_background" />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

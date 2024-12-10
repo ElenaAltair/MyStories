@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import elena.altair.note.R
@@ -71,9 +72,6 @@ import elena.altair.note.utils.share.ShareHelperPeople
 import elena.altair.note.utils.share.ShareHelperPeople.makeShareText
 import elena.altair.note.utils.theme.ThemeUtils.getSelectedTheme
 import elena.altair.note.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -87,7 +85,6 @@ class NewPeopleActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()
     private val STORAGE_CODE: Int = 100
     private val DSQLITE_MAX_LENGTH = 2000
-    private var job: Job? = null
     private var oldPeople: PeopleEntity2? = null
     private var newPeople: PeopleEntity2? = null
 
@@ -101,36 +98,66 @@ class NewPeopleActivity : AppCompatActivity() {
         binding = ActivityNewPeopleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (currentBackground == BACKGROUND_STARS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
-        } else if (currentBackground == BACKGROUND_SNOW) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
-        } else if (currentBackground == BACKGROUND_CATS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
-        } else if (currentBackground == BACKGROUND_FLOWERS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
-        } else if (currentBackground == BACKGROUND_TREES) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
-        } else if (currentBackground == BACKGROUND_EMPTY) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
-        } else if (currentBackground == BACKGROUND_HALLOWEEN) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
-        } else if (currentBackground == BACKGROUND_EMOJI) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
-        } else if (currentBackground == BACKGROUND_LANDSCAPE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
-        } else if (currentBackground == BACKGROUND_EAT) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
-        } else if (currentBackground == BACKGROUND_TOYS) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
-        } else if (currentBackground == BACKGROUND_LOVE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_love)
-        } else if (currentBackground == BACKGROUND_SCIENCE) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_science)
-        } else if (currentBackground == BACKGROUND_SEA) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
-        } else if (currentBackground == BACKGROUND_SECRET) {
-            binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+        when (currentBackground) {
+            BACKGROUND_STARS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_stars)
+            }
+
+            BACKGROUND_SNOW -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_snow)
+            }
+
+            BACKGROUND_CATS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_cat)
+            }
+
+            BACKGROUND_FLOWERS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_flowers)
+            }
+
+            BACKGROUND_TREES -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_trees)
+            }
+
+            BACKGROUND_EMPTY -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_empty)
+            }
+
+            BACKGROUND_HALLOWEEN -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_halloween)
+            }
+
+            BACKGROUND_EMOJI -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_emoji)
+            }
+
+            BACKGROUND_LANDSCAPE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_landscape)
+            }
+
+            BACKGROUND_EAT -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_eat)
+            }
+
+            BACKGROUND_TOYS -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_toys)
+            }
+
+            BACKGROUND_LOVE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_love)
+            }
+
+            BACKGROUND_SCIENCE -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_science)
+            }
+
+            BACKGROUND_SEA -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_sea)
+            }
+
+            BACKGROUND_SECRET -> {
+                binding.llMain.setBackgroundResource(R.drawable.app_background_secret)
+            }
         }
 
         getPeople()
@@ -261,7 +288,7 @@ class NewPeopleActivity : AppCompatActivity() {
             val title = titleTemp
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                job = CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {
                     val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
                     val strMessage = savePdf(title, string, this@NewPeopleActivity)
                     dialog.dismiss()
@@ -277,7 +304,7 @@ class NewPeopleActivity : AppCompatActivity() {
                     requestPermissions(permissions, STORAGE_CODE)
                 } else {
                     //permission already granted, call savePdf() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    lifecycleScope.launch {
                         val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
                         val strMessage = savePdf(title, string, this@NewPeopleActivity)
                         dialog.dismiss()
@@ -301,7 +328,7 @@ class NewPeopleActivity : AppCompatActivity() {
             val title = titleTemp
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android 10 (версия Q) // Android 11 (версия R)
-                job = CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {
                     val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
                     val strMessage = saveTxt(title, string, this@NewPeopleActivity)
                     dialog.dismiss()
@@ -316,7 +343,7 @@ class NewPeopleActivity : AppCompatActivity() {
                     requestPermissions(permissions, STORAGE_CODE)
                 } else {
                     //permission already granted, call saveTxt() method
-                    job = CoroutineScope(Dispatchers.Main).launch {
+                    lifecycleScope.launch {
                         val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
                         val strMessage = saveTxt(title, string, this@NewPeopleActivity)
                         dialog.dismiss()
@@ -337,7 +364,7 @@ class NewPeopleActivity : AppCompatActivity() {
             }
             val title = titleTemp
 
-            job = CoroutineScope(Dispatchers.Main).launch {
+            lifecycleScope.launch {
                 val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
                 val strMessage = saveDocx(title, string, this@NewPeopleActivity)
                 dialog.dismiss()
@@ -382,7 +409,7 @@ class NewPeopleActivity : AppCompatActivity() {
                 // поместим выбранный файл в кеш приложения и считаем текст из него
                 val pathBuff = getDriveFilePath(uri, this, nameFile)
 
-                job = CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {
                     val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
 
                     val text = extractDocx(
@@ -427,7 +454,7 @@ class NewPeopleActivity : AppCompatActivity() {
                 //Log.d("MyLog", "pathBuff ${pathBuff}")
 
 
-                job = CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {
                     val dialog = ProgressDialog.createProgressDialog(this@NewPeopleActivity)
 
                     val text = extractTxt(
@@ -470,7 +497,7 @@ class NewPeopleActivity : AppCompatActivity() {
                 //Log.d("MyLog", "pathBuff ${pathBuff}")
 
 
-                job = CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {
                     val dialog = ProgressDialog.createProgressDialogExtPdf(this@NewPeopleActivity)
 
                     val text = extractPdf(

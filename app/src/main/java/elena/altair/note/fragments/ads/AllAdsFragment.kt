@@ -36,8 +36,8 @@ import elena.altair.note.activities.MainActivity.Companion.currentUser
 import elena.altair.note.activities.ads.DescriptionActivity
 import elena.altair.note.activities.ads.EditAdsActivity
 import elena.altair.note.adapters.ads.AllAdsFragmentBookRsAdapter
-import elena.altair.note.databinding.ContinueDialogBinding
-import elena.altair.note.databinding.DeleteDialogBinding
+import elena.altair.note.databinding.DialogContinueBinding
+import elena.altair.note.databinding.DialogDeleteBinding
 import elena.altair.note.databinding.FragmentAllAdsBinding
 import elena.altair.note.dialoghelper.DialogSpinnerHelper
 import elena.altair.note.fragments.books.BackPressed
@@ -67,6 +67,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
     private var currentCategory = ""
     private var tempTime = "0"
     private lateinit var dialogProgres: AlertDialog
+    private var timer: CountDownTimer? = null
 
     override fun onClickNew() {
 
@@ -300,7 +301,7 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
     ) {
         val builder = AlertDialog.Builder(activity as AppCompatActivity)
         val bindingDialog =
-            ContinueDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
+            DialogContinueBinding.inflate((activity as AppCompatActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
@@ -327,13 +328,13 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
     ) {
         val builder = AlertDialog.Builder(activity as AppCompatActivity)
         val bindingDialog =
-            DeleteDialogBinding.inflate((activity as AppCompatActivity).layoutInflater)
+            DialogDeleteBinding.inflate((activity as AppCompatActivity).layoutInflater)
         val view = bindingDialog.root
         builder.setView(view)
         bindingDialog.tvMess.text = message
         val dialog = builder.create()
 
-        object : CountDownTimer(10000, 1000) {
+        timer = object : CountDownTimer(10000, 1000) {
 
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
@@ -343,15 +344,19 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
             override fun onFinish() {
                 bindingDialog.bDelete.visibility = View.VISIBLE
             }
-        }.start()
+        }
+        if(this.timer != null)
+            timer!!.start()
 
 
         bindingDialog.bNo.setOnClickListener {
+            timer?.onFinish()
             dialog?.dismiss()
         }
         bindingDialog.bDelete.setOnClickListener {
             flagDel = 1
             firebaseViewModel.deleteItem(ad)
+            timer?.onFinish()
             dialog?.dismiss()
 
 
@@ -471,6 +476,11 @@ class AllAdsFragment : BaseFragment(), AllAdsFragmentBookRsAdapter.AdListener, B
         requireActivity().supportFragmentManager.commit {
             replace(R.id.placeHolder, MainListFragment.newInstance())
         }
+    }
+
+    override fun onDestroy() {
+        timer?.onFinish()
+        super.onDestroy()
     }
 
     companion object {

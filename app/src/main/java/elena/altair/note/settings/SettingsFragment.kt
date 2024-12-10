@@ -1,6 +1,5 @@
 package elena.altair.note.settings
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import elena.altair.note.R

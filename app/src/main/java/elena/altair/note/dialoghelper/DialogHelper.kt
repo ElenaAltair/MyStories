@@ -5,7 +5,7 @@ import android.view.View
 import elena.altair.note.R
 import elena.altair.note.accounthelper.AccountHelper
 import elena.altair.note.activities.MainActivity
-import elena.altair.note.databinding.SignDialogBinding
+import elena.altair.note.databinding.DialogSignBinding
 
 class DialogHelper(private val act: MainActivity) {
 
@@ -13,7 +13,7 @@ class DialogHelper(private val act: MainActivity) {
 
     fun createSignDialog(index: Int) { // 0 - регистрация, 1 - вход
         val builder = AlertDialog.Builder(act)
-        val bindingDialog = SignDialogBinding.inflate(act.layoutInflater)
+        val bindingDialog = DialogSignBinding.inflate(act.layoutInflater)
         val view = bindingDialog.root
 
         builder.setView(view)
@@ -33,7 +33,7 @@ class DialogHelper(private val act: MainActivity) {
     }
 
     // если пользователь забыл пароль
-    private fun setOnClickResetPassword(bindingDialog: SignDialogBinding, dialog: AlertDialog?) {
+    private fun setOnClickResetPassword(bindingDialog: DialogSignBinding, dialog: AlertDialog?) {
         if (bindingDialog.edSignEmail.text.isNotEmpty()) {
             //Log.d("MyLog", bindingDialog.edSignEmail.text.toString().trim() ) // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             act.mAuth.sendPasswordResetEmail(bindingDialog.edSignEmail.text.toString().trim())
@@ -55,7 +55,7 @@ class DialogHelper(private val act: MainActivity) {
 
     private fun setOnClickSignUpIn(
         index: Int,
-        bindingDialog: SignDialogBinding,
+        bindingDialog: DialogSignBinding,
         dialog: AlertDialog?
     ) {
         dialog?.dismiss()
@@ -72,7 +72,7 @@ class DialogHelper(private val act: MainActivity) {
         }
     }
 
-    private fun setDialogState(index: Int, bindingDialog: SignDialogBinding) {
+    private fun setDialogState(index: Int, bindingDialog: DialogSignBinding) {
         if (index == DialogConst.SIGN_UP_STATE) {
             bindingDialog.tvSignTitle.text = act.resources.getString(R.string.ac_sign_up)
             bindingDialog.btSignUpIn.text = act.resources.getString(R.string.sign_up_action)
